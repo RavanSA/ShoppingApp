@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Application dimensions -->
+    <dimen name="margin_tiny">5dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_normal">15dp</dimen>
+    <dimen name="margin_large">20dp</dimen>
+
+    <!-- Text Sizes -->
+    <dimen name="text_size_normal">12sp</dimen>
+    <dimen name="text_size_title">14sp</dimen>
+    <dimen name="text_size_large_title">16sp</dimen>
+    <dimen name="splash_screen_textview">30sp</dimen>
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_horizontal_margin">16dp</dimen>
+
+</resources>
