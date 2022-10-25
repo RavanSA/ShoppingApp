@@ -33,7 +33,6 @@ class SplashActivity : AppCompatActivity() {
             R.anim.splash_logo_anim)
         binding.tvSplashAppName.animation = AnimationUtils.loadAnimation(applicationContext,
             R.anim.splash_textview_anim)
-
     }
 
     private fun startRegistrationActivity() {

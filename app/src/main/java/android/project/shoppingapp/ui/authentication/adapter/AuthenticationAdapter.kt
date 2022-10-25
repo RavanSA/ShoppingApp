@@ -1,6 +1,6 @@
 package android.project.shoppingapp.ui.authentication.adapter
 
-import android.project.shoppingapp.ui.authentication.registration.LoginFragment
+import android.project.shoppingapp.ui.authentication.login.LoginFragment
 import android.project.shoppingapp.ui.authentication.registration.RegistrationFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
