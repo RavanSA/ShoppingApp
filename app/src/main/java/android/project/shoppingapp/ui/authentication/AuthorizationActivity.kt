@@ -1,4 +1,4 @@
-package android.project.shoppingapp.ui.authorization
+package android.project.shoppingapp.ui.authentication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

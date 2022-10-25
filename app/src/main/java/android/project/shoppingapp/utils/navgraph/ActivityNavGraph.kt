@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.project.shoppingapp.MainActivity
-import android.project.shoppingapp.ui.authorization.AuthorizationActivity
+import android.project.shoppingapp.ui.authentication.AuthorizationActivity
 
 object ActivityNavGraph {
 

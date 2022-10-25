@@ -1,4 +1,4 @@
-package android.project.shoppingapp.ui.authorization.onboarding.adapter
+package android.project.shoppingapp.ui.authentication.onboarding.adapter
 
 import android.project.shoppingapp.data.model.OnBoardingItem
 import android.project.shoppingapp.databinding.OnboardingItemLayoutBinding

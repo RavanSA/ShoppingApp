@@ -1,4 +1,4 @@
-package android.project.shoppingapp.ui.authorization.onboarding
+package android.project.shoppingapp.ui.authentication.onboarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.data.model.OnBoardingItem
 import android.project.shoppingapp.databinding.FragmentOnBoardingBinding
-import android.project.shoppingapp.ui.authorization.onboarding.adapter.OnBoardingItemSliderAdapter
-import android.util.Log
+import android.project.shoppingapp.ui.authentication.onboarding.adapter.OnBoardingItemSliderAdapter
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController

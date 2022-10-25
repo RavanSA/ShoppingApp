@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -101,4 +102,8 @@ dependencies {
 
     //Datastore
     implementation "androidx.datastore:datastore-preferences:1.1.0-dev01"
+
+    //Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+
 }

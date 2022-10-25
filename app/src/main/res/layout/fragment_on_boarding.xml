@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.authorization.onboarding.OnBoardingFragment">
+    tools:context=".ui.authentication.onboarding.OnBoardingFragment">
 
 
     <androidx.viewpager2.widget.ViewPager2

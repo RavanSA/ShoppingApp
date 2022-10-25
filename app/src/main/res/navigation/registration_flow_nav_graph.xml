@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="android.project.shoppingapp.ui.authorization.onboarding.OnBoardingFragment"
+        android:name="android.project.shoppingapp.ui.authentication.onboarding.OnBoardingFragment"
         android:label="OnBoardingFragment" >
         <action
             android:id="@+id/action_onBoardingFragment_to_authorizationFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/authorizationFragment"
-        android:name="android.project.shoppingapp.ui.authorization.AuthorizationFragment"
+        android:name="android.project.shoppingapp.ui.authentication.AuthorizationFragment"
         android:label="AuthorizationFragment" />
 
 </navigation>

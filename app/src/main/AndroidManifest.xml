@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ShoppingApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.authorization.AuthorizationActivity"
+            android:name=".ui.authentication.AuthorizationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

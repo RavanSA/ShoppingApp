@@ -1,14 +1,12 @@
-package android.project.shoppingapp.ui.authorization
+package android.project.shoppingapp.ui.authentication
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentAuthorizationBinding
-import android.project.shoppingapp.ui.authorization.registration.adapter.AuthenticationAdapter
-import androidx.fragment.app.FragmentActivity
+import android.project.shoppingapp.ui.authentication.adapter.AuthenticationAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 
