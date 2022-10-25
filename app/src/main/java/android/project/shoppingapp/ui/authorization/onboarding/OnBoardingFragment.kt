@@ -6,55 +6,106 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
+import android.project.shoppingapp.data.model.OnBoardingItem
+import android.project.shoppingapp.databinding.FragmentOnBoardingBinding
+import android.project.shoppingapp.ui.authorization.onboarding.adapter.OnBoardingItemSliderAdapter
+import android.util.Log
+import android.view.animation.AnimationUtils
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OnBoardingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class OnBoardingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentOnBoardingBinding
+    private lateinit var navController: NavController
+
+    private val onBoardingItemSliderAdapter = OnBoardingItemSliderAdapter(
+        listOf(
+            OnBoardingItem(
+                "Health Tips / Advice",
+                "Discover tips and advice to help you to help maintain transform and main your health",
+                "exercise.json"
+            ),
+            OnBoardingItem(
+                "Diet Tips / Advice",
+                "Find out basics of health diet and good nutrition, Start eating well and keep a balanced diet",
+                "diet.json"
+            ),
+            OnBoardingItem(
+                "Covid 19 Symptoms/Prevention tips",
+                "Get regular Reminders of Covid-19 prevention tips ensuring you stay safe",
+                "covid19.json"
+            )
+        )
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_on_boarding, container, false)
+        binding = FragmentOnBoardingBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OnBoardingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OnBoardingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
+        binding.viewPager?.adapter = onBoardingItemSliderAdapter
+        binding.onBoardingSkipButton.setOnClickListener {
+            //navigate to login
+            navController.navigate(
+                R.id.action_onBoardingFragment_to_authorizationFragment
+            )
+        }
+
+
+//        binding.indicator?.setViewPager(binding?.viewPager)
+        binding.viewPager?.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+
+                    if (position == onBoardingItemSliderAdapter.itemCount - 1) {
+                        val animation = AnimationUtils.loadAnimation(
+                            requireActivity(),
+                            R.anim.splash_textview_anim
+                        )
+
+                        binding?.buttonNext?.animation = animation
+                        binding?.buttonNext?.text = "Finish"
+                        binding.onBoardingSkipButton.visibility = View.GONE
+
+                        binding?.buttonNext?.setOnClickListener {
+                            lifecycleScope.launch {
+                                //save to data store
+                            }
+
+//                            //redirect to login page
+                            navController.navigate(
+                                R.id.action_onBoardingFragment_to_authorizationFragment
+                            )
+                        }
+                    } else {
+                        binding?.buttonNext?.text = "Next"
+                    }
+                }
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
                 }
             }
+        )
     }
 }
