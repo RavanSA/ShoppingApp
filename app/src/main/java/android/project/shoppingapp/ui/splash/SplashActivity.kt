@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
     private fun splashAnimation() {
         binding.ivSplashLogo.animation = AnimationUtils.loadAnimation(applicationContext,
             R.anim.splash_logo_anim)
-        binding.tvSplashAppName.animation = AnimationUtils.loadAnimation(applicationContext,
+        binding.pbActivityIndicator.animation = AnimationUtils.loadAnimation(applicationContext,
             R.anim.splash_textview_anim)
     }
 

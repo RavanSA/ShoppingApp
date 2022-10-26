@@ -15,4 +15,10 @@
     <dimen name="default_margin">16dp</dimen>
     <dimen name="default_horizontal_margin">16dp</dimen>
 
+    <!--    Custom Sizes-->
+    <dimen name="splash_screen_logo_width">200dp</dimen>
+    <dimen name="splash_screen_logo_height">200dp</dimen>
+
+
+
 </resources>

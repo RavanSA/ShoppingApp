@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.authentication.onboarding
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.project.shoppingapp.data.model.OnBoardingItem
 import android.project.shoppingapp.databinding.FragmentOnBoardingBinding
 import android.project.shoppingapp.ui.authentication.onboarding.adapter.OnBoardingItemSliderAdapter
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -22,25 +25,37 @@ class OnBoardingFragment : Fragment() {
     private lateinit var binding: FragmentOnBoardingBinding
     private lateinit var navController: NavController
 
-    private val onBoardingItemSliderAdapter = OnBoardingItemSliderAdapter(
+
+    private val onBoardingIconItems by lazy {
         listOf(
-            OnBoardingItem(
-                "Health Tips / Advice",
-                "Discover tips and advice to help you to help maintain transform and main your health",
-                "exercise.json"
-            ),
-            OnBoardingItem(
-                "Diet Tips / Advice",
-                "Find out basics of health diet and good nutrition, Start eating well and keep a balanced diet",
-                "diet.json"
-            ),
-            OnBoardingItem(
-                "Covid 19 Symptoms/Prevention tips",
-                "Get regular Reminders of Covid-19 prevention tips ensuring you stay safe",
-                "covid19.json"
+            context?.let { ContextCompat.getDrawable(it, R.drawable.onboarding_1) },
+            context?.let { ContextCompat.getDrawable(it, R.drawable.onboarding_2) },
+            context?.let { ContextCompat.getDrawable(it, R.drawable.onboarding_3) }
+        )
+    }
+
+    private val onBoardingItemSliderAdapter by lazy {
+
+        OnBoardingItemSliderAdapter(
+            listOf(
+                OnBoardingItem(
+                    "Purchase Online",
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi",
+                    onBoardingIconItems[0]
+                ),
+                OnBoardingItem(
+                    "Add to Basket",
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi",
+                    onBoardingIconItems[1]
+                ),
+                OnBoardingItem(
+                    "Get your Order",
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi",
+                    onBoardingIconItems[2]
+                )
             )
         )
-    )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -42,9 +42,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-
-
-
     private fun registerUser() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

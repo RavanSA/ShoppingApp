@@ -6,32 +6,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/colorPrimary"
         tools:context=".ui.splash.SplashActivity">
 
         <ImageView
             android:id="@+id/ivSplashLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background"
+            android:layout_width="@dimen/splash_screen_logo_width"
+            android:layout_height="@dimen/splash_screen_logo_height"
+            android:src="@drawable/app_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tvSplashAppName"
-            android:layout_width="wrap_content"
+        <ProgressBar
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:letterSpacing="0.3"
-            android:text="@string/shopping_app_title"
-            android:textColor="@color/black"
-            android:textSize="@dimen/splash_screen_textview"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/pbActivityIndicator"
+            android:indeterminateOnly="true"
+            android:keepScreenOn="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivSplashLogo">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivSplashLogo"
+            />
 
-        </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

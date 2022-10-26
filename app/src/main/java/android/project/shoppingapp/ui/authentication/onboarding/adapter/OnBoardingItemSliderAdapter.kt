@@ -28,9 +28,11 @@ class OnBoardingItemSliderAdapter(private val introSlides: List<OnBoardingItem>)
     inner class IntroSlideViewHolder(private val binding: OnboardingItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(introSlide: OnBoardingItem) {
-            binding.textTitle.text = introSlide.title
-            binding.textDescription.text = introSlide.description
-            onTextPassed?.invoke(binding.textTitle)
+            binding.tvOnBoardItemTitle.text = introSlide.title
+            binding.tvOnBoardItemDescription.text = introSlide.description
+            binding.imageSlideIcon.setImageDrawable(introSlide.icon)
+//            binding.textDescription.text = introSlide.description
+            onTextPassed?.invoke(binding.tvOnBoardItemTitle)
         }
     }
 }

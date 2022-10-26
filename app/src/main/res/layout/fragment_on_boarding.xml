@@ -6,8 +6,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.authentication.onboarding.OnBoardingFragment">
 
+    <TextView
+        android:id="@+id/onBoardingSkipButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        android:letterSpacing="0.3"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_normal"
+        android:textAlignment="textEnd"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivskipIcon"
+        app:layout_constraintBottom_toBottomOf="@id/ivskipIcon"
+        app:layout_constraintEnd_toStartOf="@id/ivskipIcon"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        />
+
+    <ImageView
+        android:id="@+id/ivskipIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_large"
+        android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+        app:layout_constraintStart_toEndOf="@id/onBoardingSkipButton"
+        app:layout_constraintTop_toTopOf="@id/onBoardingSkipButton"
+        app:layout_constraintBottom_toBottomOf="@id/ivskipIcon"
+        />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -41,15 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <TextView
-        android:id="@+id/onBoardingSkipButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="SKIP BUTTON"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonNext"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
