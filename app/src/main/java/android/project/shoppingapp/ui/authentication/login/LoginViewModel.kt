@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.authentication.login
 
+import android.project.shoppingapp.data.local.DataStoreManager
 import android.project.shoppingapp.data.repository.AuthRepository
 import android.project.shoppingapp.utils.Resources
 import android.util.Patterns
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val dataStoreManager: DataStoreManager,
     private val repository: AuthRepository
 ) : ViewModel() {
 
@@ -51,6 +53,10 @@ class LoginViewModel @Inject constructor(
         _loginFlow.value = Resources.Loading(true)
         val result = repository.login(_email.value, _password.value)
         _loginFlow.value = result
+    }
+
+    fun setUserAuthenticated() = viewModelScope.launch {
+        dataStoreManager.updateUserAuthentication(true)
     }
 
 }

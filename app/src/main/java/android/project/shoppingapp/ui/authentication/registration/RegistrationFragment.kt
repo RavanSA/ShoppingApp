@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentRegistrationBinding
 import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
 import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -46,20 +47,26 @@ class RegistrationFragment : Fragment() {
     private fun registerUser() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                registrationViewModel.signup.collect { uiState ->
-                    when (uiState) {
-                        is Resources.Success -> {
-                            Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG).show()
-                            Log.d("UISATELOG", uiState.toString())
+                with(registrationViewModel) {
+                    signup.collect { uiState ->
+                        when (uiState) {
+                            is Resources.Success -> {
+                                Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
+                                    .show()
+                                Log.d("UISATELOG", uiState.toString())
+                                setUserAuthenticated()
+                                ActivityNavGraph.startApplicationFlow(requireActivity(),requireContext())
+                            }
+                            is Resources.Loading -> {}
+                            is Resources.Error -> {}
+                            else -> {}
                         }
-                        is Resources.Loading -> {}
-                        is Resources.Error -> {}
-                        else -> {}
                     }
                 }
             }
         }
     }
+
 
     private fun initListeners() {
         with(binding) {

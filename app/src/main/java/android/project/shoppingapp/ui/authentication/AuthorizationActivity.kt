@@ -25,7 +25,6 @@ class AuthorizationActivity : AppCompatActivity() {
             .findFragmentById(R.id.fragment_container_view) as NavHostFragment
     }
 
-    // if user first time redirect to onboard else login page
 
 
 }

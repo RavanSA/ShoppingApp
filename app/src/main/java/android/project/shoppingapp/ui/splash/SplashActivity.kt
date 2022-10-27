@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.ActivitySplashBinding
+import android.project.shoppingapp.ui.splash.viewmodel.SplashScreenEvent
+import android.project.shoppingapp.ui.splash.viewmodel.SplashViewModel
 import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +21,7 @@ import kotlinx.coroutines.launch
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
-    //viewmodel init
+    private val splashViewModel by viewModels<SplashViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         splashAnimation()
-        startRegistrationActivity()
+        redirectToUser()
     }
 
     private fun splashAnimation() {
@@ -35,17 +40,36 @@ class SplashActivity : AppCompatActivity() {
             R.anim.splash_textview_anim)
     }
 
-    private fun startRegistrationActivity() {
+
+    private fun redirectToUser() {
         lifecycleScope.launch {
-            delay(3000L)
-            ActivityNavGraph.startLoginAndRegisterActivity(applicationContext)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                splashViewModel.authEvent.collect { event ->
+                    when (event) {
+                        is SplashScreenEvent.RedirectToRegistrationFlow -> {
+                            startRegistrationActivity()
+                        }
+                        is SplashScreenEvent.RedirectToApplicationFlow -> {
+                            startApplicationFlow()
+                        }
+                    }
+                }
+            }
         }
     }
 
-    // TODO decide registration flow or app flow
+    private fun startRegistrationActivity() {
+        lifecycleScope.launch {
+            delay(3000L)
+            ActivityNavGraph.startRegistrationFlow(applicationContext)
+        }
+    }
 
-    // TODO fun to start app flow
-
-    // TODO fun to start registration flow
+    private fun startApplicationFlow() {
+        lifecycleScope.launch {
+            delay(3000L)
+            ActivityNavGraph.startApplicationFlow(this@SplashActivity, applicationContext)
+        }
+    }
 
 }
