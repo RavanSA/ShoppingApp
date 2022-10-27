@@ -9,7 +9,6 @@ import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentLoginBinding
 import android.project.shoppingapp.utils.Resources
 import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
-import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -53,7 +52,6 @@ class LoginFragment : Fragment() {
                                 setUserAuthenticated()
                                 Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
                                     .show()
-                                Log.d("LOGIN", uiState.toString())
                                 ActivityNavGraph.startApplicationFlow(
                                     requireActivity(), requireContext()
                                 )
@@ -126,7 +124,7 @@ class LoginFragment : Fragment() {
                                             getString(R.string.tv_login_password_error)
                                         tvPasswordLoginError.setTextColor(
                                             ContextCompat.getColor(
-                                                requireContext(), R.color.colorRed
+                                                requireContext(), R.color.colorPrimary
                                             )
                                         )
                                         ivLoginPasswordError.visibility = View.GONE

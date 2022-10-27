@@ -3,6 +3,7 @@ package android.project.shoppingapp.ui.authentication.login
 import android.project.shoppingapp.data.local.DataStoreManager
 import android.project.shoppingapp.data.repository.AuthRepository
 import android.project.shoppingapp.utils.Resources
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -56,6 +57,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun setUserAuthenticated() = viewModelScope.launch {
+        Log.d("SETUSERAUTH","LOGIN")
         dataStoreManager.updateUserAuthentication(true)
     }
 

@@ -1,6 +1,7 @@
 package android.project.shoppingapp.data.local
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -41,6 +42,7 @@ class DataStoreManager(context: Context) {
 
     suspend fun updateUserAuthentication(userAuth: Boolean) {
         dataStore.edit { preferences ->
+            Log.d("DATASTOREUPDATE", userAuth.toString())
             preferences[PreferencesKeys.isUserAuthenticated] = userAuth
         }
     }

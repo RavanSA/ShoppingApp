@@ -7,6 +7,7 @@ import android.project.shoppingapp.databinding.ActivitySplashBinding
 import android.project.shoppingapp.ui.splash.viewmodel.SplashScreenEvent
 import android.project.shoppingapp.ui.splash.viewmodel.SplashViewModel
 import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
+import android.util.Log
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
@@ -42,18 +43,18 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun redirectToUser() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                splashViewModel.authEvent.collect { event ->
-                    when (event) {
+        lifecycleScope.launchWhenResumed {
+                splashViewModel.authEvent.collect {
+                    when (it) {
                         is SplashScreenEvent.RedirectToRegistrationFlow -> {
+                            Log.d("EVENT","REGISTRATİONFLOW")
                             startRegistrationActivity()
                         }
                         is SplashScreenEvent.RedirectToApplicationFlow -> {
+                            Log.d("EVENT","APPLICATIONFLOW")
                             startApplicationFlow()
                         }
                     }
-                }
             }
         }
     }

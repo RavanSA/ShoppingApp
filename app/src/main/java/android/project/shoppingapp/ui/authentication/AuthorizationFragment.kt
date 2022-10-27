@@ -23,6 +23,7 @@ class AuthorizationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentAuthorizationBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -31,8 +32,7 @@ class AuthorizationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
-        val fragmentManager = activity?.supportFragmentManager
-        val adapter = fragmentManager?.let { AuthenticationAdapter(it,lifecycle) }
+        val adapter = AuthenticationAdapter(childFragmentManager,lifecycle)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
