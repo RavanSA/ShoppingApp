@@ -20,6 +20,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -28,6 +30,7 @@ import kotlinx.coroutines.launch
 class RegistrationFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
+    private lateinit var navController: NavController
     private val registrationViewModel by viewModels<RegistrationViewModel>()
     private val progressBar by lazy {
         LoadingDialog(requireContext())
@@ -36,6 +39,7 @@ class RegistrationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        navController = findNavController()
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -64,10 +68,12 @@ class RegistrationFragment : Fragment() {
                                     .show()
                                 Log.d("UISATELOG", uiState.toString())
                                 setUserAuthenticated()
-                                ActivityNavGraph.startApplicationFlow(
-                                    requireActivity(),
-                                    requireContext()
-                                )
+//                                ActivityNavGraph.startApplicationFlow(
+//                                    requireActivity(),
+//                                    requireContext()
+//                                )
+                                navController.navigate(R.id.action_authorizationFragment_to_productFragment)
+
                             }
                             is Resources.Loading -> {
                                 progressBar.show()

@@ -79,7 +79,6 @@ class OnBoardingFragment : Fragment() {
                 R.id.action_onBoardingFragment_to_authorizationFragment
             )
         }
-
     }
 
 

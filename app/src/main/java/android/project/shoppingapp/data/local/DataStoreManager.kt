@@ -27,7 +27,7 @@ class DataStoreManager(context: Context) {
     private val dataStore = context.dataStore
 
     val firstTimeLogin: Flow<Boolean> = dataStore.data.map { preferences ->
-        preferences[PreferencesKeys.firstTimeLogin] ?: false
+        preferences[PreferencesKeys.firstTimeLogin] ?: true
     }
 
     val userAuthentication: Flow<Boolean> = dataStore.data.map { preferences ->

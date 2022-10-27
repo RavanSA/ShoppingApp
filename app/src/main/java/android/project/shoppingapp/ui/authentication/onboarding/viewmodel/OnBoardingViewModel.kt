@@ -14,7 +14,7 @@ class OnBoardingViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun userPassedOnBoardScreens() = viewModelScope.launch{
-        dataStoreManager.updateFirstTimeLogin(true)
+        dataStoreManager.updateFirstTimeLogin(false)
     }
 
 }

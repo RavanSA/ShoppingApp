@@ -17,6 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,7 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var navController: NavController
     private val progressBar by lazy {
         LoadingDialog(requireContext())
     }
@@ -32,6 +35,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        navController = findNavController()
         binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -60,9 +64,11 @@ class LoginFragment : Fragment() {
                                 setUserAuthenticated()
                                 Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
                                     .show()
-                                ActivityNavGraph.startApplicationFlow(
-                                    requireActivity(), requireContext()
-                                )
+//                                ActivityNavGraph.startApplicationFlow(
+//                                    requireActivity(), requireContext()
+//                                )
+                                navController.navigate(R.id.action_authorizationFragment_to_productFragment)
+
                             }
                             is Resources.Loading -> {
                                 progressBar.show()
