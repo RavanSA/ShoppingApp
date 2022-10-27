@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentLoginBinding
-import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.*
 import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -24,6 +25,9 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentLoginBinding
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,6 +53,10 @@ class LoginFragment : Fragment() {
                     loginFlow.collect { uiState ->
                         when (uiState) {
                             is Resources.Success -> {
+                                progressBar.dismiss()
+
+                                uiState.message?.let { showCustomDialog(it,Constants.SUCCES_DIALOG, requireContext()) }
+
                                 setUserAuthenticated()
                                 Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
                                     .show()
@@ -56,8 +64,14 @@ class LoginFragment : Fragment() {
                                     requireActivity(), requireContext()
                                 )
                             }
-                            is Resources.Loading -> {}
-                            is Resources.Error -> {}
+                            is Resources.Loading -> {
+                                progressBar.show()
+                            }
+                            is Resources.Error -> {
+                                progressBar.dismiss()
+                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
+                                uiState.message?.let { Log.d("Error dialog", it) }
+                            }
                             else -> {}
                         }
                     }

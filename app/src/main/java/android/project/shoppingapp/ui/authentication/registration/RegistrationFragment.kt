@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentRegistrationBinding
+import android.project.shoppingapp.utils.Constants
+import android.project.shoppingapp.utils.LoadingDialog
 import android.project.shoppingapp.utils.Resources
 import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
+import android.project.shoppingapp.utils.showCustomDialog
 import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -26,6 +29,9 @@ class RegistrationFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
     private val registrationViewModel by viewModels<RegistrationViewModel>()
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -51,6 +57,9 @@ class RegistrationFragment : Fragment() {
                     signup.collect { uiState ->
                         when (uiState) {
                             is Resources.Success -> {
+                                progressBar.dismiss()
+                                uiState.message?.let { showCustomDialog(it,Constants.SUCCES_DIALOG, requireContext()) }
+
                                 Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
                                     .show()
                                 Log.d("UISATELOG", uiState.toString())
@@ -60,8 +69,13 @@ class RegistrationFragment : Fragment() {
                                     requireContext()
                                 )
                             }
-                            is Resources.Loading -> {}
-                            is Resources.Error -> {}
+                            is Resources.Loading -> {
+                                progressBar.show()
+                            }
+                            is Resources.Error -> {
+                                progressBar.dismiss()
+                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
+                            }
                             else -> {}
                         }
                     }
