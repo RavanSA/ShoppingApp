@@ -1,96 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:padding="20dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:helperText="Only alphabets and no special characters."
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="140dp">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_normal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etUserName"
+            <TextView
+                android:id="@+id/tvRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/margin_large"
+                android:inputType="textEmailAddress"
+                android:letterSpacing="0.2"
+                android:maxLines="1"
+                android:text="Registration"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_x_x_large_title"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:helperText="Password length should be greater than 8 characters"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/userName"
-            tools:layout_editor_absoluteX="238dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registerUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/margin_x_large"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@id/tvRegistration"
+                tools:layout_editor_absoluteX="140dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:helperText="User Id must have ann underscore(_)"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/email"
-            tools:layout_editor_absoluteX="238dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_custom"
+                    android:hint="Username" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
+
+            <TextView
+                android:id="@+id/tvRegisterUsernameError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/ivRegisterUserNameError"
+                app:layout_constraintTop_toBottomOf="@id/registerUsername" />
+
+
+            <ImageView
+                android:id="@+id/ivRegisterUserNameError"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="11dp"
+                android:src="@drawable/ic_baseline_warning_24"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/registerUsername"
+                app:tint="@color/colorRed" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registerEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="User Id" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/margin_x_large"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterUsernameError"
+                tools:layout_editor_absoluteX="140dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext_custom"
+                    android:hint="Email" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:helperText="User Id must have ann underscore(_)"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/password"
-            tools:layout_editor_absoluteX="238dp">
+            <TextView
+                android:id="@+id/tvRegisterEmailError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/ivRegisterEmailError"
+                app:layout_constraintTop_toBottomOf="@id/registerEmail" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etConfirmPassword"
+
+            <ImageView
+                android:id="@+id/ivRegisterEmailError"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="11dp"
+                android:src="@drawable/ic_baseline_warning_24"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/registerEmail"
+                app:tint="@color/colorRed" />
+
+            <FrameLayout
+                android:id="@+id/flLoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm Password" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterEmailError">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/registerPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    tools:layout_editor_absoluteX="140dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etRegisterPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edittext_custom"
+                        android:hint="Password" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/ivShowPassword"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="11dp"
+                    android:src="@drawable/ic_baseline_visibility_off_24"
+                    app:tint="@color/colorPrimary" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterPasswordError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/ivRegisterEmailError"
+                app:layout_constraintTop_toBottomOf="@id/flLoginPassword" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:enabled="false"
-            android:text="Submit"
-            app:layout_constraintTop_toBottomOf="@id/confirmPassword"
-            tools:layout_editor_absoluteX="20dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <ImageView
+                android:id="@+id/ivRegisterError"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="11dp"
+                android:src="@drawable/ic_baseline_warning_24"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flLoginPassword"
+                app:tint="@color/colorRed" />
+
+
+            <FrameLayout
+                android:id="@+id/flConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterPasswordError">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/registerConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    tools:layout_editor_absoluteX="140dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etRegisterConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edittext_custom"
+                        android:hint="Confirm Password" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/ivShowConfirmPassword"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="11dp"
+                    android:src="@drawable/ic_baseline_visibility_off_24"
+                    app:tint="@color/colorPrimary" />
+            </FrameLayout>
+
+
+            <TextView
+                android:id="@+id/tvRegisterConfirmPasswordError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/ivRegisterConfirmPasswordError"
+                app:layout_constraintTop_toBottomOf="@id/flConfirmPassword" />
+
+
+            <ImageView
+                android:id="@+id/ivRegisterConfirmPasswordError"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="11dp"
+                android:src="@drawable/ic_baseline_warning_24"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flConfirmPassword"
+                app:tint="@color/colorRed" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/colorPrimary"
+                android:elevation="5dp"
+                android:text="Log in"
+                app:backgroundTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterConfirmPasswordError" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

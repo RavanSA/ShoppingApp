@@ -18,7 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
             Resources.Success(result.user!!)
         } catch (e: Exception) {
             e.printStackTrace()
-            Resources.Error(e.toString())
+            Resources.Error(e.message.toString())
         }
     }
 
@@ -29,7 +29,7 @@ class AuthRepositoryImpl @Inject constructor(
             return Resources.Success(result.user!!)
         } catch (e: Exception) {
             e.printStackTrace()
-            Resources.Error(e.toString())
+            Resources.Error(e.message.toString())
         }
     }
 

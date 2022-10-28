@@ -7,14 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentLoginBinding
-import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.ui.splash.viewmodel.SplashScreenEvent
+import android.project.shoppingapp.utils.*
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,21 +27,26 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var navController: NavController
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        navController = findNavController()
         binding = FragmentLoginBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initListeners()
         isFormValid()
         registerUser()
-        binding.btnRegister.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             loginViewModel.loginUser()
         }
     }
@@ -45,15 +54,33 @@ class LoginFragment : Fragment() {
     private fun registerUser() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                loginViewModel.loginFlow.collect { uiState ->
-                    when (uiState) {
-                        is Resources.Success -> {
-                            Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG).show()
-                            Log.d("LOGIN", uiState.toString())
+                with(loginViewModel) {
+                    loginFlow.collect { uiState ->
+                        when (uiState) {
+                            is Resources.Success -> {
+                                progressBar.dismiss()
+
+                                uiState.message?.let { showCustomDialog(it,Constants.SUCCES_DIALOG, requireContext()) }
+
+                                setUserAuthenticated()
+                                Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
+                                    .show()
+//                                ActivityNavGraph.startApplicationFlow(
+//                                    requireActivity(), requireContext()
+//                                )
+                                navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
+
+                            }
+                            is Resources.Loading -> {
+                                progressBar.show()
+                            }
+                            is Resources.Error -> {
+                                progressBar.dismiss()
+                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
+                                uiState.message?.let { Log.d("Error dialog", it) }
+                            }
+                            else -> {}
                         }
-                        is Resources.Loading -> {}
-                        is Resources.Error -> {}
-                        else -> {}
                     }
                 }
             }
@@ -65,7 +92,7 @@ class LoginFragment : Fragment() {
             etEmail.doAfterTextChanged {
                 loginViewModel.setEmail(it.toString())
             }
-            etPassword.doAfterTextChanged {
+            etLoginPassword.doAfterTextChanged {
                 loginViewModel.setPassword(it.toString())
             }
         }
@@ -74,7 +101,7 @@ class LoginFragment : Fragment() {
     private fun isFormValid() {
         lifecycleScope.launch {
             loginViewModel.isFormValid.collect { value ->
-                binding.btnRegister.isEnabled = value
+                binding.btnLogin.isEnabled = value
                 setErrors()
             }
         }
@@ -88,23 +115,47 @@ class LoginFragment : Fragment() {
                     with(loginViewModel) {
 
                         launch {
-                            if(!etEmail.text.isNullOrBlank()){
-                                emailError.collect { if (it != "") { etEmail.error = it }
-                                else{etEmail.error = getString(android.project.shoppingapp.R.string.app_name)} }
+                            if (!etEmail.text.isNullOrBlank()) {
+                                emailError.collect {
+                                    if (it != "") {
+                                        tvEmailLoginError.text = it
+                                        ivLoginEmailError.visibility = View.VISIBLE
+                                    } else {
+                                        tvEmailLoginError.text = ""
+                                        ivLoginEmailError.visibility = View.GONE
+                                    }
+                                }
                             }
                         }
 
                         launch {
-                            if(!etPassword.text.isNullOrBlank()){
-                                passwordError.collect { if (it != "") { etPassword.error = it }
-                                else{etPassword.error = getString(android.project.shoppingapp.R.string.app_name)} }
+                            if (!etLoginPassword.text.isNullOrBlank()) {
+                                passwordError.collect {
+                                    if (it != "") {
+                                        tvPasswordLoginError.text = it
+                                        ivLoginPasswordError.visibility = View.VISIBLE
+                                        tvPasswordLoginError.setTextColor(
+                                            ContextCompat.getColor(
+                                                requireContext(), R.color.colorRed
+                                            )
+                                        )
+                                    } else {
+
+                                        tvPasswordLoginError.text =
+                                            getString(R.string.tv_login_password_error)
+                                        tvPasswordLoginError.setTextColor(
+                                            ContextCompat.getColor(
+                                                requireContext(), R.color.colorPrimary
+                                            )
+                                        )
+                                        ivLoginPasswordError.visibility = View.GONE
+                                    }
+                                }
                             }
                         }
-
                     }
                 }
             }
         }
     }
-
 }

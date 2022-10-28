@@ -1,7 +1,9 @@
 package android.project.shoppingapp.ui.authentication.registration
 
+import android.project.shoppingapp.data.local.DataStoreManager
 import android.project.shoppingapp.data.repository.AuthRepository
 import android.project.shoppingapp.utils.Resources
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
+    private val dataStoreManager: DataStoreManager,
     private val repository: AuthRepository
 ) : ViewModel() {
 
@@ -73,5 +76,12 @@ class RegistrationViewModel @Inject constructor(
             val result = repository.register(_username.value, _email.value, _password.value)
             _signup.value = result
      }
+
+    fun setUserAuthenticated() = viewModelScope.launch {
+        Log.d("DATASTORE","REGISTER")
+        dataStoreManager.updateUserAuthentication(true)
+    }
+
+
 
 }
