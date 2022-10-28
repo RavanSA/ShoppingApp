@@ -1,46 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@+id/splashFragment">
-<!--    <include app:graph="@navigation/registration_flow_nav_graph" />-->
-<!--    <include app:graph="@navigation/application_flow_nav_graph" />-->
+    app:startDestination="@id/splashFragment3">
 
     <fragment
-        android:id="@+id/splashFragment"
+        android:id="@+id/splashFragment3"
         android:name="android.project.shoppingapp.ui.splash.SplashFragment"
         android:label="SplashFragment" >
         <action
-            android:id="@+id/action_splashFragment_to_authorizationFragment"
-            app:destination="@id/authorizationFragment" />
+            android:id="@+id/action_splashFragment3_to_authorizationFragment3"
+            app:destination="@id/authorizationFragment3" />
         <action
-            android:id="@+id/action_splashFragment_to_onBoardingFragment"
-            app:destination="@id/onBoardingFragment" />
+            android:id="@+id/action_splashFragment3_to_productFragment2"
+            app:destination="@id/productFragment2" />
         <action
-            android:id="@+id/action_splashFragment_to_productFragment"
-            app:destination="@id/productFragment" />
+            android:id="@+id/action_splashFragment3_to_onBoardingFragment3"
+            app:destination="@id/onBoardingFragment3" />
     </fragment>
     <fragment
-        android:id="@+id/onBoardingFragment"
-        android:name="android.project.shoppingapp.ui.authentication.onboarding.OnBoardingFragment"
-        android:label="OnBoardingFragment" >
-        <action
-            android:id="@+id/action_onBoardingFragment_to_authorizationFragment"
-            app:destination="@id/authorizationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/productFragment"
-        android:name="android.project.shoppingapp.ui.products.ProductFragment"
-        android:label="fragment_product"
-        tools:layout="@layout/fragment_product" />
-    <fragment
-        android:id="@+id/authorizationFragment"
+        android:id="@+id/authorizationFragment3"
         android:name="android.project.shoppingapp.ui.authentication.AuthorizationFragment"
         android:label="AuthorizationFragment" >
         <action
-            android:id="@+id/action_authorizationFragment_to_productFragment"
-            app:destination="@id/productFragment" />
+            android:id="@+id/action_authorizationFragment3_to_productFragment2"
+            app:destination="@id/productFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/productFragment2"
+        android:name="android.project.shoppingapp.ui.products.ProductFragment"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment2_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment3"
+        android:name="android.project.shoppingapp.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/searchFragment3"
+        android:name="android.project.shoppingapp.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/onBoardingFragment3"
+        android:name="android.project.shoppingapp.ui.authentication.onboarding.OnBoardingFragment"
+        android:label="OnBoardingFragment" >
+        <action
+            android:id="@+id/action_onBoardingFragment3_to_authorizationFragment3"
+            app:destination="@id/authorizationFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="android.project.shoppingapp.ui.productdetail.ProductDetailFragment"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail" />
 </navigation>
-

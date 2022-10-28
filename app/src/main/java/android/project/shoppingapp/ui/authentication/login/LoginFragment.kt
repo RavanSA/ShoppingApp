@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentLoginBinding
+import android.project.shoppingapp.ui.splash.viewmodel.SplashScreenEvent
 import android.project.shoppingapp.utils.*
-import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -42,6 +42,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initListeners()
         isFormValid()
         registerUser()
@@ -67,7 +68,7 @@ class LoginFragment : Fragment() {
 //                                ActivityNavGraph.startApplicationFlow(
 //                                    requireActivity(), requireContext()
 //                                )
-                                navController.navigate(R.id.action_authorizationFragment_to_productFragment)
+                                navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
 
                             }
                             is Resources.Loading -> {

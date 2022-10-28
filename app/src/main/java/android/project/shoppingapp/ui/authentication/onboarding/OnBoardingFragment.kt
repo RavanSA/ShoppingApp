@@ -76,7 +76,7 @@ class OnBoardingFragment : Fragment() {
 
         binding.onBoardingSkipButton.setOnClickListener {
             navController.navigate(
-                R.id.action_onBoardingFragment_to_authorizationFragment
+                R.id.action_onBoardingFragment3_to_authorizationFragment3
             )
         }
     }
@@ -134,7 +134,7 @@ class OnBoardingFragment : Fragment() {
                     }
 
                     navController.navigate(
-                        R.id.action_onBoardingFragment_to_authorizationFragment
+                        R.id.action_onBoardingFragment3_to_authorizationFragment3
                     )
                 }
             } else {

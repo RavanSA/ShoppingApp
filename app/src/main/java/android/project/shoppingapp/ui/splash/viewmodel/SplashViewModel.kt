@@ -17,7 +17,6 @@ class SplashViewModel @Inject constructor(
     private val _authEvent: MutableSharedFlow<SplashScreenEvent> = MutableSharedFlow()
     val authEvent: SharedFlow<SplashScreenEvent> = _authEvent
 
-    private var _firstTime: Boolean = false
 //    val firstTime: SharedFlow<Boolean> = _firstTime
 
     init {
@@ -30,21 +29,15 @@ class SplashViewModel @Inject constructor(
                 _authEvent.emit(SplashScreenEvent.RedirectToApplicationFlow)
             } else {
                 dataStoreManager.firstTimeLogin.collect { isFirsTimeLogin ->
-                    if(isFirsTimeLogin) {
-                        _authEvent.emit(SplashScreenEvent.RedirectToOnBoardingScreen)
-                    } else {
+                    Log.d("FIRSTTIME", isFirsTimeLogin.toString())
+                    if (!isFirsTimeLogin) {
+                        Log.d("INIFVIEWMODEL", isFirsTimeLogin.toString())
                         _authEvent.emit(SplashScreenEvent.RedirectToRegistrationFlow)
+                    } else {
+                        _authEvent.emit(SplashScreenEvent.RedirectToOnBoardingScreen)
                     }
                 }
             }
         }
     }
-
-    private fun isUserFirstTimeOpenApp() = viewModelScope.launch {
-        dataStoreManager.firstTimeLogin.collect { isFirstTimeLogin ->
-            _firstTime = isFirstTimeLogin
-        }
-    }
-
 }
-

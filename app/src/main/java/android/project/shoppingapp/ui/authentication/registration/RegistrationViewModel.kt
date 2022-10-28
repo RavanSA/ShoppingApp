@@ -82,4 +82,6 @@ class RegistrationViewModel @Inject constructor(
         dataStoreManager.updateUserAuthentication(true)
     }
 
+
+
 }

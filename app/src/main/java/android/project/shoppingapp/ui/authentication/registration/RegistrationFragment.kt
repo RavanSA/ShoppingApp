@@ -10,7 +10,6 @@ import android.project.shoppingapp.databinding.FragmentRegistrationBinding
 import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.LoadingDialog
 import android.project.shoppingapp.utils.Resources
-import android.project.shoppingapp.utils.navgraph.ActivityNavGraph
 import android.project.shoppingapp.utils.showCustomDialog
 import android.util.Log
 import android.widget.Toast
@@ -72,7 +71,7 @@ class RegistrationFragment : Fragment() {
 //                                    requireActivity(),
 //                                    requireContext()
 //                                )
-                                navController.navigate(R.id.action_authorizationFragment_to_productFragment)
+                                navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
 
                             }
                             is Resources.Loading -> {
