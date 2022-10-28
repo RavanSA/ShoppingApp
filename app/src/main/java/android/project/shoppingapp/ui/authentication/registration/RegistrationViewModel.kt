@@ -1,7 +1,7 @@
 package android.project.shoppingapp.ui.authentication.registration
 
 import android.project.shoppingapp.data.local.DataStoreManager
-import android.project.shoppingapp.data.repository.AuthRepository
+import android.project.shoppingapp.data.repository.firebase.AuthRepository
 import android.project.shoppingapp.utils.Resources
 import android.util.Log
 import android.util.Patterns
