@@ -93,9 +93,6 @@ dependencies {
     //Viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
-    //Indicator-3rd party library
-    implementation 'me.relex:circleindicator:2.1.6'
-
     //Lottie
     implementation "com.airbnb.android:lottie:5.2.0"
 
@@ -104,5 +101,9 @@ dependencies {
 
     //Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:29.0.0')
+
+    //Swipe Refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
 
 }

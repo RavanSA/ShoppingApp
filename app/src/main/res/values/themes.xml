@@ -21,4 +21,13 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+
+    <style name="ChipTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@android:color/transparent</item>
+        <item name="tabBackground">@drawable/tab_selector</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+
+
 </resources>

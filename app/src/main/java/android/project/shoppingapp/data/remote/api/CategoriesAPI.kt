@@ -9,7 +9,7 @@ import retrofit2.http.Path
 interface CategoriesAPI {
 
     @GET("products/categories")
-    suspend fun getAllCategories() : List<CategoriesDTO>
+    suspend fun getAllCategories() : CategoriesDTO
 
     @GET("products/category/{category}")
     suspend fun getProductsByCategory(@Path(value = "category") category : String) : List<ProductsDTOItem>

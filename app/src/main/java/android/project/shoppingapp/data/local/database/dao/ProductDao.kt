@@ -14,13 +14,13 @@ import kotlinx.coroutines.flow.Flow
 interface ProductsDao : BaseDao<ProductsEntity> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-   suspend fun insertProduct(product: ProductsEntity)
+   suspend fun insertProducts(products: List<ProductsEntity>)
 
     @Query("SELECT * FROM ${Constants.TABLE_PRODUCT}")
-    fun getAllProducts(): Flow<List<ProductsEntity>>
+    suspend fun getAllProducts(): List<ProductsEntity>
 
     @Query("DELETE FROM ${Constants.TABLE_PRODUCT}")
-    suspend fun deleteAll()
+    suspend fun clearProductsCache()
 
     @Query("SELECT * FROM ${Constants.TABLE_PRODUCT} WHERE  id = :productId")
     fun getProductById(productId: Int): Flow<ProductsEntity?>

@@ -9,6 +9,7 @@ import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentSearchBinding
 import android.project.shoppingapp.ui.products.adapter.NewProductsLists
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
+import android.project.shoppingapp.ui.search.adapters.SearchAdapter
 import android.project.shoppingapp.ui.search.viewmodel.SearchViewModel
 import android.project.shoppingapp.utils.Resources
 import android.util.Log
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -40,6 +42,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeCategories()
+        subscribeProducts()
     }
 
 
@@ -50,9 +53,26 @@ class SearchFragment : Fragment() {
                     when (categories) {
                         is Resources.Success -> {
                             categories.data?.map { category ->
-                                val chip = Chip(requireContext())
-                                chip.text = category.toString()
-                                binding.productsChipGroup.addView(chip)
+                                binding.tabLayout.addTab(
+                                    binding.tabLayout.newTab().setText(category)
+                                )
+                                binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                                    override fun onTabSelected(tab: TabLayout.Tab?) {
+                                        Log.d("ONTABSELECTED", tab?.text.toString())
+                                        searchViewModel.getProductsByCategory(tab?.text.toString())
+                                    }
+
+                                    override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                                    }
+
+                                    override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                                    }
+                                })
+//                                val chip = Chip(requireContext())
+//                                chip.text = category.toString()
+//                                binding.productsChipGroup.addView(chip)
                             }
                         }
                         is Resources.Loading -> {}
@@ -63,4 +83,27 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
+
+    private fun subscribeProducts() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchViewModel.productsState.collect { products ->
+                    when (products) {
+                        is Resources.Success -> {
+                            val adapterSearch = SearchAdapter()
+                            adapterSearch.differ.submitList(
+                                products.data
+                            )
+                            binding.rvSearchProducts.adapter = adapterSearch
+                        }
+                        is Resources.Loading -> {}
+                        is Resources.Error -> {}
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
 }

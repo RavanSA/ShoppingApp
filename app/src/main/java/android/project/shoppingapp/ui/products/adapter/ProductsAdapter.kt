@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.products.adapter
 
+import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.databinding.ProductItemListBinding
 import android.util.Log
@@ -14,15 +15,15 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
 
 
 
-    private val callback = object : DiffUtil.ItemCallback<ProductsDTOItem>() {
-        override fun areItemsTheSame(oldItem: ProductsDTOItem, newItem: ProductsDTOItem): Boolean {
+    private val callback = object : DiffUtil.ItemCallback<Products>() {
+        override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
             Log.d("ADAPTERITEM1", oldItem.toString())
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ProductsDTOItem,
-            newItem: ProductsDTOItem
+            oldItem: Products,
+            newItem: Products
         ): Boolean {
             Log.d("ADAPTERITEM2", oldItem.toString())
             return oldItem == newItem
@@ -52,7 +53,7 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
     inner class ProductsViewHolder(private val binding: ProductItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(product: ProductsDTOItem) {
+        fun bindData(product: Products) {
             Log.d("VOEWHOLDER", product.toString())
             Glide.with(binding.itemImage)
                 .load(product.image)
@@ -60,8 +61,8 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
 
             binding.itemTitle.text = product.title
             binding.itemPrice.text = "USD ${product.price}"
-            binding.itemRating.text = "${product.rating.rate}"
-            binding.itemReview.text = "${product.rating.count} Reviews"
+            binding.itemRating.text = "${product.ratingCount}"
+            binding.itemReview.text = "${product.ratingRate} Reviews"
 
 
         }

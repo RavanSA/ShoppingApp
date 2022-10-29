@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.products.viewmodel
 
+import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.data.repository.categories.CategoriesRepository
 import android.project.shoppingapp.data.repository.products.ProductRepository
@@ -19,17 +20,20 @@ class ProductViewModel @Inject constructor(
     private val repository: ProductRepository
 ): ViewModel() {
 
-    private val _productsState: MutableStateFlow<Resources<List<ProductsDTOItem>>?> = MutableStateFlow(null)
-    val productsState: StateFlow<Resources<List<ProductsDTOItem>>?> = _productsState
+    private val _productsState: MutableStateFlow<Resources<List<Products>>?> = MutableStateFlow(null)
+    val productsState: StateFlow<Resources<List<Products>>?> = _productsState
 
     init {
         getProducts()
     }
 
-    private fun getProducts() {
+
+    fun getProducts(
+        getProductsFromRemote: Boolean = false
+    ) {
         viewModelScope.launch {
-            repository.getProducts().collect { products ->
-                Log.d("PRODUCTS", products.data.toString())
+            repository.getProducts(getProductsFromRemote).collect { products ->
+                Log.d("PRODUCTS", products?.data.toString())
                 _productsState.value = products
             }
         }

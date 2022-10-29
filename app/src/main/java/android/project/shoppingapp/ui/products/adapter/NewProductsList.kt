@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.products.adapter
 
+import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.databinding.NewProductListBinding
 import android.project.shoppingapp.databinding.ProductItemListBinding
@@ -15,14 +16,14 @@ class NewProductsLists : RecyclerView.Adapter<NewProductsLists.NewProductsViewHo
 
 
 
-    private val callback = object : DiffUtil.ItemCallback<ProductsDTOItem>() {
-        override fun areItemsTheSame(oldItem: ProductsDTOItem, newItem: ProductsDTOItem): Boolean {
+    private val callback = object : DiffUtil.ItemCallback<Products>() {
+        override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ProductsDTOItem,
-            newItem: ProductsDTOItem
+            oldItem: Products,
+            newItem: Products
         ): Boolean {
             return oldItem == newItem
         }
@@ -50,7 +51,7 @@ class NewProductsLists : RecyclerView.Adapter<NewProductsLists.NewProductsViewHo
     inner class NewProductsViewHolder(private val binding: NewProductListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindImage(product: ProductsDTOItem) {
+        fun bindImage(product: Products) {
             Log.d("VOEWHOLDER", product.toString())
             Glide.with(binding.newItemImageView)
                 .load(product.image)

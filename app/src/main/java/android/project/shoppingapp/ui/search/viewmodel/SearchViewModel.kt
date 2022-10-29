@@ -19,8 +19,11 @@ class SearchViewModel @Inject constructor(
     private val categoryRepository: CategoriesRepository
 ) :ViewModel() {
 
-    private val _categoriesState: MutableStateFlow<Resources<List<CategoriesDTO>>?> = MutableStateFlow(null)
-    val categoriesState: StateFlow<Resources<List<CategoriesDTO>>?> = _categoriesState
+    private val _categoriesState: MutableStateFlow<Resources<CategoriesDTO>?> = MutableStateFlow(null)
+    val categoriesState: StateFlow<Resources<CategoriesDTO>?> = _categoriesState
+
+    private val _productsState: MutableStateFlow<Resources<List<ProductsDTOItem>>?> = MutableStateFlow(null)
+    val productsState: StateFlow<Resources<List<ProductsDTOItem>>?> = _productsState
 
 
     init {
@@ -31,6 +34,12 @@ class SearchViewModel @Inject constructor(
         categoryRepository.getAllCategories().collect { categories ->
             Log.d("CATEGORIES", categories.toString())
             _categoriesState.value = categories
+        }
+    }
+
+    fun getProductsByCategory(category: String) = viewModelScope.launch {
+        categoryRepository.getProductsByCategory(category).collect { products ->
+            _productsState.value = products
         }
     }
 

@@ -1,17 +1,16 @@
 package android.project.shoppingapp.ui.products
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentProductBinding
 import android.project.shoppingapp.ui.products.adapter.NewProductsLists
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.products.viewmodel.ProductViewModel
 import android.project.shoppingapp.utils.Resources
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +18,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -42,8 +43,21 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
+        onRefresh()
         subscribeProductList()
     }
+
+    //
+    private fun onRefresh() {
+        binding.swiperefresh.setOnRefreshListener {
+            lifecycleScope.launch {
+                productViewModel.getProducts(true)
+                delay(2000L)
+                binding.swiperefresh.isRefreshing = false
+            }
+        }
+    }
+
 
     private fun subscribeProductList() {
         lifecycleScope.launch {
@@ -52,14 +66,14 @@ class ProductFragment : Fragment() {
                     when (products) {
                         is Resources.Success -> {
 
-                            binding.rvHourlyList.layoutManager =
-                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            //       binding.rvHourlyList.layoutManager =
+                            //         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                             val adapterNewItem = NewProductsLists()
                             adapterNewItem.differ.submitList(
                                 products.data
                                     ?.shuffled()?.take(10)
                             )
-                            binding.rvHourlyList.adapter = adapterNewItem
+//                            binding.rvHourlyList.adapter = adapterNewItem
                             Log.d("PRODUCTS", products.data.toString())
                             val adapter = ProductsAdapter()
 

@@ -23,13 +23,13 @@ class CategoriesRepositoryImpl@Inject constructor(
 ) : CategoriesRepository {
 
 
-    override fun getAllCategories(): Flow<Resources<List<CategoriesDTO>>> = flow {
-        emit(Resources.Loading<List<CategoriesDTO>>(true))
+    override fun getAllCategories(): Flow<Resources<CategoriesDTO>> = flow {
+        emit(Resources.Loading<CategoriesDTO>(true))
         val categories = api.getAllCategories()
-        emit(Resources.Success<List<CategoriesDTO>>(data = categories))
+        emit(Resources.Success<CategoriesDTO>(data = categories))
     }.catch { error ->
         Log.d("CATEGORIES", error.toString())
-        emit(Resources.Error<List<CategoriesDTO>>(error.message.toString()))
+        emit(Resources.Error<CategoriesDTO>(error.message.toString()))
     }.flowOn(Dispatchers.IO)
 
 

@@ -20,6 +20,10 @@ data class ProductsEntity(
     val image: String,
     @ColumnInfo(name="price")
     val price: Double,
+    @ColumnInfo(name="ratingCount")
+    val ratingCount: Int,
+    @ColumnInfo(name = "ratingRate")
+    val ratingRate: Double,
     @ColumnInfo(name="title")
     val title: String
 )
