@@ -13,4 +13,7 @@ interface ProductRepository {
 
     fun getProductById(productId: Int): Flow<Resources<ProductDTO>>
 
+    fun getProductsBySearchFilters(category: String?, searchQuery: String) : Flow<List<Products>>
+
+
 }

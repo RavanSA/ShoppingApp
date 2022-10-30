@@ -71,6 +71,16 @@ class ProductRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
+    override fun getProductsBySearchFilters(
+        category: String?,
+        searchQuery: String
+    ): Flow<List<Products>> {
+        return productDao.getProductsdBySearchFilters(
+            category = category,
+            searchQuery = searchQuery
+        )
+    }
+
     override fun getProductById(productId: Int): Flow<Resources<ProductDTO>> = flow {
         emit(Resources.Loading<ProductDTO>(true))
         val products = api.getProduct(productId)

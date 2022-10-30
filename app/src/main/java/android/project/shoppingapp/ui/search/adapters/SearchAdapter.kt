@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.search.adapters
 
+import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.databinding.SearchItemListBinding
 import android.view.LayoutInflater
@@ -11,12 +12,12 @@ import com.bumptech.glide.Glide
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
-    private val callback = object : DiffUtil.ItemCallback<ProductsDTOItem>() {
-        override fun areItemsTheSame(oldItem: ProductsDTOItem, newItem: ProductsDTOItem): Boolean {
+    private val callback = object : DiffUtil.ItemCallback<Products>() {
+        override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ProductsDTOItem, newItem: ProductsDTOItem): Boolean {
+        override fun areContentsTheSame(oldItem: Products, newItem: Products): Boolean {
             return oldItem == newItem
         }
 
@@ -24,16 +25,16 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     val differ = AsyncListDiffer(this,callback)
 
-    private var onItemClickListener : ((ProductsDTOItem)-> Unit) = {}
+    private var onItemClickListener : ((Products)-> Unit) = {}
 
-    fun setOnItemClickListener(listener : (ProductsDTOItem)-> Unit){
+    fun setOnItemClickListener(listener : (Products)-> Unit){
         onItemClickListener = listener
     }
 
 
     inner class SearchViewHolder(private val binding : SearchItemListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(shopItem: ProductsDTOItem){
+        fun bindData(shopItem: Products){
 
             Glide.with(binding.searchItemImage)
                 .load(shopItem.image)
@@ -41,8 +42,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
             binding.searchItemTitle.text = shopItem.title
             binding.searchItemPrice.text = "USD ${shopItem.price}"
-            binding.searchItemRating.text = "${shopItem.rating.rate}"
-            binding.searchItemReview.text = "${shopItem.rating.count} Reviews"
+            binding.searchItemRating.text = "${shopItem.ratingRate}"
+            binding.searchItemReview.text = "${shopItem.ratingCount} Reviews"
 
             binding.searchItemView.setOnClickListener {
                 onItemClickListener(shopItem)
