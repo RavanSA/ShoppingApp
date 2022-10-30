@@ -8,4 +8,8 @@ object Constants {
 
     const val ERROR_DIALOG = "error"
 
+    const val TABLE_PRODUCT = "products"
+
+    const val TABLE_CATEGORIES = "categories"
+
 }

@@ -1,6 +1,6 @@
-package android.project.shoppingapp.data.repository.impl
+package android.project.shoppingapp.data.repository.firebase.impl
 
-import android.project.shoppingapp.data.repository.AuthRepository
+import android.project.shoppingapp.data.repository.firebase.AuthRepository
 import android.project.shoppingapp.utils.Resources
 import android.project.shoppingapp.utils.firebase.await
 import com.google.firebase.auth.FirebaseAuth

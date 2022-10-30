@@ -1,4 +1,4 @@
-package android.project.shoppingapp.data.repository
+package android.project.shoppingapp.data.repository.firebase
 
 import android.project.shoppingapp.utils.Resources
 import com.google.firebase.auth.FirebaseUser
