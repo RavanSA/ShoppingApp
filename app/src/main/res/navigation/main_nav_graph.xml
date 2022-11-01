@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_productFragment2_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <argument
+            android:name="productId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment3"
@@ -60,4 +63,11 @@
         android:name="android.project.shoppingapp.ui.productdetail.ProductDetailFragment"
         android:label="fragment_product_detail"
         tools:layout="@layout/fragment_product_detail" />
+    <dialog
+        android:id="@+id/basketBottomSheet"
+        android:name="android.project.shoppingapp.ui.basket.BasketBottomSheet"
+        android:label="BasketBottomSheet" />
+
+    <action android:id="@+id/actionGlobalBasketBottomSheet" app:destination="@id/basketBottomSheet"/>
+
 </navigation>

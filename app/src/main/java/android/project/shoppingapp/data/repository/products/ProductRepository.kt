@@ -11,7 +11,7 @@ interface ProductRepository {
 
     fun getProducts(fetchProductListFromRemote: Boolean): Flow<Resources<List<Products>>?>
 
-    fun getProductById(productId: Int): Flow<Resources<ProductDTO>>
+    fun getProductById(productId: Int): Flow<Resources<Products>>
 
     fun getProductsBySearchFilters(category: String?, searchQuery: String) : Flow<List<Products>>
 

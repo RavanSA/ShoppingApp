@@ -1,9 +1,10 @@
-package android.project.shoppingapp.utils
+package android.project.shoppingapp.utils.customui
 
 import android.app.Dialog
 import android.content.Context
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.CustomErrorDialogBinding
+import android.project.shoppingapp.utils.Constants
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.core.content.ContextCompat

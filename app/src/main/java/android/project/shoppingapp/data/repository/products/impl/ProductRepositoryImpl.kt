@@ -3,8 +3,6 @@ package android.project.shoppingapp.data.repository.products.impl
 import android.project.assignmentweek5.data.local.database.AppDatabase
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.ProductsAPI
-import android.project.shoppingapp.data.remote.api.dto.products.ProductDTO
-import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.data.remote.api.mapper.toProducts
 import android.project.shoppingapp.data.remote.api.mapper.toProductsEntity
 import android.project.shoppingapp.data.repository.products.ProductRepository
@@ -17,6 +15,7 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
+
 
 class ProductRepositoryImpl @Inject constructor(
     private val api: ProductsAPI,
@@ -67,7 +66,7 @@ class ProductRepositoryImpl @Inject constructor(
         productDao.getAllProducts().map { it.toProducts() }
         ))
     }.catch { error ->
-        emit(Resources.Error<List<Products>>("Error Occurred $error"))
+        emit(Resources.Error<List<Products>>(error.message.toString()))
     }.flowOn(Dispatchers.IO)
 
 
@@ -81,12 +80,17 @@ class ProductRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getProductById(productId: Int): Flow<Resources<ProductDTO>> = flow {
-        emit(Resources.Loading<ProductDTO>(true))
+    override fun getProductById(productId: Int): Flow<Resources<Products>> = flow {
+        emit(Resources.Loading<Products>(true))
+
         val products = api.getProduct(productId)
-        emit(Resources.Success<ProductDTO>(data = products))
+
+        emit(Resources.Success<Products>(
+            data = products.toProducts()
+        )
+        )
     }.catch { error ->
-        emit(Resources.Error<ProductDTO>(error.message.toString()))
+        emit(Resources.Error<Products>(error.message.toString()))
     }.flowOn(Dispatchers.IO)
 
 

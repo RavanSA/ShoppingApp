@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentRegistrationBinding
 import android.project.shoppingapp.utils.Constants
-import android.project.shoppingapp.utils.LoadingDialog
+import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.Resources
-import android.project.shoppingapp.utils.showCustomDialog
+import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -22,7 +21,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/modalBasketTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shopping Cart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_x_x_large_title"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/barrierToolBar"
+            app:layout_constraintEnd_toStartOf="@id/cartClearAll"
+            />
+
+        <ImageView
+            android:id="@+id/cartClearAll"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_remove_24" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierAllowsGoneWidgets="false"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="cartClearAll, modalBasketTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBasket"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrierToolBar"
+            app:layout_constraintBottom_toTopOf="@id/cart_checkout"
+            tools:itemCount="5"
+            tools:listitem="@layout/basket_item" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/cart_checkout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="Proceed to Checkout"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textAlignment="viewStart"
+            android:paddingStart="32dp"
+            app:icon="@drawable/ic_baseline_arrow_forward_ios_24"
+            app:iconTint="@color/white"
+            app:iconGravity="end"
+            android:paddingEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/cart_items_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:text="Total 5 items"
+            app:layout_constraintBottom_toTopOf="@+id/cart_checkout"
+            app:layout_constraintStart_toStartOf="@+id/cart_checkout" />
+
+        <TextView
+            android:id="@+id/cart_items_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="100$"
+            app:layout_constraintBottom_toTopOf="@+id/cart_checkout"
+            app:layout_constraintEnd_toEndOf="@+id/cart_checkout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

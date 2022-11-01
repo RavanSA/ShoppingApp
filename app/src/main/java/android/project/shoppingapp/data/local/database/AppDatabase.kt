@@ -1,18 +1,22 @@
 package android.project.assignmentweek5.data.local.database
 
 import android.content.Context
+import android.project.shoppingapp.data.local.database.dao.BasketDao
 import android.project.shoppingapp.data.local.database.dao.CategoryDao
 import android.project.shoppingapp.data.local.database.dao.ProductsDao
+import android.project.shoppingapp.data.local.database.entity.BasketEntity
 import android.project.shoppingapp.data.local.database.entity.CategoryEntity
 import android.project.shoppingapp.data.local.database.entity.ProductsEntity
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ProductsEntity::class, CategoryEntity::class], version = 1)
+@Database(entities = [ProductsEntity::class,
+    CategoryEntity::class, BasketEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductsDao
     abstract fun categoriesDao(): CategoryDao
+    abstract fun basketDao(): BasketDao
 
     companion object {
         @Volatile
