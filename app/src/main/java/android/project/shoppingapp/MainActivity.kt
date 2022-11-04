@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.project.shoppingapp.databinding.ActivityMainBinding
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,4 +44,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun hideBottomNav(visible: Boolean) {
+        binding.bottomNavigationView.isVisible = visible
+    }
+
 }

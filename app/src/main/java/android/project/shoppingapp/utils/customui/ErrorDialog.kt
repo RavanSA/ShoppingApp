@@ -3,6 +3,7 @@ package android.project.shoppingapp.utils.customui
 import android.app.Dialog
 import android.content.Context
 import android.project.shoppingapp.R
+import android.project.shoppingapp.databinding.CustomAlertDialogBinding
 import android.project.shoppingapp.databinding.CustomErrorDialogBinding
 import android.project.shoppingapp.utils.Constants
 import android.view.LayoutInflater
@@ -35,3 +36,8 @@ fun showCustomDialog(title: String, status: String, context: Context) {
     dialog.show()
 
 }
+
+
+
+
+

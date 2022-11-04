@@ -42,5 +42,7 @@ interface BasketDao {
     suspend fun deleteBasketItemById(productId: Int)
 
 
+    @Query("DELETE FROM ${Constants.TABLE_BASKET}")
+    suspend fun deleteBasket()
 
 }

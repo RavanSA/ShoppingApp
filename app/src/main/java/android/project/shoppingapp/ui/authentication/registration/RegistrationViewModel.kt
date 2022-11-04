@@ -7,7 +7,9 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,6 +76,7 @@ class RegistrationViewModel @Inject constructor(
      fun signupUser() = viewModelScope.launch {
         _signup.value = Resources.Loading(true)
             val result = repository.register(_username.value, _email.value, _password.value)
+
             _signup.value = result
      }
 

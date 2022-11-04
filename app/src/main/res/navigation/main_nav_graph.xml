@@ -44,7 +44,11 @@
         android:id="@+id/profileFragment3"
         android:name="android.project.shoppingapp.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment3_to_authorizationFragment3"
+            app:destination="@id/authorizationFragment3" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment3"
         android:name="android.project.shoppingapp.ui.search.SearchFragment"
@@ -66,7 +70,11 @@
     <dialog
         android:id="@+id/basketBottomSheet"
         android:name="android.project.shoppingapp.ui.basket.BasketBottomSheet"
-        android:label="BasketBottomSheet" />
+        android:label="BasketBottomSheet" >
+        <action
+            android:id="@+id/action_basketBottomSheet_to_productFragment2"
+            app:destination="@id/productFragment2" />
+    </dialog>
 
     <action android:id="@+id/actionGlobalBasketBottomSheet" app:destination="@id/basketBottomSheet"/>
 

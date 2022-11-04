@@ -1,14 +1,11 @@
 package android.project.shoppingapp.ui.basket
 
 import android.project.shoppingapp.data.local.database.entity.BasketEntity
-import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.repository.cartrepository.CartRepository
-import android.project.shoppingapp.utils.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -62,6 +59,10 @@ class BottomSheetViewModel @Inject constructor(
 
     fun deleteItemFromBasket(productId: Int) = viewModelScope.launch {
         cartRepository.deleteBasketItemById(productId)
+    }
+
+    fun deleteAllProductFromBasket() = viewModelScope.launch {
+        cartRepository.deleteBasket()
     }
 
 }

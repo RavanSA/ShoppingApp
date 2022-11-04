@@ -17,4 +17,7 @@ interface CartRepository {
 
     suspend fun deleteBasketItemById(productId: Int)
 
+    suspend fun deleteBasket()
+
+
 }

@@ -1,60 +1,102 @@
 package android.project.shoppingapp.ui.profile
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
+import android.project.shoppingapp.MainActivity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
+import android.project.shoppingapp.databinding.ActivityMainBinding
+import android.project.shoppingapp.databinding.CustomAlertDialogBinding
+import android.project.shoppingapp.databinding.FragmentProfileBinding
+import android.project.shoppingapp.ui.products.adapter.NewProductsLists
+import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
+import android.project.shoppingapp.utils.Constants
+import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.customui.showCustomDialog
+import android.util.Log
+import android.view.Window
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val viewModel: ProfileViewModel by viewModels<ProfileViewModel>()
+    lateinit var binding: FragmentProfileBinding
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
+        subscribeProductList()
+        binding.profileLogout.setOnClickListener {
+            showAlertDialog(requireContext())
+        }
+    }
+
+    private fun subscribeProductList() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.profileInfo.collect { profileState ->
+                    when (profileState) {
+                        is ProfileState.Success -> {
+                            binding.profileName.text = profileState.user.username
+                            binding.profileEmail.text = profileState.user.email
+                        }
+                        is ProfileState.Error -> {}
+                        is ProfileState.Loading -> {}
+                        else -> {}
+                    }
                 }
             }
+        }
     }
+
+    fun showAlertDialog( context: Context) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        val binding = CustomAlertDialogBinding
+            .inflate(LayoutInflater.from(context))
+
+        with(binding) {
+            tvErrorDialog.text = "Are you sure to logout?"
+            btnYes.setOnClickListener {
+                navController.navigate(R.id.action_profileFragment3_to_authorizationFragment3)
+                viewModel.logout()
+                dialog.dismiss()
+                (requireActivity() as MainActivity).hideBottomNav(false)
+            }
+            btnNo.setOnClickListener {
+                dialog.dismiss()
+            }
+            ivErrorDialog.setImageDrawable(
+                ContextCompat.getDrawable(context, R.drawable.ic_baseline_info_24)
+            )
+        }
+        dialog.setContentView(binding.root)
+        dialog.show()
+
+    }
+
+
 }

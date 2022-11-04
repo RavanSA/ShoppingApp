@@ -36,4 +36,8 @@ class CartRepositoryImpl @Inject constructor(
         return dao.deleteBasketItemById(productId)
     }
 
+    override suspend fun deleteBasket() {
+        return dao.deleteBasket()
+    }
+
 }
