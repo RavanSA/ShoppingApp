@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -49,6 +50,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/bg_rounded_corner"
                 app:layout_constraintStart_toStartOf="@+id/cart_item_price"
                 app:layout_constraintTop_toBottomOf="@+id/cart_item_price"
                 app:srcCompat="@drawable/ic_baseline_remove_24" />
@@ -58,6 +60,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="16dp"
+                android:background="@drawable/bg_rounded_corner"
                 app:layout_constraintStart_toEndOf="@+id/cart_item_quantity"
                 app:layout_constraintTop_toTopOf="@+id/cart_item_minus"
                 app:srcCompat="@drawable/ic_baseline_add_24" />
@@ -66,11 +69,12 @@
                 android:id="@+id/cart_item_delete"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:background="@drawable/bg_rounded_corner"
                 app:layout_constraintBottom_toBottomOf="@+id/cart_item_plus"
                 app:layout_constraintEnd_toEndOf="@+id/cart_item_price"
                 app:layout_constraintTop_toTopOf="@+id/cart_item_plus"
-                app:srcCompat="@drawable/ic_baseline_remove_24"
-                app:tint="@color/colorPrimary" />
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/cart_item_quantity"

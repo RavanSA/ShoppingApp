@@ -48,7 +48,7 @@ class ProductFragment : Fragment(), ProductListener {
         onRefresh()
         subscribeProductList()
         observeBasketAmount()
-        binding.productCart.setOnClickListener {
+        binding.ivProductCart.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
         }
     }

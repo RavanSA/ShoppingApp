@@ -1,18 +1,13 @@
 package android.project.shoppingapp.ui.productdetail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.project.shoppingapp.data.model.Products
+import android.project.shoppingapp.databinding.FragmentProductDetailBinding
+import android.project.shoppingapp.utils.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.project.shoppingapp.R
-import android.project.shoppingapp.data.model.Products
-import android.project.shoppingapp.databinding.FragmentProductBinding
-import android.project.shoppingapp.databinding.FragmentProductDetailBinding
-import android.project.shoppingapp.ui.products.adapter.NewProductsLists
-import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
-import android.project.shoppingapp.utils.Resources
-import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +39,7 @@ class ProductDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         subscribeProductDetail()
+        navigateToBack()
     }
 
     private fun subscribeProductDetail() {
@@ -52,15 +48,15 @@ class ProductDetailFragment : Fragment() {
                 productDetailViewModel.productState.collect { product ->
                     when (product) {
                         is Resources.Success -> {
-                            binding.productDetailPrice.text = product.data?.price.toString()
-                            binding.productDetailTitle.text = product.data?.title.toString()
-                            binding.productDetailRating.text = product.data?.ratingRate.toString()
-                            binding.productDetailDescription.text =
+                            binding.tvProductPrice.text = product.data?.price.toString()
+                            binding.tvProductTitle.text = product.data?.title.toString()
+                            binding.tvProductRating.text = product.data?.ratingRate.toString()
+                            binding.tvProductDescription.text =
                                 product.data?.description.toString()
-                            binding.productDetailReviews.text = product.data?.ratingCount.toString()
+                            binding.tvProductReview.text = product.data?.ratingCount.toString()
                             Glide.with(this@ProductDetailFragment)
                                 .load(product.data?.image)
-                                .into(binding.productDetailImage)
+                                .into(binding.ivProductImage)
                             product.data?.let { getProductQuantity(it) }
                         }
                         is Resources.Loading -> {}
@@ -76,17 +72,25 @@ class ProductDetailFragment : Fragment() {
     private fun getProductQuantity(product: Products) {
         lifecycleScope.launch {
             productDetailViewModel.productQuantity.collect { quantity ->
-                binding.cartItemQuantity.text = quantity?.toString() ?: "0"
-                binding.productDetailAddToCart.setOnClickListener {
+                binding.tvProductQuantity.text = quantity?.toString() ?: "0"
+                if (quantity == 0 || quantity == null) {
+                    binding.groupQuantitySettings.visibility = View.GONE
+                    binding.btnAddtoCart.visibility = View.VISIBLE
+                } else {
+                    binding.groupQuantitySettings.visibility = View.VISIBLE
+                    binding.btnAddtoCart.visibility = View.GONE
+                }
+                binding.btnAddtoCart.setOnClickListener {
                     if (quantity == 0 || quantity == null) {
                         addToCart(product)
+                    } else {
                     }
                 }
-                binding.cartItemPlus.setOnClickListener {
+                binding.btnPlus.setOnClickListener {
                     increaseProductQuantity(product.id)
                 }
-                binding.cartItemMinus.setOnClickListener {
-                    if(quantity != 0) decreaseProductQuantity(product.id)
+                binding.btnMinus.setOnClickListener {
+                    if (quantity != 0) decreaseProductQuantity(product.id)
                 }
             }
         }
@@ -105,9 +109,10 @@ class ProductDetailFragment : Fragment() {
     }
 
 
-
     fun navigateToBack() {
-        navController.popBackStack()
+        binding.ivBackButton.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
 }

@@ -1,8 +1,11 @@
 package android.project.shoppingapp.ui.search
 
 import android.os.Bundle
+import android.project.shoppingapp.R
+import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.FragmentSearchBinding
 import android.project.shoppingapp.ui.search.adapters.SearchAdapter
+import android.project.shoppingapp.ui.search.adapters.SearchItemListener
 import android.project.shoppingapp.ui.search.viewmodel.SearchViewModel
 import android.project.shoppingapp.utils.Resources
 import android.util.Log
@@ -15,16 +18,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), SearchItemListener {
 
     private lateinit var binding: FragmentSearchBinding
     private val searchViewModel by viewModels<SearchViewModel>()
-
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +42,12 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
         subscribeCategories()
         subscribeProducts()
         categoriesCallBack()
-        binding.categoriesSearchView.setOnQueryTextListener(object :
+        observeBasketAmount()
+        binding.edSearchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextChange(p0: String?): Boolean {
                 searchViewModel.setSearchQuery(p0 ?: "")
@@ -51,6 +59,10 @@ class SearchFragment : Fragment() {
             }
 
         })
+
+        binding.ivSearchCart.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
+        }
     }
 
 
@@ -64,6 +76,7 @@ class SearchFragment : Fragment() {
                                 binding.tabLayout.addTab(
                                     binding.tabLayout.newTab().setText(category.category)
                                 )
+
                                 //
                                 //                               val chip = Chip(requireContext())
 //                                chip.text = category.toString()
@@ -98,11 +111,21 @@ class SearchFragment : Fragment() {
     }
 
 
+    private fun observeBasketAmount() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchViewModel.totalAmount.collect { amount ->
+                    binding.cartAmount.text = amount.toString() + "$"
+                }
+            }
+        }
+    }
+
     private fun subscribeProducts() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchViewModel.productsState.collect { products ->
-                    val adapterSearch = SearchAdapter()
+                    val adapterSearch = SearchAdapter(this@SearchFragment)
                     adapterSearch.differ.submitList(products)
                     binding.rvSearchProducts.adapter = adapterSearch
 
@@ -123,4 +146,9 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onClicked(product: Products) {
+        navController.navigate(R.id.action_searchFragment3_to_productDetailFragment, Bundle().apply {
+            putString("productId", product.id.toString())
+        })
+    }
 }

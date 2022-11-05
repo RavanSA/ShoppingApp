@@ -2,7 +2,7 @@ package android.project.shoppingapp.utils
 
 import android.content.Context
 
-//class Utils {
+class Utils {
 //    companion object {
 //        fun dpToPx(dp: Int): Int {
 //            return ((dp * Resources.getSystem().displayMetrics.density).toInt());
@@ -12,4 +12,4 @@ import android.content.Context
 //            return ((px / Resources.getSystem().displayMetrics.density).toInt());
 //        }
 //    }
-//}
+}

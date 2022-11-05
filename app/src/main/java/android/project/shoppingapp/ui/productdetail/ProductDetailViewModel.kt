@@ -28,7 +28,7 @@ class ProductDetailViewModel @Inject constructor(
     val productState: StateFlow<Resources<Products>?> = _productState
 
 //    private val _product: MutableStateFlow<Products?> = MutableStateFlow(null)
-    private val _productQuantity: MutableStateFlow<Int?> = MutableStateFlow(null)
+    private val _productQuantity: MutableStateFlow<Int?> = MutableStateFlow(0)
     val productQuantity: StateFlow<Int?> = _productQuantity
 
     init {
@@ -37,11 +37,6 @@ class ProductDetailViewModel @Inject constructor(
             getProductQuantity(productId.toInt())
         }
     }
-
-
-//    fun setProduct(product: Products) {
-//        _product.value = product
-//    }
 
     private fun getProductById(id: Int) = viewModelScope.launch {
         productRepository.getProductById(id).collect { product ->
@@ -68,11 +63,15 @@ class ProductDetailViewModel @Inject constructor(
 
 
     fun increaseProductQuantity(productId: Int) = viewModelScope.launch {
-        cartRepository.increaseProductQuantity(productId)
+        if(productQuantity.value != 0) {
+            cartRepository.increaseProductQuantity(productId)
+        }
     }
 
     fun decreaseProductQuantity(productId: Int) = viewModelScope.launch {
-        cartRepository.decreaseProductQuantity(productId)
+        if(productQuantity.value!! > 0) {
+            cartRepository.decreaseProductQuantity(productId)
+        }
     }
 
     private fun getProductQuantity(productId: Int) = viewModelScope.launch {

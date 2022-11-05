@@ -72,7 +72,7 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
                         showAlertDialog(requireContext())
                     }
 
-                    binding.cartItemsInfo.text = products?.size.toString()
+                    binding.cartItemsInfo.text = "Total ${products?.size.toString()} items"
                 }
 
 
@@ -83,7 +83,7 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
     private fun getTotalPrice() {
         lifecycleScope.launch {
             basketViewModel.totalAmount.collect { price ->
-                binding.cartItemsPrice.text = price.toString()
+                binding.cartItemsPrice.text = price.toString() + " USD"
             }
         }
     }

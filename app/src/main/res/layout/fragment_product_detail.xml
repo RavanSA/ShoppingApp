@@ -2,159 +2,171 @@
 <layout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/product_detail_add_to_cart"
+            android:layout_marginBottom="@dimen/margin_normal"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddtoCart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/margin_normal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/product_detail_price"
+                    android:id="@+id/tvProductPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    tools:text="USD 350"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/text_size_large_title"
                     app:layout_constraintStart_toStartOf="@+id/flImage"
-                    app:layout_constraintTop_toBottomOf="@+id/flImage" />
+                    app:layout_constraintTop_toBottomOf="@+id/flImage"
+                    tools:text="USD 1020" />
 
                 <TextView
-                    android:id="@+id/product_detail_title"
+                    android:id="@+id/tvProductTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    tools:text="TMA-2 HD WIRELESS"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/product_detail_price"
-                    app:layout_constraintTop_toBottomOf="@+id/product_detail_price" />
-
-                <TextView
-                    android:id="@+id/product_detail_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
-                    tools:text="4.8"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintStart_toEndOf="@+id/imageView9"
-                    app:layout_constraintTop_toBottomOf="@+id/product_detail_title" />
+                    android:textSize="@dimen/text_size_x_x_large_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tvProductPrice"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProductPrice"
+                    tools:text="Product Detail Title" />
 
                 <TextView
-                    android:id="@+id/product_detail_description"
+                    android:id="@+id/tvProductRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_tiny"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintStart_toEndOf="@+id/ivRatingIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProductTitle"
+                    tools:text="1.0" />
+
+                <TextView
+                    android:id="@+id/tvProductDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="24dp"
-                    tools:text="The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. \n\nThe speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. "
-                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginBottom="@dimen/margin_x_x_large"
+                    android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/product_detail_title"
-                    app:layout_constraintStart_toStartOf="@+id/imageView9"
-                    app:layout_constraintTop_toBottomOf="@+id/product_detail_rating" />
+                    app:layout_constraintEnd_toEndOf="@+id/tvProductTitle"
+                    app:layout_constraintStart_toStartOf="@+id/ivRatingIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProductRating" />
 
-            <FrameLayout
-                android:id="@+id/flImage"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/product_detail_image"
+                <FrameLayout
+                    android:id="@+id/flImage"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_height="@dimen/productDetailImageHeight"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivBackButton"
+                        android:layout_width="@dimen/btnRoundedCornerBackground"
+                        android:layout_height="@dimen/btnRoundedCornerBackground"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        tools:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+                    <ImageView
+                        android:id="@+id/ivProductImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/productDetailImageHeight"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                </FrameLayout>
 
                 <ImageView
-                    android:id="@+id/ivBackButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:background="@drawable/bg_rounded_corner"
-                    tools:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
-            </FrameLayout>
-                <ImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/product_detail_rating"
-                    app:layout_constraintStart_toStartOf="@+id/product_detail_title"
-                    app:layout_constraintTop_toBottomOf="@+id/product_detail_title"
+                    android:id="@+id/ivRatingIcon"
+                    android:layout_width="@dimen/btnRoundedCornerBackground"
+                    android:layout_height="@dimen/btnRoundedCornerBackground"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvProductRating"
+                    app:layout_constraintStart_toStartOf="@+id/tvProductTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProductTitle"
                     app:srcCompat="@drawable/ic_baseline_star_rate_24" />
 
                 <TextView
-                    android:id="@+id/product_detail_reviews"
+                    android:id="@+id/tvProductReview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    tools:text="234 Reviews"
+                    android:layout_marginStart="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintBottom_toBottomOf="@+id/product_detail_rating"
-                    app:layout_constraintStart_toEndOf="@+id/product_detail_rating"
-                    app:layout_constraintTop_toTopOf="@+id/product_detail_rating" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tvProductRating"
+                    app:layout_constraintStart_toEndOf="@+id/tvProductRating"
+                    app:layout_constraintTop_toTopOf="@+id/tvProductRating"
+                    tools:text="5 Reviews" />
+
+
+                <androidx.constraintlayout.widget.Group
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="btnMinus,btnPlus, tvProductQuantity"
+                    android:id="@+id/groupQuantitySettings" />
 
 
                 <ImageView
-                    android:id="@+id/cart_item_minus"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toStartOf="@+id/product_detail_description"
-                    app:layout_constraintTop_toBottomOf="@+id/product_detail_description"
+                    android:id="@+id/btnMinus"
+                    android:layout_width="@dimen/btnRoundedCornerBackground"
+                    android:layout_height="@dimen/btnRoundedCornerBackground"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:background="@drawable/bg_rounded_corner"
+                    app:layout_constraintStart_toStartOf="@+id/tvProductDescription"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProductDescription"
                     app:srcCompat="@drawable/ic_baseline_remove_24" />
 
                 <ImageView
-                    android:id="@+id/cart_item_plus"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/cart_item_quantity"
-                    app:layout_constraintTop_toTopOf="@+id/cart_item_minus"
+                    android:id="@+id/btnPlus"
+                    android:layout_width="@dimen/btnRoundedCornerBackground"
+                    android:layout_height="@dimen/btnRoundedCornerBackground"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:background="@drawable/bg_rounded_corner"
+                    app:layout_constraintStart_toEndOf="@+id/tvProductQuantity"
+                    app:layout_constraintTop_toTopOf="@+id/btnMinus"
                     app:srcCompat="@drawable/ic_baseline_add_24" />
 
                 <TextView
-                    android:id="@+id/cart_item_quantity"
+                    android:id="@+id/tvProductQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="1"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cart_item_minus"
-                    app:layout_constraintStart_toEndOf="@+id/cart_item_minus"
-                    app:layout_constraintTop_toTopOf="@+id/cart_item_minus" />
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:text="0"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_large_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnMinus"
+                    app:layout_constraintStart_toEndOf="@+id/btnMinus"
+                    app:layout_constraintTop_toTopOf="@+id/btnMinus" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddtoCart"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:id="@+id/product_detail_add_to_cart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
-            android:text="Add to Cart"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_x_large"
+            android:text="@string/btnProductDetailText"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

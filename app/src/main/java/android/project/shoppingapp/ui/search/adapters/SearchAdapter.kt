@@ -3,6 +3,7 @@ package android.project.shoppingapp.ui.search.adapters
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.databinding.SearchItemListBinding
+import android.project.shoppingapp.ui.products.adapter.ProductListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(
+    private val listener: SearchItemListener
+) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<Products>() {
         override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
@@ -27,9 +30,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     private var onItemClickListener : ((Products)-> Unit) = {}
 
-    fun setOnItemClickListener(listener : (Products)-> Unit){
-        onItemClickListener = listener
-    }
 
 
     inner class SearchViewHolder(private val binding : SearchItemListBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -45,8 +45,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
             binding.searchItemRating.text = "${shopItem.ratingRate}"
             binding.searchItemReview.text = "${shopItem.ratingCount} Reviews"
 
-            binding.searchItemView.setOnClickListener {
-                onItemClickListener(shopItem)
+            itemView.setOnClickListener {
+                listener.onClicked(shopItem)
             }
 
         }
@@ -64,4 +64,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
     }
 
     override fun getItemCount() = differ.currentList.size
+}
+
+interface SearchItemListener {
+    fun onClicked(product: Products)
 }

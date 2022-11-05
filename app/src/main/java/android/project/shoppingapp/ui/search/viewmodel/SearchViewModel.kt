@@ -4,6 +4,7 @@ import android.project.shoppingapp.data.model.Category
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.categories.CategoriesDTO
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
+import android.project.shoppingapp.data.repository.cartrepository.CartRepository
 import android.project.shoppingapp.data.repository.categories.CategoriesRepository
 import android.project.shoppingapp.data.repository.products.ProductRepository
 import android.project.shoppingapp.utils.Resources
@@ -11,6 +12,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val categoryRepository: CategoriesRepository,
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val cartRepository: CartRepository
 ) : ViewModel() {
 
     private val _categoriesState: MutableStateFlow<Resources<List<Category>>?> =
@@ -36,11 +39,15 @@ class SearchViewModel @Inject constructor(
     private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     private val _categories: MutableStateFlow<String> = MutableStateFlow("")
 
+    private val _totalAmount: MutableStateFlow<Double?> = MutableStateFlow(0.0)
+    val totalAmount: StateFlow<Double?> = _totalAmount
+
     private var searchJob: Job? = null
 
     init {
         getAllCategories()
         getProductsBySearchCategories()
+        computeBasketAmount()
     }
 
     fun setSearchQuery(query: String) {
@@ -82,6 +89,16 @@ class SearchViewModel @Inject constructor(
             searchQuery = searchQuery
         ).collect { products ->
             _productsState.value = products
+        }
+    }
+
+    private fun computeBasketAmount() = viewModelScope.launch(Dispatchers.Default) {
+        cartRepository.getAllProductsFromBasketByUserId().collect { basket ->
+            var totalPrice: Double = 0.0
+            basket.map { item ->
+                totalPrice += item.price * item.productQuantity
+            }
+            _totalAmount.value = totalPrice
         }
     }
 

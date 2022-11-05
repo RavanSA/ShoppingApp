@@ -53,7 +53,14 @@
         android:id="@+id/searchFragment3"
         android:name="android.project.shoppingapp.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment3_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+        <argument
+            android:name="productId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/onBoardingFragment3"
         android:name="android.project.shoppingapp.ui.authentication.onboarding.OnBoardingFragment"
