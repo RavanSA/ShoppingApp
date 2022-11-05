@@ -104,6 +104,8 @@ class ProductDetailFragment : Fragment() {
         productDetailViewModel.decreaseProductQuantity(productId)
     }
 
+
+
     fun navigateToBack() {
         navController.popBackStack()
     }

@@ -13,13 +13,16 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="@dimen/margin_x_large"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
             <ImageView
                 android:id="@+id/ivappLogo"
                 android:layout_width="30dp"
@@ -38,8 +41,9 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="24dp"
                 android:text="ShoppingApp"
+                android:layout_marginBottom="@dimen/margin_x_large"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_x_x_large_title"
+                android:textSize="@dimen/text_size_x_large_title"
                 app:layout_constraintStart_toEndOf="@+id/ivappLogo"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_marginEnd="8dp"
-                android:text="1.00$"
+                android:text="0.00$"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/product_cart"
@@ -75,17 +79,6 @@
 <!--            app:barrierDirection="bottom"-->
 <!--            app:constraint_referenced_ids="cartAmount, ivappLogo,textView5,product_cart" />-->
 
-        <TextView
-            android:id="@+id/tvProductTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:layout_marginEnd="8dp"
-            android:text="Product List"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_x_large_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swiperefresh"
@@ -93,19 +86,19 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProductTitle">
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/product_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvProductTitle"
                 app:spanCount="2"
                 tools:listitem="@layout/product_item_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

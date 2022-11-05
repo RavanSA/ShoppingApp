@@ -63,8 +63,6 @@ class ProductsAdapter(
 
             binding.itemTitle.text = product.title
             binding.itemPrice.text = "USD ${product.price}"
-            binding.itemRating.text = "${product.ratingCount}"
-            binding.itemReview.text = "${product.ratingRate} Reviews"
             itemView.setOnClickListener {
                 listener.onClicked(product)
             }

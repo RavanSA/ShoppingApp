@@ -47,12 +47,9 @@ class ProductFragment : Fragment(), ProductListener {
         navController = findNavController()
         onRefresh()
         subscribeProductList()
+        observeBasketAmount()
         binding.productCart.setOnClickListener {
-//            BasketBottomSheet().apply {
-//                show(, BasketBottomSheet.TAG)
-//            }
             NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
-
         }
     }
 
@@ -100,6 +97,16 @@ class ProductFragment : Fragment(), ProductListener {
                         is Resources.Error -> {}
                         else -> {}
                     }
+                }
+            }
+        }
+    }
+
+    private fun observeBasketAmount() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                productViewModel.totalAmount.collect { amount ->
+                  binding.cartAmount.text = amount.toString() + "$"
                 }
             }
         }
