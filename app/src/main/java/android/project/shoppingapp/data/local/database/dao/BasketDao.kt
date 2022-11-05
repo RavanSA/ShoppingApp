@@ -16,33 +16,36 @@ interface BasketDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProductToBasket(product: BasketEntity)
 
-    @Query("UPDATE ${Constants.TABLE_BASKET} SET productQuantity = productQuantity + 1 WHERE productId = :productId")
-    suspend fun addProductQuantity(productId: Int)
+    @Query("""UPDATE ${Constants.TABLE_BASKET}
+              SET productQuantity = productQuantity + 1 
+              WHERE productId = :productId AND userId=:userId
+              """)
+    suspend fun addProductQuantity(productId: Int, userId: String)
 
-    @Query("UPDATE ${Constants.TABLE_BASKET} SET productQuantity = productQuantity - 1 WHERE productId = :productId")
-    suspend fun decreaseProductQuantity(productId: Int)
+    @Query("""UPDATE ${Constants.TABLE_BASKET} 
+              SET productQuantity = productQuantity - 1 
+              WHERE productId = :productId AND userId =:userId
+              """)
+    suspend fun decreaseProductQuantity(productId: Int, userId: String)
 
-    @Query("SELECT productQuantity FROM ${Constants.TABLE_BASKET} WHERE productId = :productId")
-    fun getProductQuantity(productId: Int) : Flow<Int?>
+    @Query("""SELECT productQuantity 
+              FROM ${Constants.TABLE_BASKET} 
+              WHERE productId = :productId AND userId = :userId
+              """)
+    fun getProductQuantity(productId: Int, userId: String) : Flow<Int?>
 
-    @Query("UPDATE ${Constants.TABLE_BASKET} SET productQuantity = :quantity WHERE productId = :productId")
-    suspend fun updateProductQuantity(quantity: Int, productId: String)
+    @Query("""UPDATE ${Constants.TABLE_BASKET}
+              SET productQuantity = :quantity
+              WHERE productId = :productId AND userId = :userId""")
+    suspend fun updateProductQuantity(quantity: Int, productId: String, userId: String)
 
-//    @Query("")
-//    suspend fun getProductQuantityById()
+    @Query("SELECT * FROM ${Constants.TABLE_BASKET} WHERE userId = :userId")
+    fun getAllProductsFromBasketByUserId(userId: String) : Flow<List<BasketEntity>>
 
-//    @Delete
-//    suspend fun removeProductsFromBasket()
+    @Query("DELETE FROM ${Constants.TABLE_BASKET} WHERE productId = :productId and userId = :userId")
+    suspend fun deleteBasketItemById(productId: Int, userId: String)
 
-
-    @Query("SELECT * FROM ${Constants.TABLE_BASKET}")
-    fun getAllProductsFromBasketByUserId() : Flow<List<BasketEntity>>
-
-    @Query("DELETE FROM ${Constants.TABLE_BASKET} WHERE productId = :productId")
-    suspend fun deleteBasketItemById(productId: Int)
-
-
-    @Query("DELETE FROM ${Constants.TABLE_BASKET}")
-    suspend fun deleteBasket()
+    @Query("DELETE FROM ${Constants.TABLE_BASKET} WHERE userId= :userId")
+    suspend fun deleteBasket(userId: String)
 
 }

@@ -66,6 +66,7 @@ class LoginViewModel @Inject constructor(
     fun setUserAuthenticated() = viewModelScope.launch {
         Log.d("SETUSERAUTH", "LOGIN")
         dataStoreManager.updateUserAuthentication(true)
+
     }
 
 

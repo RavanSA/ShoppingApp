@@ -55,36 +55,52 @@ class RegistrationViewModel @Inject constructor(
         _confirmPassword.value = confirmPassword
     }
 
-    val isFormValid: Flow<Boolean> = combine(_username, _email,
-        _password, _confirmPassword) {
-            username, email, password, confirmPassword ->
+    val isFormValid: Flow<Boolean> = combine(
+        _username, _email,
+        _password, _confirmPassword
+    ) { username, email, password, confirmPassword ->
         val regexString = "[a-zA-Z]+"
         val isUserNameCorrect = username.matches(regexString.toRegex())
         val isEmailCorrect = Patterns.EMAIL_ADDRESS.matcher(email).matches()
         val isPasswordCorrect = password.length > 8
         val isConfirmPasswordCorrect = confirmPassword == password
 
-        userNameError.value = if(!isUserNameCorrect){ "Username cannot empty"} else {""}
-        emailError.value = if(!isEmailCorrect){ "Invalid email address"} else {""}
-        passwordError.value = if(!isPasswordCorrect){ "Passwotd length must be greater than 8"} else {""}
-        confirmPasswordError.value = if(!isConfirmPasswordCorrect){ "Confirm password must be equal to password"} else {""}
+        userNameError.value = if (!isUserNameCorrect) {
+            "Username cannot empty"
+        } else {
+            ""
+        }
+        emailError.value = if (!isEmailCorrect) {
+            "Invalid email address"
+        } else {
+            ""
+        }
+        passwordError.value = if (!isPasswordCorrect) {
+            "Passwotd length must be greater than 8"
+        } else {
+            ""
+        }
+        confirmPasswordError.value = if (!isConfirmPasswordCorrect) {
+            "Confirm password must be equal to password"
+        } else {
+            ""
+        }
 
         return@combine isUserNameCorrect and isEmailCorrect and isPasswordCorrect and isConfirmPasswordCorrect
     }
 
 
-     fun signupUser() = viewModelScope.launch {
+    fun signupUser() = viewModelScope.launch {
         _signup.value = Resources.Loading(true)
-            val result = repository.register(_username.value, _email.value, _password.value)
+        val result = repository.register(_username.value, _email.value, _password.value)
 
-            _signup.value = result
-     }
-
-    fun setUserAuthenticated() = viewModelScope.launch {
-        Log.d("DATASTORE","REGISTER")
-        dataStoreManager.updateUserAuthentication(true)
+        _signup.value = result
     }
 
+    fun setUserAuthenticated() = viewModelScope.launch {
+        Log.d("DATASTORE", "REGISTER")
+        dataStoreManager.updateUserAuthentication(true)
+    }
 
 
 }

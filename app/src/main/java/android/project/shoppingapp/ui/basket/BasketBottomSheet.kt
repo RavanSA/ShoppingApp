@@ -51,6 +51,10 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 basketViewModel.basketState.collect { products ->
+                    if(products?.size == 0) {
+                        binding.cartCheckout.visibility = View.VISIBLE
+                    }
+
                     val basketAdapter = BasketModalSheetAdapter()
 
                     binding.rvBasket.adapter = basketAdapter

@@ -1,5 +1,6 @@
 package android.project.shoppingapp.ui.search.viewmodel
 
+import android.project.shoppingapp.data.local.DataStoreManager
 import android.project.shoppingapp.data.model.Category
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.dto.categories.CategoriesDTO
@@ -26,7 +27,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val categoryRepository: CategoriesRepository,
     private val productRepository: ProductRepository,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val dataStore: DataStoreManager
 ) : ViewModel() {
 
     private val _categoriesState: MutableStateFlow<Resources<List<Category>>?> =
@@ -44,10 +46,19 @@ class SearchViewModel @Inject constructor(
 
     private var searchJob: Job? = null
 
+    private var currentUser: String = ""
+
     init {
+        getUserId()
         getAllCategories()
         getProductsBySearchCategories()
         computeBasketAmount()
+    }
+
+    private fun getUserId() = viewModelScope.launch{
+        dataStore.userId.collect { uid ->
+            currentUser = uid
+        }
     }
 
     fun setSearchQuery(query: String) {
@@ -92,8 +103,8 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun computeBasketAmount() = viewModelScope.launch(Dispatchers.Default) {
-        cartRepository.getAllProductsFromBasketByUserId().collect { basket ->
+    private fun computeBasketAmount() = viewModelScope.launch {
+        cartRepository.getAllProductsFromBasketByUserId(currentUser).collect { basket ->
             var totalPrice: Double = 0.0
             basket.map { item ->
                 totalPrice += item.price * item.productQuantity

@@ -14,4 +14,6 @@ object Constants {
 
     const val TABLE_BASKET = "basket"
 
+    const val TABLE_USER = "user"
+
 }

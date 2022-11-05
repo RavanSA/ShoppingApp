@@ -1,37 +1,29 @@
 package android.project.shoppingapp.data.repository.firebase.impl
 
-import android.annotation.SuppressLint
+import android.project.shoppingapp.data.local.DataStoreManager
 import android.project.shoppingapp.data.model.User
 import android.project.shoppingapp.data.repository.firebase.AuthRepository
 import android.project.shoppingapp.utils.Resources
 import android.project.shoppingapp.utils.firebase.await
-import android.util.Log
-import androidx.sqlite.db.SupportSQLiteCompat.Api16Impl.cancel
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authFirebase: FirebaseAuth
+    private val authFirebase: FirebaseAuth,
+    private val dataStoreManager: DataStoreManager
     ) : AuthRepository {
 
     override suspend fun login(email: String, password: String): Resources<FirebaseUser> {
         return try {
             val result = authFirebase.signInWithEmailAndPassword(email, password).await()
-
+            authFirebase.currentUser?.let { dataStoreManager.setUserId(it.uid) }
             Resources.Success(result.user!!)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -56,6 +48,7 @@ class AuthRepositoryImpl @Inject constructor(
                 FirebaseFirestore.getInstance().collection("users")
                     .document(it).set(data)
             }
+            authFirebase.currentUser?.let { dataStoreManager.setUserId(it.uid) }
             return Resources.Success(result.user!!)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -63,9 +56,8 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-
-
-    override fun logout() {
+    override suspend fun logout() {
+        authFirebase.currentUser?.let { dataStoreManager.setUserId(null) }
         authFirebase.signOut()
     }
 

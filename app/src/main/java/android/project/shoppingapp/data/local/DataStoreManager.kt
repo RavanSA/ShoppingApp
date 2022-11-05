@@ -6,6 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,6 +23,7 @@ class DataStoreManager(context: Context) {
     companion object PreferencesKeys {
         val firstTimeLogin = booleanPreferencesKey("first_time_login")
         val isUserAuthenticated = booleanPreferencesKey("is_user_authenticated")
+        val userId = stringPreferencesKey("userId")
     }
 
     private val dataStore = context.dataStore
@@ -34,6 +36,10 @@ class DataStoreManager(context: Context) {
         preferences[PreferencesKeys.isUserAuthenticated] ?: false
     }
 
+    val userId: Flow<String> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.userId] ?: ""
+    }
+
     suspend fun updateFirstTimeLogin(firstTime: Boolean) {
         dataStore.edit { mutablePreferences ->
             mutablePreferences[PreferencesKeys.firstTimeLogin] = firstTime
@@ -44,6 +50,12 @@ class DataStoreManager(context: Context) {
         dataStore.edit { preferences ->
             Log.d("DATASTOREUPDATE", userAuth.toString())
             preferences[PreferencesKeys.isUserAuthenticated] = userAuth
+        }
+    }
+
+    suspend fun setUserId(userId: String?) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.userId] = userId ?: ""
         }
     }
 

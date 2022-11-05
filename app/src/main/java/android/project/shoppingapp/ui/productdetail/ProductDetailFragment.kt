@@ -48,12 +48,12 @@ class ProductDetailFragment : Fragment() {
                 productDetailViewModel.productState.collect { product ->
                     when (product) {
                         is Resources.Success -> {
-                            binding.tvProductPrice.text = product.data?.price.toString()
+                            binding.tvProductPrice.text = product.data?.price.toString() + " USD"
                             binding.tvProductTitle.text = product.data?.title.toString()
                             binding.tvProductRating.text = product.data?.ratingRate.toString()
                             binding.tvProductDescription.text =
                                 product.data?.description.toString()
-                            binding.tvProductReview.text = product.data?.ratingCount.toString()
+                            binding.tvProductReview.text = product.data?.ratingCount.toString() + " Reviews"
                             Glide.with(this@ProductDetailFragment)
                                 .load(product.data?.image)
                                 .into(binding.ivProductImage)
@@ -83,7 +83,6 @@ class ProductDetailFragment : Fragment() {
                 binding.btnAddtoCart.setOnClickListener {
                     if (quantity == 0 || quantity == null) {
                         addToCart(product)
-                    } else {
                     }
                 }
                 binding.btnPlus.setOnClickListener {
