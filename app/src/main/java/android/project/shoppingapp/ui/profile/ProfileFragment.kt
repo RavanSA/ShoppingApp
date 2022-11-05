@@ -25,6 +25,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,9 +49,15 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         subscribeProductList()
+        observeBasketAmount()
         binding.profileLogout.setOnClickListener {
             showAlertDialog(requireContext())
         }
+
+        binding.ivProfileCart.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
+        }
+
     }
 
     private fun subscribeProductList() {
@@ -59,8 +66,8 @@ class ProfileFragment : Fragment() {
                 viewModel.profileInfo.collect { profileState ->
                     when (profileState) {
                         is ProfileState.Success -> {
-                            binding.profileName.text = profileState.user.username
-                            binding.profileEmail.text = profileState.user.email
+                            binding.tvProfileName.text = profileState.user.username
+                            binding.tvProfileEmail.text = profileState.user.email
                         }
                         is ProfileState.Error -> {}
                         is ProfileState.Loading -> {}
@@ -89,14 +96,21 @@ class ProfileFragment : Fragment() {
             btnNo.setOnClickListener {
                 dialog.dismiss()
             }
-            ivErrorDialog.setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.ic_baseline_info_24)
-            )
         }
         dialog.setContentView(binding.root)
         dialog.show()
 
     }
 
+
+    private fun observeBasketAmount() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.totalAmount.collect { amount ->
+                    binding.cartAmount.text = amount.toString() + "$"
+                }
+            }
+        }
+    }
 
 }

@@ -52,7 +52,7 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
 
                 basketViewModel.basketState.collect { products ->
                     if(products?.size == 0) {
-                        binding.cartCheckout.visibility = View.VISIBLE
+                        binding.cartCheckout.visibility = View.GONE
                     }
 
                     val basketAdapter = BasketModalSheetAdapter()

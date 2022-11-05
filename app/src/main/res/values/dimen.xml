@@ -30,6 +30,8 @@
     <dimen name="modalBasketBottomInfo">60dp</dimen>
     <dimen name="productDetailImageHeight">300dp</dimen>
     <dimen name="btnRoundedCornerBackground">24dp</dimen>
+    <dimen name="dividerHeight">1dp</dimen>
+    <dimen name="profileScrollHeight">500dp</dimen>
 
 
 

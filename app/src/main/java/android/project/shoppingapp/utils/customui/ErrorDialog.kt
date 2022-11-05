@@ -28,7 +28,7 @@ fun showCustomDialog(title: String, status: String, context: Context) {
             )
         } else if (status == Constants.SUCCES_DIALOG) {
             ivErrorDialog.setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.ic_baseline_check_circle_outline_24)
+                ContextCompat.getDrawable(context, R.drawable.ic_baseline_error_outline_24)
             )
         }
     }

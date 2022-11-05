@@ -12,8 +12,10 @@
             android:id="@+id/ivErrorDialog"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:minWidth="600dp"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_check_circle_outline_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
