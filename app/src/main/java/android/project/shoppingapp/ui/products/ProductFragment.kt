@@ -1,8 +1,11 @@
 package android.project.shoppingapp.ui.products
 
 import android.os.Bundle
+import android.project.shoppingapp.R
+import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.FragmentProductBinding
 import android.project.shoppingapp.ui.products.adapter.NewProductsLists
+import android.project.shoppingapp.ui.products.adapter.ProductListener
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.products.viewmodel.ProductViewModel
 import android.project.shoppingapp.utils.Resources
@@ -16,16 +19,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class ProductFragment : Fragment() {
+class ProductFragment : Fragment(), ProductListener {
 
     private lateinit var binding: FragmentProductBinding
     private val productViewModel by viewModels<ProductViewModel>()
@@ -45,7 +47,15 @@ class ProductFragment : Fragment() {
         navController = findNavController()
         onRefresh()
         subscribeProductList()
+        binding.productCart.setOnClickListener {
+//            BasketBottomSheet().apply {
+//                show(, BasketBottomSheet.TAG)
+//            }
+            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
+
+        }
     }
+
 
     //
     private fun onRefresh() {
@@ -75,10 +85,15 @@ class ProductFragment : Fragment() {
                             )
 //                            binding.rvHourlyList.adapter = adapterNewItem
                             Log.d("PRODUCTS", products.data.toString())
-                            val adapter = ProductsAdapter()
+                            val adapter = ProductsAdapter(
+                                this@ProductFragment
+                            )
 
                             adapter.differ.submitList(products.data)
                             binding.productRecyclerView.adapter = adapter
+
+//                            BasketBottomSheet(requireContext(), )
+//                                .show()
 
                         }
                         is Resources.Loading -> {}
@@ -88,6 +103,13 @@ class ProductFragment : Fragment() {
                 }
             }
         }
+    }
+
+
+    override fun onClicked(product: Products) {
+        navController.navigate(R.id.action_productFragment2_to_productDetailFragment, Bundle().apply {
+            putString("productId", product.id.toString())
+        })
     }
 
 }

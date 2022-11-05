@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentLoginBinding
-import android.project.shoppingapp.ui.splash.viewmodel.SplashScreenEvent
 import android.project.shoppingapp.utils.*
+import android.project.shoppingapp.utils.customui.LoadingDialog
+import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -60,7 +61,7 @@ class LoginFragment : Fragment() {
                             is Resources.Success -> {
                                 progressBar.dismiss()
 
-                                uiState.message?.let { showCustomDialog(it,Constants.SUCCES_DIALOG, requireContext()) }
+                              showCustomDialog("Succesfully Logged In",Constants.SUCCES_DIALOG, requireContext())
 
                                 setUserAuthenticated()
                                 Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)

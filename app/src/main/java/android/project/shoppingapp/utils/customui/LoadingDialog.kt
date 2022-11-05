@@ -1,4 +1,4 @@
-package android.project.shoppingapp.utils
+package android.project.shoppingapp.utils.customui
 
 import android.app.Dialog
 import android.content.Context

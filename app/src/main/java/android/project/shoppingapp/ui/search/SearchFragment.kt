@@ -39,7 +39,8 @@ class SearchFragment : Fragment() {
         subscribeCategories()
         subscribeProducts()
         categoriesCallBack()
-        binding.categoriesSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.categoriesSearchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
             override fun onQueryTextChange(p0: String?): Boolean {
                 searchViewModel.setSearchQuery(p0 ?: "")
                 return false
@@ -48,6 +49,7 @@ class SearchFragment : Fragment() {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
+
         })
     }
 
@@ -62,8 +64,8 @@ class SearchFragment : Fragment() {
                                 binding.tabLayout.addTab(
                                     binding.tabLayout.newTab().setText(category.category)
                                 )
-                            //
-                            //                               val chip = Chip(requireContext())
+                                //
+                                //                               val chip = Chip(requireContext())
 //                                chip.text = category.toString()
 //                                binding.productsChipGroup.addView(chip)
                             }
@@ -101,8 +103,8 @@ class SearchFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchViewModel.productsState.collect { products ->
                     val adapterSearch = SearchAdapter()
-                            adapterSearch.differ.submitList(products)
-                            binding.rvSearchProducts.adapter = adapterSearch
+                    adapterSearch.differ.submitList(products)
+                    binding.rvSearchProducts.adapter = adapterSearch
 
 //                    when (products) {
 //                        is Resources.Success -> {

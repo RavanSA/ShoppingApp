@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+class ProductsAdapter(
+    private val listener: ProductListener
+) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
 
 
@@ -63,11 +65,18 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
             binding.itemPrice.text = "USD ${product.price}"
             binding.itemRating.text = "${product.ratingCount}"
             binding.itemReview.text = "${product.ratingRate} Reviews"
+            itemView.setOnClickListener {
+                listener.onClicked(product)
+            }
 
 
         }
 
     }
 
+}
 
+
+interface ProductListener {
+    fun onClicked(product: Products)
 }

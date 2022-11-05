@@ -12,4 +12,6 @@ object Constants {
 
     const val TABLE_CATEGORIES = "categories"
 
+    const val TABLE_BASKET = "basket"
+
 }
