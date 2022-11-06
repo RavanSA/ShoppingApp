@@ -98,7 +98,6 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun setUserAuthenticated() = viewModelScope.launch {
-        Log.d("DATASTORE", "REGISTER")
         dataStoreManager.updateUserAuthentication(true)
     }
 

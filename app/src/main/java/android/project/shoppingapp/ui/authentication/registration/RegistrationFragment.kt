@@ -29,6 +29,7 @@ class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var navController: NavController
     private val registrationViewModel by viewModels<RegistrationViewModel>()
+
     private val progressBar by lazy {
         LoadingDialog(requireContext())
     }
@@ -59,25 +60,28 @@ class RegistrationFragment : Fragment() {
                         when (uiState) {
                             is Resources.Success -> {
                                 progressBar.dismiss()
-                                uiState.message?.let { showCustomDialog(it,Constants.SUCCES_DIALOG, requireContext()) }
-
-                                Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
-                                    .show()
-                                Log.d("UISATELOG", uiState.toString())
+                                uiState.message?.let {
+                                    showCustomDialog(
+                                        it,
+                                        Constants.SUCCES_DIALOG,
+                                        requireContext()
+                                    )
+                                }
                                 setUserAuthenticated()
-//                                ActivityNavGraph.startApplicationFlow(
-//                                    requireActivity(),
-//                                    requireContext()
-//                                )
                                 navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
-
                             }
                             is Resources.Loading -> {
                                 progressBar.show()
                             }
                             is Resources.Error -> {
                                 progressBar.dismiss()
-                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
+                                uiState.message?.let {
+                                    showCustomDialog(
+                                        it,
+                                        Constants.ERROR_DIALOG,
+                                        requireContext()
+                                    )
+                                }
                             }
                             else -> {}
                         }
@@ -167,7 +171,6 @@ class RegistrationFragment : Fragment() {
                                 }
                             }
                         }
-
                     }
                 }
             }

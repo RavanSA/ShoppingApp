@@ -29,6 +29,7 @@ class LoginFragment : Fragment() {
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
+
     private val progressBar by lazy {
         LoadingDialog(requireContext())
     }
@@ -61,14 +62,13 @@ class LoginFragment : Fragment() {
                             is Resources.Success -> {
                                 progressBar.dismiss()
 
-                              showCustomDialog("Succesfully Logged In",Constants.SUCCES_DIALOG, requireContext())
+                                showCustomDialog(
+                                    "Succesfully Logged In",
+                                    Constants.SUCCES_DIALOG,
+                                    requireContext()
+                                )
 
                                 setUserAuthenticated()
-                                Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
-                                    .show()
-//                                ActivityNavGraph.startApplicationFlow(
-//                                    requireActivity(), requireContext()
-//                                )
                                 navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
 
                             }
@@ -77,8 +77,13 @@ class LoginFragment : Fragment() {
                             }
                             is Resources.Error -> {
                                 progressBar.dismiss()
-                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
-                                uiState.message?.let { Log.d("Error dialog", it) }
+                                uiState.message?.let {
+                                    showCustomDialog(
+                                        it,
+                                        Constants.ERROR_DIALOG,
+                                        requireContext()
+                                    )
+                                }
                             }
                             else -> {}
                         }

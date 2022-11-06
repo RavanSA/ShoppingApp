@@ -29,17 +29,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeBottomNav() {
-        binding.bottomNavigationView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when (destination.id) {
-                R.id.productFragment2 -> {
-                    binding.bottomNavigationView.visibility = View.VISIBLE
-                }
-                R.id.profileFragment3 -> {
-                    binding.bottomNavigationView.visibility = View.VISIBLE
-                }
-                R.id.searchFragment3 -> {
-                    binding.bottomNavigationView.visibility = View.VISIBLE
+        with(binding) {
+            bottomNavigationView.setupWithNavController(navController)
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                when (destination.id) {
+                    R.id.productFragment2 -> {
+                        bottomNavigationView.visibility = View.VISIBLE
+                    }
+                    R.id.profileFragment3 -> {
+                        bottomNavigationView.visibility = View.VISIBLE
+                    }
+                    R.id.searchFragment3 -> {
+                        bottomNavigationView.visibility = View.VISIBLE
+                    }
                 }
             }
         }

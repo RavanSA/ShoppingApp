@@ -139,6 +139,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etRegisterPassword"
                         android:layout_width="match_parent"
+                        android:inputType="textPassword"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_edittext_custom"
                         android:hint="Password" />
@@ -202,6 +203,7 @@
                         android:id="@+id/etRegisterConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textPassword"
                         android:background="@drawable/bg_edittext_custom"
                         android:hint="Confirm Password" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -253,7 +255,7 @@
                 android:layout_marginTop="@dimen/margin_normal"
                 android:background="@color/colorPrimary"
                 android:elevation="5dp"
-                android:text="Log in"
+                android:text="Register"
                 app:backgroundTint="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

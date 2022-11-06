@@ -1,6 +1,6 @@
 package android.project.shoppingapp.data.repository.cartrepository.impl
 
-import android.project.assignmentweek5.data.local.database.AppDatabase
+import android.project.shoppingapp.data.local.database.AppDatabase
 import android.project.shoppingapp.data.local.database.entity.BasketEntity
 import android.project.shoppingapp.data.repository.cartrepository.CartRepository
 import kotlinx.coroutines.flow.Flow

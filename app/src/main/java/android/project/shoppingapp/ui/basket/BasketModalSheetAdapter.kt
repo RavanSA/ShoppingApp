@@ -55,7 +55,6 @@ class BasketModalSheetAdapter : RecyclerView.Adapter<BasketModalSheetAdapter.Bot
 
     override fun onBindViewHolder(holder: BottomSheetBasketViewHolder, position: Int) {
         val product = differ.currentList[position]
-        Log.d("ADAPTERITEMdıfer", product.toString())
         holder.bind(product)
     }
 
@@ -83,8 +82,4 @@ class BasketModalSheetAdapter : RecyclerView.Adapter<BasketModalSheetAdapter.Bot
         }
     }
 
-}
-
-interface BasketListener {
-    fun onClicked(basket: BasketEntity)
 }

@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 class NewProductsLists : RecyclerView.Adapter<NewProductsLists.NewProductsViewHolder>() {
 
 
-
     private val callback = object : DiffUtil.ItemCallback<Products>() {
         override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
             return oldItem.id == newItem.id
@@ -52,14 +51,10 @@ class NewProductsLists : RecyclerView.Adapter<NewProductsLists.NewProductsViewHo
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindImage(product: Products) {
-            Log.d("VOEWHOLDER", product.toString())
             Glide.with(binding.newItemImageView)
                 .load(product.image)
                 .into(binding.newItemImageView)
-
         }
-
     }
-
 
 }

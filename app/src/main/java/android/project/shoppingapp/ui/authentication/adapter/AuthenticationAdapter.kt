@@ -9,8 +9,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 private const val NUM_TABS = 2
 
-class AuthenticationAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
+class AuthenticationAdapter(
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {
         return NUM_TABS
@@ -23,4 +25,5 @@ class AuthenticationAdapter(fragmentManager: FragmentManager, lifecycle: Lifecyc
         }
         return LoginFragment()
     }
+
 }

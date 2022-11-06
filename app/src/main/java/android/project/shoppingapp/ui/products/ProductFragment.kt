@@ -8,7 +8,10 @@ import android.project.shoppingapp.ui.products.adapter.NewProductsLists
 import android.project.shoppingapp.ui.products.adapter.ProductListener
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.products.viewmodel.ProductViewModel
+import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.customui.LoadingDialog
+import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +36,10 @@ class ProductFragment : Fragment(), ProductListener {
     private val productViewModel by viewModels<ProductViewModel>()
     private lateinit var navController: NavController
 
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +61,7 @@ class ProductFragment : Fragment(), ProductListener {
     }
 
 
-    //
+
     private fun onRefresh() {
         binding.swiperefresh.setOnRefreshListener {
             lifecycleScope.launch {
@@ -72,30 +79,23 @@ class ProductFragment : Fragment(), ProductListener {
                 productViewModel.productsState.collect { products ->
                     when (products) {
                         is Resources.Success -> {
-
-                            //       binding.rvHourlyList.layoutManager =
-                            //         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                            val adapterNewItem = NewProductsLists()
-                            adapterNewItem.differ.submitList(
-                                products.data
-                                    ?.shuffled()?.take(10)
-                            )
-//                            binding.rvHourlyList.adapter = adapterNewItem
-                            Log.d("PRODUCTS", products.data.toString())
-                            val adapter = ProductsAdapter(
-                                this@ProductFragment
-                            )
-
+                            progressBar.dismiss()
+                            val adapter = ProductsAdapter(this@ProductFragment)
                             adapter.differ.submitList(products.data)
                             binding.productRecyclerView.adapter = adapter
-
-//                            BasketBottomSheet(requireContext(), )
-//                                .show()
-
                         }
-                        is Resources.Loading -> {}
-                        is Resources.Error -> {}
-                        else -> {}
+                        is Resources.Loading -> {
+                            progressBar.show()
+                        }
+                        is Resources.Error -> {
+                            progressBar.dismiss()
+                            products.message?.let {
+                                showCustomDialog(
+                                    it, Constants.ERROR_DIALOG, requireContext()
+                                )
+                            }
+                        }
+                        else -> progressBar.show()
                     }
                 }
             }
@@ -115,7 +115,7 @@ class ProductFragment : Fragment(), ProductListener {
 
     override fun onClicked(product: Products) {
         navController.navigate(R.id.action_productFragment2_to_productDetailFragment, Bundle().apply {
-            putString("productId", product.id.toString())
+            putString(Constants.PRODUCT_ID, product.id.toString())
         })
     }
 

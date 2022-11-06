@@ -18,13 +18,15 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val authFirebase: FirebaseAuth,
     private val dataStoreManager: DataStoreManager
-    ) : AuthRepository {
+) : AuthRepository {
 
     override suspend fun login(email: String, password: String): Resources<FirebaseUser> {
         return try {
+            Resources.Loading<FirebaseUser>(true)
             val result = authFirebase.signInWithEmailAndPassword(email, password).await()
             authFirebase.currentUser?.let { dataStoreManager.setUserId(it.uid) }
-            Resources.Success(result.user!!)
+            Resources.Loading<FirebaseUser>(false)
+            Resources.Success<FirebaseUser>(result.user!!)
         } catch (e: Exception) {
             e.printStackTrace()
             Resources.Error(e.message.toString())
@@ -37,19 +39,21 @@ class AuthRepositoryImpl @Inject constructor(
         password: String
     ): Resources<FirebaseUser> {
         return try {
+            Resources.Loading<FirebaseUser>(true)
             val result = authFirebase.createUserWithEmailAndPassword(email, password).await()
             result.user?.updateProfile(
                 UserProfileChangeRequest.Builder().setDisplayName(name).build()
             )?.await()
-                val data = HashMap<String, Any>()
-                data["email"] = email
-                data["username"] = name
+            val data = HashMap<String, Any>()
+            data["email"] = email
+            data["username"] = name
             getUid()?.let {
                 FirebaseFirestore.getInstance().collection("users")
                     .document(it).set(data)
             }
             authFirebase.currentUser?.let { dataStoreManager.setUserId(it.uid) }
-            return Resources.Success(result.user!!)
+            Resources.Loading<FirebaseUser>(false)
+            return Resources.Success<FirebaseUser>(result.user!!)
         } catch (e: Exception) {
             e.printStackTrace()
             Resources.Error(e.message.toString())
@@ -64,19 +68,19 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun getUid(): String? = authFirebase.uid
 
 
-     override suspend fun getUserProfileInfo():Flow<User?> = channelFlow {
-         var user: User? = null
-         val callBack =
-             FirebaseFirestore.getInstance().collection("users")
-                 .document(authFirebase.currentUser?.uid.toString())
-                 .get().addOnSuccessListener {
+    override suspend fun getUserProfileInfo(): Flow<User?> = channelFlow {
+        var user: User? = null
+        val callBack =
+            FirebaseFirestore.getInstance().collection("users")
+                .document(authFirebase.currentUser?.uid.toString())
+                .get().addOnSuccessListener {
 
-                     user = it.toObject(User::class.java)
-                     trySendBlocking(user)
-                 }.addOnFailureListener {
-                     trySendBlocking(null)
-                 }
-         awaitClose { callBack.isCanceled() }
+                    user = it.toObject(User::class.java)
+                    trySendBlocking(user)
+                }.addOnFailureListener {
+                    trySendBlocking(null)
+                }
+        awaitClose { callBack.isCanceled() }
     }
 
 

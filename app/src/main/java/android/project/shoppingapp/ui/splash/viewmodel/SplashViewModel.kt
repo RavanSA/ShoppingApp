@@ -27,9 +27,7 @@ class SplashViewModel @Inject constructor(
                 _authEvent.emit(SplashScreenEvent.RedirectToApplicationFlow)
             } else {
                 dataStoreManager.firstTimeLogin.collect { isFirsTimeLogin ->
-                    Log.d("FIRSTTIME", isFirsTimeLogin.toString())
                     if (!isFirsTimeLogin) {
-                        Log.d("INIFVIEWMODEL", isFirsTimeLogin.toString())
                         _authEvent.emit(SplashScreenEvent.RedirectToRegistrationFlow)
                     } else {
                         _authEvent.emit(SplashScreenEvent.RedirectToOnBoardingScreen)

@@ -43,14 +43,16 @@ class SplashFragment : Fragment() {
 
 
     private fun splashAnimation() {
-        binding.ivSplashLogo.animation = AnimationUtils.loadAnimation(
-            requireContext(),
-            R.anim.splash_logo_anim
-        )
-        binding.pbActivityIndicator.animation = AnimationUtils.loadAnimation(
-            requireContext(),
-            R.anim.splash_textview_anim
-        )
+        with(binding) {
+            ivSplashLogo.animation = AnimationUtils.loadAnimation(
+                requireContext(),
+                R.anim.splash_logo_anim
+            )
+            pbActivityIndicator.animation = AnimationUtils.loadAnimation(
+                requireContext(),
+                R.anim.splash_textview_anim
+            )
+        }
     }
 
     private fun redirectToUser() {
@@ -66,10 +68,6 @@ class SplashFragment : Fragment() {
                     is SplashScreenEvent.RedirectToOnBoardingScreen -> {
                         startOnBoardScreen()
                     }
-//                    is SplashScreenEvent.RedirectToOnBoardingScreen -> {
-//                        startOnBoardScreen()
-//                    }
-
                 }
             }
         }
@@ -81,13 +79,6 @@ class SplashFragment : Fragment() {
             navController.navigate(R.id.action_splashFragment3_to_onBoardingFragment3)
         }
     }
-
-//    private fun startOnBoardScreen() {
-//        lifecycleScope.launch {
-//            delay(3000L)
-//            navController.navigate(R.id.action_splashFragment_to_onBoardingFragment)
-//        }
-//    }
 
     private fun startAuthorization() {
         lifecycleScope.launch {
@@ -104,4 +95,3 @@ class SplashFragment : Fragment() {
     }
 
 }
-

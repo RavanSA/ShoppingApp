@@ -1,11 +1,10 @@
 package android.project.shoppingapp.ui.productdetail
 
 import android.project.shoppingapp.data.local.DataStoreManager
-import android.project.shoppingapp.data.local.database.entity.BasketEntity
-import android.project.shoppingapp.data.model.Category
-import android.project.shoppingapp.data.model.Products
+import android.project.shoppingapp.data.local.database.entity.BasketEntity import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.repository.cartrepository.CartRepository
 import android.project.shoppingapp.data.repository.products.ProductRepository
+import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.Resources
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -36,7 +35,7 @@ class ProductDetailViewModel @Inject constructor(
 
     init {
         getUserId()
-        savedStateHandle.get<String>("productId")?.let { productId ->
+        savedStateHandle.get<String>(Constants.PRODUCT_ID)?.let { productId ->
             getProductById(productId.toInt())
             getProductQuantity(productId.toInt())
         }

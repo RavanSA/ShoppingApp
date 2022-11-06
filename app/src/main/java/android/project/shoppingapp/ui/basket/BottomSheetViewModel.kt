@@ -51,13 +51,10 @@ class BottomSheetViewModel @Inject constructor(
     }
 
     private fun computeTotalAmount() = viewModelScope.launch {
-        Log.d("UIDAMOUNT", currentUser)
-
         cartRepository.getAllProductsFromBasketByUserId(currentUser).collect { basket ->
             var totalPrice: Double = 0.0
             Log.d("BASKET", basket.toString())
             basket.map { item ->
-                Log.d("ITEMBASKETAMOUNT", item.toString())
                 totalPrice += item.price * item.productQuantity
             }
             _totalAmount.value = totalPrice

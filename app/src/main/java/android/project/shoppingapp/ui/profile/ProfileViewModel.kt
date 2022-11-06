@@ -24,7 +24,8 @@ class ProfileViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
 
-    private val _profileInfo: MutableStateFlow<ProfileState?> = MutableStateFlow(ProfileState.Loading)
+    private val _profileInfo: MutableStateFlow<ProfileState?> =
+        MutableStateFlow(ProfileState.Loading)
     val profileInfo: StateFlow<ProfileState?> = _profileInfo
 
     private val _totalAmount: MutableStateFlow<Double?> = MutableStateFlow(0.0)
@@ -50,8 +51,8 @@ class ProfileViewModel @Inject constructor(
         firebaseRepository.getUserProfileInfo()
             .catch { ProfileState.Error(it.toString()) }
             .collect { user ->
-            _profileInfo.value = user?.let { ProfileState.Success(user = it) }
-        }
+                _profileInfo.value = user?.let { ProfileState.Success(user = it) }
+            }
     }
 
     fun logout() = viewModelScope.launch {

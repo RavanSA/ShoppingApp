@@ -1,9 +1,7 @@
 package android.project.shoppingapp.ui.search.adapters
 
 import android.project.shoppingapp.data.model.Products
-import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.databinding.SearchItemListBinding
-import android.project.shoppingapp.ui.products.adapter.ProductListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -28,25 +26,22 @@ class SearchAdapter(
 
     val differ = AsyncListDiffer(this,callback)
 
-    private var onItemClickListener : ((Products)-> Unit) = {}
-
-
 
     inner class SearchViewHolder(private val binding : SearchItemListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindData(shopItem: Products){
+        fun bindData(product: Products){
 
             Glide.with(binding.searchItemImage)
-                .load(shopItem.image)
+                .load(product.image)
                 .into(binding.searchItemImage)
 
-            binding.searchItemTitle.text = shopItem.title
-            binding.searchItemPrice.text = "USD ${shopItem.price}"
-            binding.searchItemRating.text = "${shopItem.ratingRate}"
-            binding.searchItemReview.text = "${shopItem.ratingCount} Reviews"
+            binding.searchItemTitle.text = product.title
+            binding.searchItemPrice.text = "USD ${product.price}"
+            binding.searchItemRating.text = "${product.ratingRate}"
+            binding.searchItemReview.text = "${product.ratingCount} Reviews"
 
             itemView.setOnClickListener {
-                listener.onClicked(shopItem)
+                listener.onClicked(product)
             }
 
         }
@@ -64,6 +59,7 @@ class SearchAdapter(
     }
 
     override fun getItemCount() = differ.currentList.size
+
 }
 
 interface SearchItemListener {

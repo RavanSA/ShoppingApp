@@ -32,6 +32,7 @@
     <dimen name="btnRoundedCornerBackground">24dp</dimen>
     <dimen name="dividerHeight">1dp</dimen>
     <dimen name="profileScrollHeight">500dp</dimen>
+    <dimen name="registrationToolbarIcon">40dp</dimen>
 
 
 

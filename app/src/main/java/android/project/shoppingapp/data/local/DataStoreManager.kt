@@ -48,7 +48,6 @@ class DataStoreManager(context: Context) {
 
     suspend fun updateUserAuthentication(userAuth: Boolean) {
         dataStore.edit { preferences ->
-            Log.d("DATASTOREUPDATE", userAuth.toString())
             preferences[PreferencesKeys.isUserAuthenticated] = userAuth
         }
     }

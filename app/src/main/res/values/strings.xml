@@ -15,4 +15,5 @@
     <string name="searchBrowseTitle">Browse</string>
     <string name="searchDescription">Discover new products</string>
     <string name="btnProductDetailText">Add to Cart</string>
+    <string name="signInTitle">Sign In</string>
 </resources>

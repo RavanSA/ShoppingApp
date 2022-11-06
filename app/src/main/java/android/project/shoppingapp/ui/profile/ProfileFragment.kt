@@ -16,6 +16,7 @@ import android.project.shoppingapp.ui.products.adapter.NewProductsLists
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.view.Window
@@ -36,6 +37,10 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels<ProfileViewModel>()
     lateinit var binding: FragmentProfileBinding
     private lateinit var navController: NavController
+
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,11 +71,17 @@ class ProfileFragment : Fragment() {
                 viewModel.profileInfo.collect { profileState ->
                     when (profileState) {
                         is ProfileState.Success -> {
+                            progressBar.dismiss()
                             binding.tvProfileName.text = profileState.user.username
                             binding.tvProfileEmail.text = profileState.user.email
                         }
-                        is ProfileState.Error -> {}
-                        is ProfileState.Loading -> {}
+                        is ProfileState.Error -> {
+                            progressBar.dismiss()
+                            showCustomDialog(profileState.message, Constants.ERROR_DIALOG, requireContext())
+                        }
+                        is ProfileState.Loading -> {
+                            progressBar.show()
+                        }
                         else -> {}
                     }
                 }

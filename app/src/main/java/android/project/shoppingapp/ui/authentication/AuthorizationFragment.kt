@@ -40,6 +40,4 @@ class AuthorizationFragment : Fragment() {
         }.attach()
     }
 
-
-
 }

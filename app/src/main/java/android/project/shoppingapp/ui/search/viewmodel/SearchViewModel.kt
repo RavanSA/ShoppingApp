@@ -32,7 +32,7 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _categoriesState: MutableStateFlow<Resources<List<Category>>?> =
-        MutableStateFlow(null)
+        MutableStateFlow(Resources.Loading<List<Category>>(false))
     val categoriesState: StateFlow<Resources<List<Category>>?> = _categoriesState
 
     private val _productsState: MutableStateFlow<List<Products>?> = MutableStateFlow(null)
@@ -84,12 +84,6 @@ class SearchViewModel @Inject constructor(
             _categoriesState.value = categories
         }
     }
-
-//    fun getProductsByCategory(category: String) = viewModelScope.launch {
-//        categoryRepository.getProductsByCategory(category).collect { products ->
-//            _productsState.value = products
-//        }
-//    }
 
     private fun getProductsBySearchCategories(
         category: String? = null,

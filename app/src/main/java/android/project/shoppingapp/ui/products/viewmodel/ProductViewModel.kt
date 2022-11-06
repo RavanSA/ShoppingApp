@@ -50,7 +50,6 @@ class ProductViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             repository.getProducts(getProductsFromRemote).collect { products ->
-                Log.d("PRODUCTS", products?.data.toString())
                 _productsState.value = products
             }
         }

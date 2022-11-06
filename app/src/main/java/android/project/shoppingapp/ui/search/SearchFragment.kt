@@ -7,7 +7,10 @@ import android.project.shoppingapp.databinding.FragmentSearchBinding
 import android.project.shoppingapp.ui.search.adapters.SearchAdapter
 import android.project.shoppingapp.ui.search.adapters.SearchItemListener
 import android.project.shoppingapp.ui.search.viewmodel.SearchViewModel
+import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.customui.LoadingDialog
+import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,9 +35,12 @@ class SearchFragment : Fragment(), SearchItemListener {
     private val searchViewModel by viewModels<SearchViewModel>()
     private lateinit var navController: NavController
 
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(layoutInflater)
         return binding.root
@@ -47,8 +53,16 @@ class SearchFragment : Fragment(), SearchItemListener {
         subscribeProducts()
         categoriesCallBack()
         observeBasketAmount()
-        binding.edSearchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
+        searchViewTextListener()
+
+        binding.ivSearchCart.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
+        }
+
+    }
+
+    private fun searchViewTextListener() {
+        binding.edSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(p0: String?): Boolean {
                 searchViewModel.setSearchQuery(p0 ?: "")
                 return false
@@ -59,10 +73,6 @@ class SearchFragment : Fragment(), SearchItemListener {
             }
 
         })
-
-        binding.ivSearchCart.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
-        }
     }
 
 
@@ -72,19 +82,24 @@ class SearchFragment : Fragment(), SearchItemListener {
                 searchViewModel.categoriesState.collect { categories ->
                     when (categories) {
                         is Resources.Success -> {
+                            progressBar.dismiss()
                             categories.data?.map { category ->
                                 binding.tabLayout.addTab(
                                     binding.tabLayout.newTab().setText(category.category)
                                 )
-
-                                //
-                                //                               val chip = Chip(requireContext())
-//                                chip.text = category.toString()
-//                                binding.productsChipGroup.addView(chip)
                             }
                         }
-                        is Resources.Loading -> {}
-                        is Resources.Error -> {}
+                        is Resources.Loading -> {
+                            progressBar.show()
+                        }
+                        is Resources.Error -> {
+                            progressBar.dismiss()
+                            categories.message?.let {
+                                showCustomDialog(
+                                    it, Constants.ERROR_DIALOG, requireContext()
+                                )
+                            }
+                        }
                         else -> {}
                     }
                 }
@@ -95,18 +110,11 @@ class SearchFragment : Fragment(), SearchItemListener {
     private fun categoriesCallBack() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.d("ONTABSELECTED", tab?.text.toString())
                 searchViewModel.setCategories(tab?.text.toString())
-//                                        searchViewModel.getProductsByCategory(tab?.text.toString())
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
@@ -128,27 +136,16 @@ class SearchFragment : Fragment(), SearchItemListener {
                     val adapterSearch = SearchAdapter(this@SearchFragment)
                     adapterSearch.differ.submitList(products)
                     binding.rvSearchProducts.adapter = adapterSearch
-
-//                    when (products) {
-//                        is Resources.Success -> {
-//                            val adapterSearch = SearchAdapter()
-//                            adapterSearch.differ.submitList(
-//                                products.data
-//                            )
-//                            binding.rvSearchProducts.adapter = adapterSearch
-//                        }
-//                        is Resources.Loading -> {}
-//                        is Resources.Error -> {}
-//                        else -> {}
-//                    }
                 }
             }
         }
     }
 
     override fun onClicked(product: Products) {
-        navController.navigate(R.id.action_searchFragment3_to_productDetailFragment, Bundle().apply {
-            putString("productId", product.id.toString())
-        })
+        navController.navigate(R.id.action_searchFragment3_to_productDetailFragment,
+            Bundle().apply {
+                putString(Constants.PRODUCT_ID, product.id.toString())
+            })
     }
+
 }

@@ -1,6 +1,6 @@
 package android.project.shoppingapp.data.repository.products.impl
 
-import android.project.assignmentweek5.data.local.database.AppDatabase
+import android.project.shoppingapp.data.local.database.AppDatabase
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.ProductsAPI
 import android.project.shoppingapp.data.remote.api.mapper.toProducts

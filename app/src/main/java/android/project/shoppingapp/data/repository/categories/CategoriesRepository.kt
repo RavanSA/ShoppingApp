@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface CategoriesRepository {
 
-
     fun getAllCategories() : Flow<Resources<List<Category>>>
 
     fun getProductsByCategory(category : String) : Flow<Resources<List<ProductsDTOItem>>>

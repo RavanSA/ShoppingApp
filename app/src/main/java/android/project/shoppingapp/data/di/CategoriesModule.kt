@@ -1,7 +1,7 @@
 package android.project.shoppingapp.data.di
 
 import android.content.Context
-import android.project.assignmentweek5.data.local.database.AppDatabase
+import android.project.shoppingapp.data.local.database.AppDatabase
 import android.project.shoppingapp.data.remote.api.CategoriesAPI
 import android.project.shoppingapp.data.remote.api.ProductsAPI
 import android.project.shoppingapp.data.repository.categories.CategoriesRepository

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".MainActivity">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/supportActionBar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:icon="@drawable/ic_baseline_shopping_basket_24"
-            android:text="ShoppingApp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/colorPrimary">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,9 +25,9 @@
 
                 <ImageView
                     android:id="@+id/ivToolbarIcon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="11dp"
+                    android:layout_width="@dimen/registrationToolbarIcon"
+                    android:layout_height="@dimen/registrationToolbarIcon"
+                    android:layout_marginEnd="@dimen/margin_normal"
                     android:src="@drawable/ic_baseline_shopping_basket_24"
                     app:layout_constraintEnd_toStartOf="@id/tvToolbarTitle"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -38,9 +39,9 @@
                     android:id="@+id/tvToolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginStart="@dimen/margin_normal"
                     android:maxLines="1"
-                    android:text="ShoppingApp"
+                    android:text="@string/shopping_app_title"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_x_x_large_title"
@@ -52,6 +53,23 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:maxLines="1"
+            android:text="@string/signInTitle"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/margin_x_large"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_x_x_large_title"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -61,17 +79,24 @@
             app:tabIconTint="@color/white"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorFullWidth="false"
-            app:tabPaddingEnd="25dp"
-            app:tabPaddingStart="25dp"
+            app:tabPaddingEnd="@dimen/margin_x_large"
+            app:tabPaddingStart="@dimen/margin_x_large"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@color/colorSecondary" />
+            app:tabTextColor="@color/colorSecondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="@dimen/margin_large" />
+            android:padding="@dimen/margin_large"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
