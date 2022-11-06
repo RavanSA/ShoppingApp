@@ -55,8 +55,7 @@ class ProductsAdapter(
                 .load(product.image)
                 .into(binding.itemImage)
 
-            binding.itemTitle.text = product.title
-            binding.itemPrice.text = "USD ${product.price}"
+            binding.product = product
             itemView.setOnClickListener {
                 listener.onClicked(product)
             }

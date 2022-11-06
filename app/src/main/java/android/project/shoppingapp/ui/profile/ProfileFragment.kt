@@ -47,6 +47,8 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater)
+        binding.profileBasket = this@ProfileFragment
+        binding.alertDialog = this@ProfileFragment
         return binding.root
     }
 
@@ -55,14 +57,6 @@ class ProfileFragment : Fragment() {
         navController = findNavController()
         subscribeProductList()
         observeBasketAmount()
-        binding.profileLogout.setOnClickListener {
-            showAlertDialog(requireContext())
-        }
-
-        binding.ivProfileCart.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
-        }
-
     }
 
     private fun subscribeProductList() {
@@ -72,8 +66,7 @@ class ProfileFragment : Fragment() {
                     when (profileState) {
                         is ProfileState.Success -> {
                             progressBar.dismiss()
-                            binding.tvProfileName.text = profileState.user.username
-                            binding.tvProfileEmail.text = profileState.user.email
+                            binding.user = profileState.user
                         }
                         is ProfileState.Error -> {
                             progressBar.dismiss()
@@ -89,8 +82,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun showAlertDialog( context: Context) {
-        val dialog = Dialog(context)
+    fun showAlertDialog() {
+        val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         val binding = CustomAlertDialogBinding
@@ -118,10 +111,14 @@ class ProfileFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.totalAmount.collect { amount ->
-                    binding.cartAmount.text = amount.toString() + "$"
+                    binding.amount = amount.toString()
                 }
             }
         }
+    }
+
+    fun openProfileBasket() {
+        NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
     }
 
 }

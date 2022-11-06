@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
+class ProductFragment : Fragment(), ProductListener {
 
     private lateinit var binding: FragmentProductBinding
     private val productViewModel by viewModels<ProductViewModel>()
@@ -44,6 +44,7 @@ class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProductBinding.inflate(layoutInflater)
+        binding.basket = this@ProductFragment
         return binding.root
     }
 
@@ -54,9 +55,6 @@ class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
         onRefresh()
         subscribeProductList()
         observeBasketAmount()
-        binding.ivProductCart.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
-        }
     }
 
 
@@ -78,18 +76,19 @@ class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
                     products?.let {
                         it takeIfSuccess {
                             progressBar.dismiss()
-                            val adapter = ProductsAdapter(this@ProductFragment)
-                            adapter.differ.submitList(products.data)
-                            binding.productRecyclerView.adapter = adapter
+                            binding.productRecyclerView.adapter =
+                                ProductsAdapter(this@ProductFragment).apply {
+                                    differ.submitList(products.data)
+                                }
                         } takeIfLoading {
                             progressBar.show()
                         } takeIfError {
                             progressBar.dismiss()
-                            products.message?.let {
-                                showCustomDialog(
-                                    it, Constants.ERROR_DIALOG, requireContext()
-                                )
-                            }
+                            showCustomDialog(
+                                it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                Constants.ERROR_DIALOG,
+                                requireContext()
+                            )
                         }
                     } ?: kotlin.run {
                         progressBar.show()
@@ -103,10 +102,14 @@ class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 productViewModel.totalAmount.collect { amount ->
-                    binding.cartAmount.text = amount.toString() + "$"
+                    binding.amount = amount.toString()
                 }
             }
         }
+    }
+
+    fun openBasket() {
+        NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
     }
 
 
@@ -115,7 +118,8 @@ class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
             R.id.action_productFragment2_to_productDetailFragment,
             Bundle().apply {
                 putString(Constants.PRODUCT_ID, product.id.toString())
-            })
+            }
+        )
     }
 
 }

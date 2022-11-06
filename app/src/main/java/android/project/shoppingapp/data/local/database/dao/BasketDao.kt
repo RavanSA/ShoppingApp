@@ -39,7 +39,7 @@ interface BasketDao {
               WHERE productId = :productId AND userId = :userId""")
     suspend fun updateProductQuantity(quantity: Int, productId: String, userId: String)
 
-    @Query("SELECT * FROM ${Constants.TABLE_BASKET} WHERE userId = :userId")
+    @Query("SELECT * FROM ${Constants.TABLE_BASKET} WHERE userId = :userId AND productQuantity != 0")
     fun getAllProductsFromBasketByUserId(userId: String) : Flow<List<BasketEntity>>
 
     @Query("DELETE FROM ${Constants.TABLE_BASKET} WHERE productId = :productId and userId = :userId")

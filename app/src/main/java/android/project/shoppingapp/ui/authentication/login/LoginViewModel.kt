@@ -22,7 +22,6 @@ class LoginViewModel @Inject constructor(
     private val _loginFlow = MutableStateFlow<Resources<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Resources<FirebaseUser>?> = _loginFlow
 
-
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
 
@@ -66,5 +65,3 @@ class LoginViewModel @Inject constructor(
     }
 
 }
-
-

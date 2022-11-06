@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.project.shoppingapp.R
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.FragmentSearchBinding
-import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.search.adapters.SearchAdapter
 import android.project.shoppingapp.ui.search.adapters.SearchItemListener
 import android.project.shoppingapp.ui.search.viewmodel.SearchViewModel
-import android.project.shoppingapp.utils.*
+import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
-import android.util.Log
+import android.project.shoppingapp.utils.takeIfError
+import android.project.shoppingapp.utils.takeIfLoading
+import android.project.shoppingapp.utils.takeIfSuccess
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +83,7 @@ class SearchFragment : Fragment(), SearchItemListener {
                     categories?.let {
                         it takeIfSuccess {
                             progressBar.dismiss()
-                            categories.data?.map { category ->
+                            it.data?.map { category ->
                                 binding.tabLayout.addTab(
                                     binding.tabLayout.newTab().setText(category.category)
                                 )
@@ -91,11 +92,11 @@ class SearchFragment : Fragment(), SearchItemListener {
                             progressBar.show()
                         } takeIfError {
                             progressBar.dismiss()
-                            categories.message?.let {
-                                showCustomDialog(
-                                    it, Constants.ERROR_DIALOG, requireContext()
-                                )
-                            }
+                            showCustomDialog(
+                                it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                Constants.ERROR_DIALOG,
+                                requireContext()
+                            )
                         }
                     } ?: kotlin.run {
                         progressBar.show()
@@ -121,7 +122,7 @@ class SearchFragment : Fragment(), SearchItemListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchViewModel.totalAmount.collect { amount ->
-                    binding.cartAmount.text = amount.toString() + "$"
+                    binding.amount = amount.toString()
                 }
             }
         }
@@ -131,9 +132,10 @@ class SearchFragment : Fragment(), SearchItemListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchViewModel.productsState.collect { products ->
-                    val adapterSearch = SearchAdapter(this@SearchFragment)
-                    adapterSearch.differ.submitList(products)
-                    binding.rvSearchProducts.adapter = adapterSearch
+                    binding.rvSearchProducts.adapter =
+                        SearchAdapter(this@SearchFragment).apply {
+                            differ.submitList(products)
+                        }
                 }
             }
         }
@@ -143,7 +145,8 @@ class SearchFragment : Fragment(), SearchItemListener {
         navController.navigate(R.id.action_searchFragment3_to_productDetailFragment,
             Bundle().apply {
                 putString(Constants.PRODUCT_ID, product.id.toString())
-            })
+            }
+        )
     }
 
 }

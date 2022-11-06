@@ -37,6 +37,7 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProductDetailBinding.inflate(layoutInflater)
+        binding.backButton = this@ProductDetailFragment
         return binding.root
     }
 
@@ -44,7 +45,6 @@ class ProductDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         subscribeProductDetail()
-        navigateToBack()
     }
 
     private fun subscribeProductDetail() {
@@ -55,14 +55,7 @@ class ProductDetailFragment : Fragment() {
                         product?.let {
                             it takeIfSuccess {
                                 progressBar.dismiss()
-                                tvProductPrice.text =
-                                    product.data?.price.toString() + " USD"
-                                tvProductTitle.text = product.data?.title.toString()
-                                tvProductRating.text = product.data?.ratingRate.toString()
-                                tvProductDescription.text =
-                                    product.data?.description.toString()
-                                tvProductReview.text =
-                                    product.data?.ratingCount.toString() + " Reviews"
+                                binding.item = it.data
                                 Glide.with(this@ProductDetailFragment)
                                     .load(product.data?.image)
                                     .into(ivProductImage)
@@ -90,7 +83,7 @@ class ProductDetailFragment : Fragment() {
         lifecycleScope.launch {
             productDetailViewModel.productQuantity.collect { quantity ->
                 with(binding) {
-                    tvProductQuantity.text = quantity?.toString() ?: "0"
+                    productQuantity = quantity?.toString() ?: "0"
                     if (quantity == 0 || quantity == null) {
                         groupQuantitySettings.visibility = View.GONE
                         btnAddtoCart.visibility = View.VISIBLE

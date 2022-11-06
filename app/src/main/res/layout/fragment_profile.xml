@@ -4,6 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="amount"
+            type="String" />
+
+        <variable
+            name="user"
+            type="android.project.shoppingapp.data.model.User" />
+
+        <variable
+            name="alertDialog"
+            type="android.project.shoppingapp.ui.profile.ProfileFragment" />
+
+        <variable
+            name="profileBasket"
+            type="android.project.shoppingapp.ui.profile.ProfileFragment" />
 
     </data>
 
@@ -29,6 +44,7 @@
                     android:layout_width="@dimen/productCartSize"
                     android:layout_height="@dimen/productCartSize"
                     android:layout_marginEnd="@dimen/margin_normal"
+                    android:onClick="@{()-> profileBasket.openProfileBasket()}"
                     app:layout_constraintBottom_toBottomOf="@id/tvSearchTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvSearchTitle"
@@ -51,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/margin_x_large"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:text="@string/initialCartAmount"
+                    android:text="@{@string/moneySign(amount)}"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/ivProfileCart"
@@ -70,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/margin_normal"
-            tools:text="User Name"
+            tools:text="@{user.username}"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_x_x_large_title"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_tiny"
-            tools:text="revan.sadiqli99@gmail.com"
+            tools:text="@{user.email}"
             android:textSize="@dimen/margin_large"
             android:textColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="@+id/tvProfileName"
@@ -279,6 +295,7 @@
                     android:text="Logout"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:onClick="@{()-> alertDialog.showAlertDialog()}"
                     app:layout_constraintBottom_toTopOf="@+id/divider9"
                     app:layout_constraintEnd_toEndOf="@+id/profile_report_bug"
                     app:layout_constraintStart_toStartOf="@+id/textView13" />

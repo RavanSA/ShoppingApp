@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
+    <data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        <variable
+            name="item"
+            type="android.project.shoppingapp.data.model.Products" />
+
+        <variable
+            name="productQuantity"
+            type="String" />
+
+        <variable
+            name="backButton"
+            type="android.project.shoppingapp.ui.productdetail.ProductDetailFragment" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -30,6 +47,7 @@
                     android:layout_marginTop="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_large_title"
+                    android:text="@{Double.toString(item.price)}"
                     app:layout_constraintStart_toStartOf="@+id/flImage"
                     app:layout_constraintTop_toBottomOf="@+id/flImage"
                     tools:text="USD 1020" />
@@ -42,6 +60,7 @@
                     android:layout_marginEnd="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_x_x_large_title"
+                    android:text="@{item.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tvProductPrice"
                     app:layout_constraintTop_toBottomOf="@+id/tvProductPrice"
@@ -53,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_tiny"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:text="@{Double.toString(item.ratingRate)}"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintStart_toEndOf="@+id/ivRatingIcon"
                     app:layout_constraintTop_toBottomOf="@+id/tvProductTitle"
@@ -64,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_normal"
                     android:layout_marginBottom="@dimen/margin_x_x_large"
+                    android:text="@{item.description}"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tvProductTitle"
@@ -82,6 +103,7 @@
                         android:id="@+id/ivBackButton"
                         android:layout_width="@dimen/btnRoundedCornerBackground"
                         android:layout_height="@dimen/btnRoundedCornerBackground"
+                        android:onClick="@{()-> backButton.navigateToBack()}"
                         android:background="@drawable/bg_rounded_corner"
                         android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
                         tools:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
@@ -110,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
+                    android:text="@{@string/reviews(Double.toString(item.ratingCount))}"
                     app:layout_constraintBottom_toBottomOf="@+id/tvProductRating"
                     app:layout_constraintStart_toEndOf="@+id/tvProductRating"
                     app:layout_constraintTop_toTopOf="@+id/tvProductRating"
@@ -148,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_normal"
-                    android:text="0"
+                    android:text="@{productQuantity}"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_large_title"
                     app:layout_constraintBottom_toBottomOf="@+id/btnMinus"

@@ -4,10 +4,12 @@ import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.SearchItemListBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
 
 class SearchAdapter(
     private val listener: SearchItemListener
@@ -27,23 +29,15 @@ class SearchAdapter(
     val differ = AsyncListDiffer(this,callback)
 
 
-    inner class SearchViewHolder(private val binding : SearchItemListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SearchViewHolder(private val binding : SearchItemListBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(product: Products){
-
-            Glide.with(binding.searchItemImage)
-                .load(product.image)
-                .into(binding.searchItemImage)
-
-            binding.searchItemTitle.text = product.title
-            binding.searchItemPrice.text = "USD ${product.price}"
-            binding.searchItemRating.text = "${product.ratingRate}"
-            binding.searchItemReview.text = "${product.ratingCount} Reviews"
+            binding.product = product
 
             itemView.setOnClickListener {
                 listener.onClicked(product)
             }
-
         }
 
     }
@@ -65,3 +59,4 @@ class SearchAdapter(
 interface SearchItemListener {
     fun onClicked(product: Products)
 }
+
