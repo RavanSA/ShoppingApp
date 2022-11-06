@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class OnBoardingItemSliderAdapter(private val introSlides: List<OnBoardingItem>)
-    : RecyclerView.Adapter<OnBoardingItemSliderAdapter.IntroSlideViewHolder>(){
+class OnBoardingItemSliderAdapter(
+    private val introSlides: List<OnBoardingItem>
+    ) : RecyclerView.Adapter<OnBoardingItemSliderAdapter.IntroSlideViewHolder>(){
+
     var onTextPassed: ((textView: TextView) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntroSlideViewHolder {
@@ -31,7 +33,6 @@ class OnBoardingItemSliderAdapter(private val introSlides: List<OnBoardingItem>)
             binding.tvOnBoardItemTitle.text = introSlide.title
             binding.tvOnBoardItemDescription.text = introSlide.description
             binding.imageSlideIcon.setImageDrawable(introSlide.icon)
-//            binding.textDescription.text = introSlide.description
             onTextPassed?.invoke(binding.tvOnBoardItemTitle)
         }
     }

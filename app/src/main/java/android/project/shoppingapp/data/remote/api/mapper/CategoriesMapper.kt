@@ -14,8 +14,6 @@ fun toCategoriesEntity(categories: String): CategoryEntity {
         )
 }
 
-
-
 fun CategoryEntity.toCategory(): Category {
     return Category(
         id = 0,

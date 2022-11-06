@@ -1,6 +1,6 @@
 package android.project.shoppingapp.data.repository.cartrepository.impl
 
-import android.project.assignmentweek5.data.local.database.AppDatabase
+import android.project.shoppingapp.data.local.database.AppDatabase
 import android.project.shoppingapp.data.local.database.entity.BasketEntity
 import android.project.shoppingapp.data.repository.cartrepository.CartRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,28 +16,28 @@ class CartRepositoryImpl @Inject constructor(
         return dao.insertProductToBasket(product)
     }
 
-    override suspend fun increaseProductQuantity(productId: Int) {
-        return dao.addProductQuantity(productId)
+    override suspend fun increaseProductQuantity(productId: Int, userId: String) {
+        return dao.addProductQuantity(productId, userId)
     }
 
-    override suspend fun decreaseProductQuantity(productId: Int) {
-        return dao.decreaseProductQuantity(productId)
+    override suspend fun decreaseProductQuantity(productId: Int, userId: String) {
+        return dao.decreaseProductQuantity(productId, userId)
     }
 
-    override fun getProductQuantity(productId: Int): Flow<Int?> {
-        return dao.getProductQuantity(productId)
+    override fun getProductQuantity(productId: Int, userId: String): Flow<Int?> {
+        return dao.getProductQuantity(productId, userId)
     }
 
-    override fun getAllProductsFromBasketByUserId(): Flow<List<BasketEntity>> {
-        return dao.getAllProductsFromBasketByUserId()
+    override fun getAllProductsFromBasketByUserId(userId: String): Flow<List<BasketEntity>> {
+        return dao.getAllProductsFromBasketByUserId(userId)
     }
 
-    override suspend fun deleteBasketItemById(productId: Int) {
-        return dao.deleteBasketItemById(productId)
+    override suspend fun deleteBasketItemById(productId: Int, userId: String) {
+        return dao.deleteBasketItemById(productId, userId)
     }
 
-    override suspend fun deleteBasket() {
-        return dao.deleteBasket()
+    override suspend fun deleteBasket(userId: String) {
+        return dao.deleteBasket(userId)
     }
 
 }

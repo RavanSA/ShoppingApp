@@ -16,6 +16,7 @@ import android.project.shoppingapp.ui.products.adapter.NewProductsLists
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.view.Window
@@ -25,6 +26,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,11 +38,17 @@ class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
     private lateinit var navController: NavController
 
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater)
+        binding.profileBasket = this@ProfileFragment
+        binding.alertDialog = this@ProfileFragment
         return binding.root
     }
 
@@ -48,9 +56,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         subscribeProductList()
-        binding.profileLogout.setOnClickListener {
-            showAlertDialog(requireContext())
-        }
+        observeBasketAmount()
     }
 
     private fun subscribeProductList() {
@@ -59,11 +65,16 @@ class ProfileFragment : Fragment() {
                 viewModel.profileInfo.collect { profileState ->
                     when (profileState) {
                         is ProfileState.Success -> {
-                            binding.profileName.text = profileState.user.username
-                            binding.profileEmail.text = profileState.user.email
+                            progressBar.dismiss()
+                            binding.user = profileState.user
                         }
-                        is ProfileState.Error -> {}
-                        is ProfileState.Loading -> {}
+                        is ProfileState.Error -> {
+                            progressBar.dismiss()
+                            showCustomDialog(profileState.message, Constants.ERROR_DIALOG, requireContext())
+                        }
+                        is ProfileState.Loading -> {
+                            progressBar.show()
+                        }
                         else -> {}
                     }
                 }
@@ -71,8 +82,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun showAlertDialog( context: Context) {
-        val dialog = Dialog(context)
+    fun showAlertDialog() {
+        val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         val binding = CustomAlertDialogBinding
@@ -89,14 +100,25 @@ class ProfileFragment : Fragment() {
             btnNo.setOnClickListener {
                 dialog.dismiss()
             }
-            ivErrorDialog.setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.ic_baseline_info_24)
-            )
         }
         dialog.setContentView(binding.root)
         dialog.show()
 
     }
 
+
+    private fun observeBasketAmount() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.totalAmount.collect { amount ->
+                    binding.amount = amount.toString()
+                }
+            }
+        }
+    }
+
+    fun openProfileBasket() {
+        NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
+    }
 
 }

@@ -1,10 +1,10 @@
 package android.project.shoppingapp.ui.productdetail
 
-import android.project.shoppingapp.data.local.database.entity.BasketEntity
-import android.project.shoppingapp.data.model.Category
-import android.project.shoppingapp.data.model.Products
+import android.project.shoppingapp.data.local.DataStoreManager
+import android.project.shoppingapp.data.local.database.entity.BasketEntity import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.repository.cartrepository.CartRepository
 import android.project.shoppingapp.data.repository.products.ProductRepository
+import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.Resources
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -20,28 +20,32 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val cartRepository: CartRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val dataStore: DataStoreManager
 ) : ViewModel() {
 
     private val _productState: MutableStateFlow<Resources<Products>?> =
         MutableStateFlow(null)
     val productState: StateFlow<Resources<Products>?> = _productState
 
-//    private val _product: MutableStateFlow<Products?> = MutableStateFlow(null)
-    private val _productQuantity: MutableStateFlow<Int?> = MutableStateFlow(null)
+    private val _productQuantity: MutableStateFlow<Int?> = MutableStateFlow(0)
     val productQuantity: StateFlow<Int?> = _productQuantity
 
+    private var curretnUser: String = ""
+
     init {
-        savedStateHandle.get<String>("productId")?.let { productId ->
+        getUserId()
+        savedStateHandle.get<String>(Constants.PRODUCT_ID)?.let { productId ->
             getProductById(productId.toInt())
             getProductQuantity(productId.toInt())
         }
     }
 
-
-//    fun setProduct(product: Products) {
-//        _product.value = product
-//    }
+    private fun getUserId() = viewModelScope.launch {
+        dataStore.userId.collect { uid ->
+            curretnUser = uid
+        }
+    }
 
     private fun getProductById(id: Int) = viewModelScope.launch {
         productRepository.getProductById(id).collect { product ->
@@ -60,7 +64,8 @@ class ProductDetailViewModel @Inject constructor(
             ratingRate = product.ratingRate,
             title = product.title,
             productQuantity = 1,
-            userId = ""
+            userId = curretnUser,
+            basketId = 0
         )
 
         cartRepository.insertProductToBasket(product = basket)
@@ -68,15 +73,19 @@ class ProductDetailViewModel @Inject constructor(
 
 
     fun increaseProductQuantity(productId: Int) = viewModelScope.launch {
-        cartRepository.increaseProductQuantity(productId)
+        if(productQuantity.value != 0) {
+            cartRepository.increaseProductQuantity(productId, curretnUser)
+        }
     }
 
     fun decreaseProductQuantity(productId: Int) = viewModelScope.launch {
-        cartRepository.decreaseProductQuantity(productId)
+        if(productQuantity.value!! > 0) {
+            cartRepository.decreaseProductQuantity(productId, curretnUser)
+        }
     }
 
     private fun getProductQuantity(productId: Int) = viewModelScope.launch {
-        cartRepository.getProductQuantity(productId).collect { productQuantity->
+        cartRepository.getProductQuantity(productId, curretnUser).collect { productQuantity->
             _productQuantity.value = productQuantity
         }
     }

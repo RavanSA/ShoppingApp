@@ -11,9 +11,11 @@
         <ImageView
             android:id="@+id/ivErrorDialog"
             android:layout_width="match_parent"
+            android:minWidth="600dp"
             android:layout_height="120dp"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_check_circle_outline_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,32 +38,31 @@
         <Button
             android:id="@+id/btnNo"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginTop="@dimen/margin_x_x_large"
+            android:layout_marginBottom="@dimen/margin_x_large"
             android:background="@color/colorRed"
             android:text="No"
             android:textColor="#ffffffff"
-            android:layout_marginBottom="@dimen/margin_x_large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvErrorDialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnYes"
             app:layout_constraintHorizontal_chainStyle="spread"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorDialog" />
 
         <Button
             android:id="@+id/btnYes"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginTop="@dimen/margin_x_x_large"
+            android:layout_marginBottom="@dimen/margin_x_large"
             android:background="@color/colorRed"
             android:text="YES"
             android:textColor="#ffffffff"
-            android:layout_marginBottom="@dimen/margin_x_large"
             app:layout_constraintBottom_toBottomOf="@id/btnNo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnNo"
-            app:layout_constraintTop_toTopOf="@id/btnNo"/>
+            app:layout_constraintTop_toTopOf="@id/btnNo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

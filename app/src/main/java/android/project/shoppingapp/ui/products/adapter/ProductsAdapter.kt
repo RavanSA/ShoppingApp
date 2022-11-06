@@ -16,10 +16,8 @@ class ProductsAdapter(
 ) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
 
-
     private val callback = object : DiffUtil.ItemCallback<Products>() {
         override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
-            Log.d("ADAPTERITEM1", oldItem.toString())
             return oldItem.id == newItem.id
         }
 
@@ -27,7 +25,6 @@ class ProductsAdapter(
             oldItem: Products,
             newItem: Products
         ): Boolean {
-            Log.d("ADAPTERITEM2", oldItem.toString())
             return oldItem == newItem
         }
 
@@ -42,10 +39,8 @@ class ProductsAdapter(
     }
 
 
-
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         val product = differ.currentList[position]
-        Log.d("ADAPTERITEMdıfer", product.toString())
         holder.bindData(product)
     }
 
@@ -56,22 +51,15 @@ class ProductsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(product: Products) {
-            Log.d("VOEWHOLDER", product.toString())
             Glide.with(binding.itemImage)
                 .load(product.image)
                 .into(binding.itemImage)
 
-            binding.itemTitle.text = product.title
-            binding.itemPrice.text = "USD ${product.price}"
-            binding.itemRating.text = "${product.ratingCount}"
-            binding.itemReview.text = "${product.ratingRate} Reviews"
+            binding.product = product
             itemView.setOnClickListener {
                 listener.onClicked(product)
             }
-
-
         }
-
     }
 
 }

@@ -1,91 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        <variable
+            name="amount"
+            type="String" />
+
+        <variable
+            name="basket"
+            type="android.project.shoppingapp.ui.products.ProductFragment" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="@dimen/margin_x_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/ivappLogo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_shopping_basket_24"
-                app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                app:layout_constraintEnd_toStartOf="@+id/textView5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView5" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="24dp"
-                android:text="ShoppingApp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_x_x_large_title"
-                app:layout_constraintStart_toEndOf="@+id/ivappLogo"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/ivAppLogo"
+                    android:layout_width="@dimen/toolbarAppLogoSize"
+                    android:layout_height="@dimen/toolbarAppLogoSize"
+                    android:src="@drawable/ic_baseline_shopping_basket_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvToolbarTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/tvToolbarTitle"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvToolbarTitle" />
 
-            <ImageView
-                android:id="@+id/product_cart"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="24dp"
-                android:src="@drawable/ic_baseline_shopping_cart_24"
-                app:layout_constraintBottom_toBottomOf="@+id/ivappLogo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ivappLogo" />
+                <TextView
+                    android:id="@+id/tvToolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_tiny"
+                    android:layout_marginTop="@dimen/margin_x_large"
+                    android:layout_marginBottom="@dimen/margin_x_large"
+                    android:text="@string/ApplicationTitle"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_large_title"
+                    app:layout_constraintStart_toEndOf="@+id/ivAppLogo"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/cartAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_marginEnd="8dp"
-                android:text="1.00$"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/product_cart"
-                app:layout_constraintTop_toTopOf="@+id/ivappLogo"
-                app:tint="@color/black" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/ivProductCart"
+                    android:layout_width="@dimen/productCartSize"
+                    android:layout_height="@dimen/productCartSize"
+                    android:layout_marginEnd="@dimen/margin_x_large"
+                    android:onClick="@{()-> basket.openBasket()}"
+                    android:src="@drawable/ic_baseline_shopping_cart_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivAppLogo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ivAppLogo" />
+
+                <TextView
+                    android:id="@+id/cartAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_x_large"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:text="@{@string/moneySign(amount)}"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/ivProductCart"
+                    app:layout_constraintEnd_toStartOf="@+id/ivProductCart"
+                    app:layout_constraintTop_toTopOf="@+id/ivAppLogo"
+                    app:tint="@color/black" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.appcompat.widget.Toolbar>
-
-<!--        <androidx.constraintlayout.widget.Barrier-->
-<!--            android:id="@+id/barrierToolBar"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:barrierAllowsGoneWidgets="false"-->
-<!--            app:barrierDirection="bottom"-->
-<!--            app:constraint_referenced_ids="cartAmount, ivappLogo,textView5,product_cart" />-->
-
-        <TextView
-            android:id="@+id/tvProductTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:layout_marginEnd="8dp"
-            android:text="Product List"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_x_large_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swiperefresh"
@@ -93,19 +90,18 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProductTitle">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/product_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvProductTitle"
                 app:spanCount="2"
                 tools:listitem="@layout/product_item_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

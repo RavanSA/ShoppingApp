@@ -29,6 +29,7 @@ class LoginFragment : Fragment() {
     private val loginViewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
+
     private val progressBar by lazy {
         LoadingDialog(requireContext())
     }
@@ -57,30 +58,28 @@ class LoginFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 with(loginViewModel) {
                     loginFlow.collect { uiState ->
-                        when (uiState) {
-                            is Resources.Success -> {
+                        uiState?.let {
+                            it takeIfSuccess {
                                 progressBar.dismiss()
-
-                              showCustomDialog("Succesfully Logged In",Constants.SUCCES_DIALOG, requireContext())
-
+                                showCustomDialog(
+                                    Constants.SUCCESSFULL_LOGIN,
+                                    Constants.SUCCES_DIALOG,
+                                    requireContext()
+                                )
                                 setUserAuthenticated()
-                                Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
-                                    .show()
-//                                ActivityNavGraph.startApplicationFlow(
-//                                    requireActivity(), requireContext()
-//                                )
                                 navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
-
-                            }
-                            is Resources.Loading -> {
+                            } takeIfLoading {
                                 progressBar.show()
-                            }
-                            is Resources.Error -> {
+                            } takeIfError {
                                 progressBar.dismiss()
-                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
-                                uiState.message?.let { Log.d("Error dialog", it) }
+                                showCustomDialog(
+                                    it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                    Constants.ERROR_DIALOG,
+                                    requireContext()
+                                )
                             }
-                            else -> {}
+                        } ?: kotlin.run {
+                            progressBar.dismiss()
                         }
                     }
                 }

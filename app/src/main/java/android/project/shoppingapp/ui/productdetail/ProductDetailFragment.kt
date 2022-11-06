@@ -1,18 +1,15 @@
 package android.project.shoppingapp.ui.productdetail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.project.shoppingapp.data.model.Products
+import android.project.shoppingapp.databinding.FragmentProductDetailBinding
+import android.project.shoppingapp.utils.*
+import android.project.shoppingapp.utils.customui.LoadingDialog
+import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.project.shoppingapp.R
-import android.project.shoppingapp.data.model.Products
-import android.project.shoppingapp.databinding.FragmentProductBinding
-import android.project.shoppingapp.databinding.FragmentProductDetailBinding
-import android.project.shoppingapp.ui.products.adapter.NewProductsLists
-import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
-import android.project.shoppingapp.utils.Resources
-import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -31,12 +28,16 @@ class ProductDetailFragment : Fragment() {
     private val productDetailViewModel by viewModels<ProductDetailViewModel>()
     private lateinit var navController: NavController
 
+    private val progressBar by lazy {
+        LoadingDialog(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProductDetailBinding.inflate(layoutInflater)
+        binding.backButton = this@ProductDetailFragment
         return binding.root
     }
 
@@ -47,25 +48,30 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun subscribeProductDetail() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                productDetailViewModel.productState.collect { product ->
-                    when (product) {
-                        is Resources.Success -> {
-                            binding.productDetailPrice.text = product.data?.price.toString()
-                            binding.productDetailTitle.text = product.data?.title.toString()
-                            binding.productDetailRating.text = product.data?.ratingRate.toString()
-                            binding.productDetailDescription.text =
-                                product.data?.description.toString()
-                            binding.productDetailReviews.text = product.data?.ratingCount.toString()
-                            Glide.with(this@ProductDetailFragment)
-                                .load(product.data?.image)
-                                .into(binding.productDetailImage)
-                            product.data?.let { getProductQuantity(it) }
+        with(binding) {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    productDetailViewModel.productState.collect { product ->
+                        product?.let {
+                            it takeIfSuccess {
+                                progressBar.dismiss()
+                                binding.item = it.data
+                                Glide.with(this@ProductDetailFragment)
+                                    .load(product.data?.image)
+                                    .into(ivProductImage)
+                                product.data?.let { getProductQuantity(it) }
+                            } takeIfLoading {
+                                progressBar.show()
+                            } takeIfError {
+                                progressBar.dismiss()
+                                showCustomDialog(
+                                    it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                    Constants.ERROR_DIALOG, requireContext()
+                                )
+                            }
+                        } ?: kotlin.run {
+                            progressBar.show()
                         }
-                        is Resources.Loading -> {}
-                        is Resources.Error -> {}
-                        else -> {}
                     }
                 }
             }
@@ -76,17 +82,26 @@ class ProductDetailFragment : Fragment() {
     private fun getProductQuantity(product: Products) {
         lifecycleScope.launch {
             productDetailViewModel.productQuantity.collect { quantity ->
-                binding.cartItemQuantity.text = quantity?.toString() ?: "0"
-                binding.productDetailAddToCart.setOnClickListener {
+                with(binding) {
+                    productQuantity = quantity?.toString() ?: "0"
                     if (quantity == 0 || quantity == null) {
-                        addToCart(product)
+                        groupQuantitySettings.visibility = View.GONE
+                        btnAddtoCart.visibility = View.VISIBLE
+                    } else {
+                        groupQuantitySettings.visibility = View.VISIBLE
+                        btnAddtoCart.visibility = View.GONE
                     }
-                }
-                binding.cartItemPlus.setOnClickListener {
-                    increaseProductQuantity(product.id)
-                }
-                binding.cartItemMinus.setOnClickListener {
-                    if(quantity != 0) decreaseProductQuantity(product.id)
+                    btnAddtoCart.setOnClickListener {
+                        if (quantity == 0 || quantity == null) {
+                            addToCart(product)
+                        }
+                    }
+                    btnPlus.setOnClickListener {
+                        increaseProductQuantity(product.id)
+                    }
+                    btnMinus.setOnClickListener {
+                        if (quantity != 0) decreaseProductQuantity(product.id)
+                    }
                 }
             }
         }
@@ -104,8 +119,11 @@ class ProductDetailFragment : Fragment() {
         productDetailViewModel.decreaseProductQuantity(productId)
     }
 
+
     fun navigateToBack() {
-        navController.popBackStack()
+        binding.ivBackButton.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
 }

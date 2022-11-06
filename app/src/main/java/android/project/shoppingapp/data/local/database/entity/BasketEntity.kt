@@ -12,7 +12,9 @@ data class BasketEntity(
     val category: String,
     @ColumnInfo(name="productDescription")
     val description: String,
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "basketId")
+    val basketId: Int,
     @ColumnInfo(name="productId")
     val productId: Int,
     @ColumnInfo(name="productImage")

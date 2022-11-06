@@ -1,19 +1,19 @@
 package android.project.shoppingapp.ui.authentication.registration
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentRegistrationBinding
 import android.project.shoppingapp.utils.Constants
 import android.project.shoppingapp.utils.customui.LoadingDialog
-import android.project.shoppingapp.utils.Resources
 import android.project.shoppingapp.utils.customui.showCustomDialog
-import android.util.Log
-import android.widget.Toast
+import android.project.shoppingapp.utils.takeIfError
+import android.project.shoppingapp.utils.takeIfLoading
+import android.project.shoppingapp.utils.takeIfSuccess
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +29,7 @@ class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var navController: NavController
     private val registrationViewModel by viewModels<RegistrationViewModel>()
+
     private val progressBar by lazy {
         LoadingDialog(requireContext())
     }
@@ -56,30 +57,28 @@ class RegistrationFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 with(registrationViewModel) {
                     signup.collect { uiState ->
-                        when (uiState) {
-                            is Resources.Success -> {
+                        uiState?.let {
+                            it takeIfSuccess {
                                 progressBar.dismiss()
-                                uiState.message?.let { showCustomDialog(it,Constants.SUCCES_DIALOG, requireContext()) }
-
-                                Toast.makeText(requireContext(), "$uiState", Toast.LENGTH_LONG)
-                                    .show()
-                                Log.d("UISATELOG", uiState.toString())
+                                    showCustomDialog(
+                                        Constants.SUCCESSFULL_LOGIN,
+                                        Constants.SUCCES_DIALOG,
+                                        requireContext()
+                                    )
                                 setUserAuthenticated()
-//                                ActivityNavGraph.startApplicationFlow(
-//                                    requireActivity(),
-//                                    requireContext()
-//                                )
                                 navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
-
-                            }
-                            is Resources.Loading -> {
+                            } takeIfLoading {
                                 progressBar.show()
-                            }
-                            is Resources.Error -> {
+                            } takeIfError {
                                 progressBar.dismiss()
-                                uiState.message?.let { showCustomDialog(it, Constants.ERROR_DIALOG, requireContext()) }
+                                    showCustomDialog(
+                                        it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                        Constants.ERROR_DIALOG,
+                                        requireContext()
+                                    )
                             }
-                            else -> {}
+                        } ?: kotlin.run {
+                            progressBar.dismiss()
                         }
                     }
                 }
@@ -167,7 +166,6 @@ class RegistrationFragment : Fragment() {
                                 }
                             }
                         }
-
                     }
                 }
             }

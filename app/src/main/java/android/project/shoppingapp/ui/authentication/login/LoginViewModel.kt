@@ -22,14 +22,11 @@ class LoginViewModel @Inject constructor(
     private val _loginFlow = MutableStateFlow<Resources<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Resources<FirebaseUser>?> = _loginFlow
 
-
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
 
     val emailError = MutableStateFlow("")
     val passwordError = MutableStateFlow("")
-
-
 
     fun setEmail(email: String) {
         _email.value = email
@@ -64,12 +61,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun setUserAuthenticated() = viewModelScope.launch {
-        Log.d("SETUSERAUTH", "LOGIN")
         dataStoreManager.updateUserAuthentication(true)
     }
 
-
-
 }
-
-

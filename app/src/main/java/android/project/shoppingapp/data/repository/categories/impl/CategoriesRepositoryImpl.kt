@@ -1,19 +1,13 @@
 package android.project.shoppingapp.data.repository.categories.impl
 
-import android.project.assignmentweek5.data.local.database.AppDatabase
+import android.project.shoppingapp.data.local.database.AppDatabase
 import android.project.shoppingapp.data.model.Category
-import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.data.remote.api.CategoriesAPI
-import android.project.shoppingapp.data.remote.api.ProductsAPI
-import android.project.shoppingapp.data.remote.api.dto.categories.CategoriesDTO
-import android.project.shoppingapp.data.remote.api.dto.products.ProductDTO
 import android.project.shoppingapp.data.remote.api.dto.products.ProductsDTOItem
 import android.project.shoppingapp.data.remote.api.mapper.toCategoriesEntity
 import android.project.shoppingapp.data.remote.api.mapper.toCategory
 import android.project.shoppingapp.data.repository.categories.CategoriesRepository
-import android.project.shoppingapp.data.repository.products.ProductRepository
 import android.project.shoppingapp.utils.Resources
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -24,7 +18,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 class CategoriesRepositoryImpl @Inject constructor(
-    private val api: CategoriesAPI, private val appDatabase: AppDatabase
+    private val api: CategoriesAPI,
+    private val appDatabase: AppDatabase
 ) : CategoriesRepository {
 
     private val categoryDao = appDatabase.categoriesDao()
@@ -65,7 +60,6 @@ class CategoriesRepositoryImpl @Inject constructor(
             it.toCategory()
         }))
     }.catch { error ->
-        Log.d("CATEGORIES", error.toString())
         emit(Resources.Error<List<Category>>(error.message.toString()))
     }.flowOn(Dispatchers.IO)
 
@@ -78,6 +72,5 @@ class CategoriesRepositoryImpl @Inject constructor(
         }.catch { error ->
             emit(Resources.Error<List<ProductsDTOItem>>(error.message.toString()))
         }.flowOn(Dispatchers.IO)
-
 
 }

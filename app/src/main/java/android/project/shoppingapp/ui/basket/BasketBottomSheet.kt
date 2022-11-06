@@ -49,33 +49,32 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
     private fun subsribeUI() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-
                 basketViewModel.basketState.collect { products ->
-                    val basketAdapter = BasketModalSheetAdapter()
+                    with(binding) {
+                        if (products?.size == 0) {
+                            binding.cartCheckout.visibility = View.GONE
+                        }
+                        val basketAdapter = BasketModalSheetAdapter()
+                        with(basketAdapter) {
+                            rvBasket.adapter = basketAdapter
+                            differ.submitList(products)
+                            decreaseListener {
+                                basketViewModel.decreaseProductQuantity(it.productId)
+                            }
+                            increaseListener {
+                                basketViewModel.increaseProductQuantity(it.productId)
+                            }
 
-                    binding.rvBasket.adapter = basketAdapter
-                    basketAdapter.differ.submitList(products)
-//                    basketAdapter.removeListener {
-//                        basketViewModel.increaseProductQuantity(it.productId)
-//                    }
-                    basketAdapter.decreaseListener {
-                        basketViewModel.decreaseProductQuantity(it.productId)
+                            removeListener {
+                                basketViewModel.deleteItemFromBasket(it.productId)
+                            }
+                            cartCheckout.setOnClickListener {
+                                showAlertDialog(requireContext())
+                            }
+                            cartItemsInfo.text = "Total ${products?.size.toString()} items"
+                        }
                     }
-                    basketAdapter.increaseListener {
-                        basketViewModel.increaseProductQuantity(it.productId)
-                    }
-
-                    basketAdapter.removeListener {
-                        basketViewModel.deleteItemFromBasket(it.productId)
-                    }
-                    binding.cartCheckout.setOnClickListener {
-                        showAlertDialog(requireContext())
-                    }
-
-                    binding.cartItemsInfo.text = products?.size.toString()
                 }
-
-
             }
         }
     }
@@ -83,7 +82,7 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
     private fun getTotalPrice() {
         lifecycleScope.launch {
             basketViewModel.totalAmount.collect { price ->
-                binding.cartItemsPrice.text = price.toString()
+                binding.cartItemsPrice.text = price.toString() + " USD"
             }
         }
     }
@@ -119,8 +118,3 @@ class BasketBottomSheet : BottomSheetDialogFragment() {
 
 
 }
-
-//    override fun onClicked(basket: BasketEntity) {
-//        binding.
-//    }
-
