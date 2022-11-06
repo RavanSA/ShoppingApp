@@ -8,8 +8,7 @@ import android.project.shoppingapp.ui.products.adapter.NewProductsLists
 import android.project.shoppingapp.ui.products.adapter.ProductListener
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.products.viewmodel.ProductViewModel
-import android.project.shoppingapp.utils.Constants
-import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.*
 import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
@@ -30,7 +29,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class ProductFragment : Fragment(), ProductListener {
+class ProductFragment : Fragment(R.layout.fragment_product), ProductListener {
 
     private lateinit var binding: FragmentProductBinding
     private val productViewModel by viewModels<ProductViewModel>()
@@ -61,7 +60,6 @@ class ProductFragment : Fragment(), ProductListener {
     }
 
 
-
     private fun onRefresh() {
         binding.swiperefresh.setOnRefreshListener {
             lifecycleScope.launch {
@@ -77,17 +75,15 @@ class ProductFragment : Fragment(), ProductListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 productViewModel.productsState.collect { products ->
-                    when (products) {
-                        is Resources.Success -> {
+                    products?.let {
+                        it takeIfSuccess {
                             progressBar.dismiss()
                             val adapter = ProductsAdapter(this@ProductFragment)
                             adapter.differ.submitList(products.data)
                             binding.productRecyclerView.adapter = adapter
-                        }
-                        is Resources.Loading -> {
+                        } takeIfLoading {
                             progressBar.show()
-                        }
-                        is Resources.Error -> {
+                        } takeIfError {
                             progressBar.dismiss()
                             products.message?.let {
                                 showCustomDialog(
@@ -95,7 +91,8 @@ class ProductFragment : Fragment(), ProductListener {
                                 )
                             }
                         }
-                        else -> progressBar.show()
+                    } ?: kotlin.run {
+                        progressBar.show()
                     }
                 }
             }
@@ -106,7 +103,7 @@ class ProductFragment : Fragment(), ProductListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 productViewModel.totalAmount.collect { amount ->
-                  binding.cartAmount.text = amount.toString() + "$"
+                    binding.cartAmount.text = amount.toString() + "$"
                 }
             }
         }
@@ -114,9 +111,11 @@ class ProductFragment : Fragment(), ProductListener {
 
 
     override fun onClicked(product: Products) {
-        navController.navigate(R.id.action_productFragment2_to_productDetailFragment, Bundle().apply {
-            putString(Constants.PRODUCT_ID, product.id.toString())
-        })
+        navController.navigate(
+            R.id.action_productFragment2_to_productDetailFragment,
+            Bundle().apply {
+                putString(Constants.PRODUCT_ID, product.id.toString())
+            })
     }
 
 }

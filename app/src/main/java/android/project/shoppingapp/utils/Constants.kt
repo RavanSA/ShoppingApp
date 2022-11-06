@@ -16,4 +16,10 @@ object Constants {
 
     const val TABLE_USER = "user"
 
+    const val ERROR_TYPE_UNEXPECTED = "Unexpected Error Occured"
+
+    const val SUCCESSFULL_LOGIN = "Succesfully Logged In"
+
+    const val MONEY_SIGN  = "USD"
+
 }

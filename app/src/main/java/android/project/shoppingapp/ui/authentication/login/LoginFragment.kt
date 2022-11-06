@@ -58,34 +58,28 @@ class LoginFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 with(loginViewModel) {
                     loginFlow.collect { uiState ->
-                        when (uiState) {
-                            is Resources.Success -> {
+                        uiState?.let {
+                            it takeIfSuccess {
                                 progressBar.dismiss()
-
                                 showCustomDialog(
-                                    "Succesfully Logged In",
+                                    Constants.SUCCESSFULL_LOGIN,
                                     Constants.SUCCES_DIALOG,
                                     requireContext()
                                 )
-
                                 setUserAuthenticated()
                                 navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
-
-                            }
-                            is Resources.Loading -> {
+                            } takeIfLoading {
                                 progressBar.show()
-                            }
-                            is Resources.Error -> {
+                            } takeIfError {
                                 progressBar.dismiss()
-                                uiState.message?.let {
-                                    showCustomDialog(
-                                        it,
-                                        Constants.ERROR_DIALOG,
-                                        requireContext()
-                                    )
-                                }
+                                showCustomDialog(
+                                    it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                    Constants.ERROR_DIALOG,
+                                    requireContext()
+                                )
                             }
-                            else -> {}
+                        } ?: kotlin.run {
+                            progressBar.dismiss()
                         }
                     }
                 }

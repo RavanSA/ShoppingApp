@@ -3,8 +3,7 @@ package android.project.shoppingapp.ui.productdetail
 import android.os.Bundle
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.FragmentProductDetailBinding
-import android.project.shoppingapp.utils.Constants
-import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.*
 import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.view.LayoutInflater
@@ -53,8 +52,8 @@ class ProductDetailFragment : Fragment() {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     productDetailViewModel.productState.collect { product ->
-                        when (product) {
-                            is Resources.Success -> {
+                        product?.let {
+                            it takeIfSuccess {
                                 progressBar.dismiss()
                                 tvProductPrice.text =
                                     product.data?.price.toString() + " USD"
@@ -68,19 +67,17 @@ class ProductDetailFragment : Fragment() {
                                     .load(product.data?.image)
                                     .into(ivProductImage)
                                 product.data?.let { getProductQuantity(it) }
-                            }
-                            is Resources.Loading -> {
+                            } takeIfLoading {
                                 progressBar.show()
-                            }
-                            is Resources.Error -> {
+                            } takeIfError {
                                 progressBar.dismiss()
-                                product.message?.let {
-                                    showCustomDialog(
-                                        it, Constants.ERROR_DIALOG, requireContext()
-                                    )
-                                }
+                                showCustomDialog(
+                                    it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
+                                    Constants.ERROR_DIALOG, requireContext()
+                                )
                             }
-                            else -> {}
+                        } ?: kotlin.run {
+                            progressBar.show()
                         }
                     }
                 }

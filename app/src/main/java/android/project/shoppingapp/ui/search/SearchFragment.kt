@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.project.shoppingapp.R
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.FragmentSearchBinding
+import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.search.adapters.SearchAdapter
 import android.project.shoppingapp.ui.search.adapters.SearchItemListener
 import android.project.shoppingapp.ui.search.viewmodel.SearchViewModel
-import android.project.shoppingapp.utils.Constants
-import android.project.shoppingapp.utils.Resources
+import android.project.shoppingapp.utils.*
 import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
@@ -71,7 +71,6 @@ class SearchFragment : Fragment(), SearchItemListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
-
         })
     }
 
@@ -80,19 +79,17 @@ class SearchFragment : Fragment(), SearchItemListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 searchViewModel.categoriesState.collect { categories ->
-                    when (categories) {
-                        is Resources.Success -> {
+                    categories?.let {
+                        it takeIfSuccess {
                             progressBar.dismiss()
                             categories.data?.map { category ->
                                 binding.tabLayout.addTab(
                                     binding.tabLayout.newTab().setText(category.category)
                                 )
                             }
-                        }
-                        is Resources.Loading -> {
+                        } takeIfLoading {
                             progressBar.show()
-                        }
-                        is Resources.Error -> {
+                        } takeIfError {
                             progressBar.dismiss()
                             categories.message?.let {
                                 showCustomDialog(
@@ -100,7 +97,8 @@ class SearchFragment : Fragment(), SearchItemListener {
                                 )
                             }
                         }
-                        else -> {}
+                    } ?: kotlin.run {
+                        progressBar.show()
                     }
                 }
             }

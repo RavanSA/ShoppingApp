@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.project.shoppingapp.R
 import android.project.shoppingapp.databinding.FragmentRegistrationBinding
-import android.project.shoppingapp.utils.Constants
+import android.project.shoppingapp.utils.*
 import android.project.shoppingapp.utils.customui.LoadingDialog
-import android.project.shoppingapp.utils.Resources
 import android.project.shoppingapp.utils.customui.showCustomDialog
 import android.util.Log
 import android.widget.Toast
@@ -57,33 +56,28 @@ class RegistrationFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 with(registrationViewModel) {
                     signup.collect { uiState ->
-                        when (uiState) {
-                            is Resources.Success -> {
+                        uiState?.let {
+                            it takeIfSuccess {
                                 progressBar.dismiss()
-                                uiState.message?.let {
                                     showCustomDialog(
-                                        it,
+                                        Constants.SUCCESSFULL_LOGIN,
                                         Constants.SUCCES_DIALOG,
                                         requireContext()
                                     )
-                                }
                                 setUserAuthenticated()
                                 navController.navigate(R.id.action_authorizationFragment3_to_productFragment2)
-                            }
-                            is Resources.Loading -> {
+                            } takeIfLoading {
                                 progressBar.show()
-                            }
-                            is Resources.Error -> {
+                            } takeIfError {
                                 progressBar.dismiss()
-                                uiState.message?.let {
                                     showCustomDialog(
-                                        it,
+                                        it.message ?: Constants.ERROR_TYPE_UNEXPECTED,
                                         Constants.ERROR_DIALOG,
                                         requireContext()
                                     )
-                                }
                             }
-                            else -> {}
+                        } ?: kotlin.run {
+                            progressBar.dismiss()
                         }
                     }
                 }
