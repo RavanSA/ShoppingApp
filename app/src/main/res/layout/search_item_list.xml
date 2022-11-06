@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{Double.toString(product.price)}"
+                android:text="@{@string/moneySign(Double.toString(product.price))}"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@+id/search_item_title"
                 app:layout_constraintTop_toBottomOf="@+id/search_item_title" />
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@{Integer.toString(product.ratingCount)}"
+                android:text="@{@string/reviews(Double.toString(product.ratingCount))}"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/search_item_rating"

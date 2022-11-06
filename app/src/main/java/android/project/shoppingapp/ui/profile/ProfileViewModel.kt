@@ -57,7 +57,10 @@ class ProfileViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch {
         firebaseRepository.logout()
-        dataStoreManager.updateUserAuthentication(false)
+        dataStoreManager.apply {
+            updateUserAuthentication(false)
+            setUserId("")
+        }
     }
 
     private fun computeBasketAmount() = viewModelScope.launch {
