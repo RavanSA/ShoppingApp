@@ -77,7 +77,7 @@
                         android:id="@+id/item_price"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{Double.toString(product.price)}"
+                        android:text="@{@string/moneySign(Double.toString(product.price))}"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>

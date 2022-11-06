@@ -47,7 +47,7 @@
                     android:layout_marginTop="@dimen/margin_normal"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_large_title"
-                    android:text="@{Double.toString(item.price)}"
+                    android:text="@{@string/moneySign(Double.toString(item.price))}"
                     app:layout_constraintStart_toStartOf="@+id/flImage"
                     app:layout_constraintTop_toBottomOf="@+id/flImage"
                     tools:text="USD 1020" />
