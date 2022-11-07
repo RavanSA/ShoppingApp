@@ -25,31 +25,31 @@ Android offline first shopping app built with MVVM Architecture using Fake Store
 <details>
 <summary><b>Demo 1</b></summary>
 </p>
-<video src="https://user-images.githubusercontent.com/58227337/200204578-df29e67b-16c8-4165-8641-fac157db3fea.mp4"
+<video src="https://user-images.githubusercontent.com/58227337/200204578-df29e67b-16c8-4165-8641-fac157db3fea.mp4"/>
 </details>
 
 <details>
 <summary><b>Demo 2</b></summary>
 </p>
-<video src="https://user-images.githubusercontent.com/58227337/200204610-5ee19f72-b0c6-4daa-81d7-5e64bd0d0224.mp4"
+<video src="https://user-images.githubusercontent.com/58227337/200204610-5ee19f72-b0c6-4daa-81d7-5e64bd0d0224.mp4"/>
 </details>
 
 <details>
 <summary><b>Demo 3</b></summary>
 </p>
-<video src="https://user-images.githubusercontent.com/58227337/200205042-395e684c-39ec-43b4-90ae-d6c1c708e0c1.mp4">
+<video src="https://user-images.githubusercontent.com/58227337/200205042-395e684c-39ec-43b4-90ae-d6c1c708e0c1.mp4"/>
 </details>
 
 <details>
 <summary><b>Demo 4</b></summary>
 </p>
-https://user-images.githubusercontent.com/58227337/200204641-59521d1b-812b-407c-ae9d-eb20f167c944.mp4
+<video src="https://user-images.githubusercontent.com/58227337/200204641-59521d1b-812b-407c-ae9d-eb20f167c944.mp4"/>
 </details>
 
 <details>
 <summary><b>Demo 5</b></summary>
 </p>
-https://user-images.githubusercontent.com/58227337/200204659-ba298e1a-d754-40fc-800e-6087d0127f78.mp4
+<video src="https://user-images.githubusercontent.com/58227337/200204659-ba298e1a-d754-40fc-800e-6087d0127f78.mp4"/>
 </details>
 
 ### Screenshots
