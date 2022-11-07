@@ -25,32 +25,30 @@ Android offline first shopping app built with MVVM Architecture using Fake Store
 <details>
 <summary><b>Demo 1</b></summary>
 </p>
-<video src='https://github.com/RavanSA/ShoppingApp/blob/master/demo/demo_1.mp4' width=180/>
-
+https://user-images.githubusercontent.com/58227337/200204578-df29e67b-16c8-4165-8641-fac157db3fea.mp4
 </details>
 
 <details>
 <summary><b>Demo 2</b></summary>
 </p>
-<video src='https://github.com/RavanSA/ShoppingApp/blob/master/demo/demo_2.mp4' width=180/>
+https://user-images.githubusercontent.com/58227337/200204610-5ee19f72-b0c6-4daa-81d7-5e64bd0d0224.mp4
 </details>
 
 <details>
 <summary><b>Demo 3</b></summary>
 </p>
-<video src='https://github.com/RavanSA/ShoppingApp/blob/master/demo/demo_3.mp4' width=180/>
-</details>
 
+</details>
+https://user-images.githubusercontent.com/58227337/200204632-5df72e85-aced-440c-b935-ef1c0040082b.mp4
 <details>
 <summary><b>Demo 4</b></summary>
 </p>
-<video src='https://github.com/RavanSA/ShoppingApp/blob/master/demo/demo_4.mp4' width=180/>
+https://user-images.githubusercontent.com/58227337/200204641-59521d1b-812b-407c-ae9d-eb20f167c944.mp4
 </details>
-
 <details>
 <summary><b>Demo 5</b></summary>
 </p>
-<video src='https://github.com/RavanSA/ShoppingApp/blob/master/demo/demo_5.mp4' width=180/>
+https://user-images.githubusercontent.com/58227337/200204659-ba298e1a-d754-40fc-800e-6087d0127f78.mp4
 </details>
 
 ### Screenshots
