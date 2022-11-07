@@ -56,7 +56,7 @@ Android offline first shopping app built with MVVM Architecture using Fake Store
 
 On Boarding Screen 1       | On Boarding Screen 2      | On Boarding Screen 3 
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_1.jpg"/>            |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_3.jpg"/>  | <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_3.jpg"/>  |
+<img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_1.jpg"/>            |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_2.jpg"/>  | <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_3.jpg"/>  |
 
 Login Screen               | Registration Screen       | Products Screen
 :-------------------------:|:-------------------------:|:-------------------------:
@@ -81,9 +81,9 @@ Basket Screen              | Search Screen             | Splash Screen
 - [OkHttp](https://github.com/square/okhttp) - Used to HTTP client for making network calls.
 - [Retrofit](https://github.com/square/retrofit) - Used to REST API clients.
 - [Glide](https://github.com/bumptech/glide) - Used to image loading library using HTTP.
-- [ConstraintLayout] (https://developer.android.com/develop/ui/views/layout/constraint-layout) - ConstraintLayout used to create large and complex layouts without nested viewgroups.
-- [GSON] (https://github.com/google/gson) - JSON Parser, used to parse requests on the data layer for Entities and understands Kotlin non-nullable and default parameters.
-- [ViewPager2] (https://developer.android.com/jetpack/androidx/releases/viewpager2) - Used to slide between Fragments within adapters
+- [ConstraintLayout](https://developer.android.com/develop/ui/views/layout/constraint-layout) - ConstraintLayout used to create large and complex layouts without nested viewgroups.
+- [GSON](https://github.com/google/gson) - JSON Parser, used to parse requests on the data layer for Entities and understands Kotlin non-nullable and default parameters.
+- [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2) - Used to slide between Fragments within adapters
 
 For more information about used dependencies, see [this](https://github.com/RavanSA/ShoppingApp/blob/refactor/app/build.gradle) file.
 
