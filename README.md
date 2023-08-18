@@ -32,7 +32,7 @@ Login Screen               | Registration Screen       | Products Screen
 
 Basket Screen              | Search Screen             | Detail Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(8).jpeg"/>           |  <img src="https://github.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(9).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(10).jpeg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(8).jpeg"/>           |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(9).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(10).jpeg"/>  |
 
 ## Tech Stack and whys
 
