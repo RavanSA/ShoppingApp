@@ -16,5 +16,5 @@
     <string name="btnProductDetailText">Add to Cart</string>
     <string name="signInTitle">Sign In</string>
     <string name="moneySign"> %s USD</string>
-    <string name="reviews"> %s Reviews</string>
+    <string name="reviews"> %s </string>
 </resources>

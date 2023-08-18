@@ -47,29 +47,29 @@
 
             <ImageView
                 android:id="@+id/cart_item_minus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/btnRoundedCornerBackground"
+                android:layout_height="@dimen/btnRoundedCornerBackground"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_rounded_corner"
+                android:background="@drawable/red_button_background"
                 app:layout_constraintStart_toStartOf="@+id/cart_item_price"
                 app:layout_constraintTop_toBottomOf="@+id/cart_item_price"
                 app:srcCompat="@drawable/ic_baseline_remove_24" />
 
             <ImageView
                 android:id="@+id/cart_item_plus"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/btnRoundedCornerBackground"
+                android:layout_height="@dimen/btnRoundedCornerBackground"
                 android:layout_marginStart="16dp"
-                android:background="@drawable/bg_rounded_corner"
+                android:background="@drawable/red_button_background"
                 app:layout_constraintStart_toEndOf="@+id/cart_item_quantity"
                 app:layout_constraintTop_toTopOf="@+id/cart_item_minus"
                 app:srcCompat="@drawable/ic_baseline_add_24" />
 
             <ImageView
                 android:id="@+id/cart_item_delete"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_rounded_corner"
+                android:layout_width="@dimen/btnRoundedCornerBackground"
+                android:layout_height="@dimen/btnRoundedCornerBackground"
+                android:background="@drawable/red_button_background"
                 app:layout_constraintBottom_toBottomOf="@+id/cart_item_plus"
                 app:layout_constraintEnd_toEndOf="@+id/cart_item_price"
                 app:layout_constraintTop_toTopOf="@+id/cart_item_plus"
@@ -83,7 +83,7 @@
                 android:layout_marginStart="16dp"
                 android:text="1"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_size_x_x_large_title"
                 app:layout_constraintBottom_toBottomOf="@+id/cart_item_minus"
                 app:layout_constraintStart_toEndOf="@+id/cart_item_minus"
                 app:layout_constraintTop_toTopOf="@+id/cart_item_minus" />

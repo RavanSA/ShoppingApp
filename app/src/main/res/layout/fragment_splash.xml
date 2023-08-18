@@ -25,6 +25,7 @@
             android:id="@+id/pbActivityIndicator"
             android:indeterminateOnly="true"
             android:keepScreenOn="true"
+            android:indeterminateTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivSplashLogo"

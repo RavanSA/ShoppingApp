@@ -1,17 +1,17 @@
 package android.project.shoppingapp.ui.products
 
+import android.R.attr.spacing
 import android.os.Bundle
 import android.project.shoppingapp.R
 import android.project.shoppingapp.data.model.Products
 import android.project.shoppingapp.databinding.FragmentProductBinding
-import android.project.shoppingapp.ui.products.adapter.NewProductsLists
+import android.project.shoppingapp.ui.products.adapter.GridSpacingItemDecoration
 import android.project.shoppingapp.ui.products.adapter.ProductListener
 import android.project.shoppingapp.ui.products.adapter.ProductsAdapter
 import android.project.shoppingapp.ui.products.viewmodel.ProductViewModel
 import android.project.shoppingapp.utils.*
 import android.project.shoppingapp.utils.customui.LoadingDialog
 import android.project.shoppingapp.utils.customui.showCustomDialog
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +41,7 @@ class ProductFragment : Fragment(), ProductListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentProductBinding.inflate(layoutInflater)
         binding.basket = this@ProductFragment
@@ -55,6 +55,7 @@ class ProductFragment : Fragment(), ProductListener {
         onRefresh()
         subscribeProductList()
         observeBasketAmount()
+        setClickListeners()
     }
 
 
@@ -80,6 +81,13 @@ class ProductFragment : Fragment(), ProductListener {
                                 ProductsAdapter(this@ProductFragment).apply {
                                     differ.submitList(products.data)
                                 }
+                            binding.productRecyclerView.addItemDecoration(
+                                GridSpacingItemDecoration(
+                                    2,
+                                    30,
+                                    false
+                                )
+                            )
                         } takeIfLoading {
                             progressBar.show()
                         } takeIfError {
@@ -110,6 +118,41 @@ class ProductFragment : Fragment(), ProductListener {
 
     fun openBasket() {
         NavHostFragment.findNavController(this).navigate(R.id.actionGlobalBasketBottomSheet)
+    }
+
+    private fun setClickListeners() {
+        with(binding) {
+            etSearch.setOnClickListener {
+                navController.navigate(
+                    R.id.action_productFragment_to_searchFragment,
+                )
+            }
+            ivAllCategory.setOnClickListener {
+                navController.navigate(
+                    R.id.action_productFragment_to_searchFragment,
+                )
+            }
+            ivCategoryPC.setOnClickListener {
+                navController.navigate(
+                    R.id.action_productFragment_to_searchFragment,
+                )
+            }
+            ivCategoryPhone.setOnClickListener {
+                navController.navigate(
+                    R.id.action_productFragment_to_searchFragment,
+                )
+            }
+            ivCategoryHeadPhone.setOnClickListener {
+                navController.navigate(
+                    R.id.action_productFragment_to_searchFragment,
+                )
+            }
+            ivCategoryGaming.setOnClickListener {
+                navController.navigate(
+                    R.id.action_productFragment_to_searchFragment,
+                )
+            }
+        }
     }
 
 

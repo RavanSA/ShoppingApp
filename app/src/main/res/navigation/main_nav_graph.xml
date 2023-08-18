@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_productFragment2_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_searchFragment"
+            app:destination="@id/searchFragment3" />
         <argument
             android:name="productId"
             app:argType="string" />
@@ -60,6 +63,9 @@
         <argument
             android:name="productId"
             app:argType="string" />
+        <action
+            android:id="@+id/actionSearchFragmentToProductFragment"
+            app:destination="@id/productFragment2" />
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment3"

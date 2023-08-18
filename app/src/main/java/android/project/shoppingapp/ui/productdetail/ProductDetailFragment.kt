@@ -85,13 +85,13 @@ class ProductDetailFragment : Fragment() {
                 with(binding) {
                     productQuantity = quantity?.toString() ?: "0"
                     if (quantity == 0 || quantity == null) {
-                        groupQuantitySettings.visibility = View.GONE
-                        btnAddtoCart.visibility = View.VISIBLE
+                        llProductStepper.visibility = View.GONE
+                        addToCartBtn.visibility = View.VISIBLE
                     } else {
-                        groupQuantitySettings.visibility = View.VISIBLE
-                        btnAddtoCart.visibility = View.GONE
+                        llProductStepper.visibility = View.VISIBLE
+                        addToCartBtn.visibility = View.GONE
                     }
-                    btnAddtoCart.setOnClickListener {
+                    addToCartBtn.setOnClickListener {
                         if (quantity == 0 || quantity == null) {
                             addToCart(product)
                         }

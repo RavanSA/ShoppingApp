@@ -19,52 +19,21 @@ Android offline first shopping app built with MVVM Architecture using Fake Store
 
 
 ## Demonstration
-	
-### Videos
 
-<details>
-<summary><b>Demo 1</b></summary>
-</p>
-<video src="https://user-images.githubusercontent.com/58227337/200204578-df29e67b-16c8-4165-8641-fac157db3fea.mp4"/>
-</details>
-
-<details>
-<summary><b>Demo 2</b></summary>
-</p>
-<video src="https://user-images.githubusercontent.com/58227337/200204610-5ee19f72-b0c6-4daa-81d7-5e64bd0d0224.mp4"/>
-</details>
-
-<details>
-<summary><b>Demo 3</b></summary>
-</p>
-<video src="https://user-images.githubusercontent.com/58227337/200205042-395e684c-39ec-43b4-90ae-d6c1c708e0c1.mp4"/>
-</details>
-
-<details>
-<summary><b>Demo 4</b></summary>
-</p>
-<video src="https://user-images.githubusercontent.com/58227337/200204641-59521d1b-812b-407c-ae9d-eb20f167c944.mp4"/>
-</details>
-
-<details>
-<summary><b>Demo 5</b></summary>
-</p>
-<video src="https://user-images.githubusercontent.com/58227337/200204659-ba298e1a-d754-40fc-800e-6087d0127f78.mp4"/>
-</details>
 
 ### Screenshots
 
 On Boarding Screen 1       | On Boarding Screen 2      | On Boarding Screen 3 
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_1.jpg"/>            |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_2.jpg"/>  | <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/onboarding_3.jpg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(1).jpeg"/>            |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(2).jpeg"/>  | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(3).jpeg"/>  |
 
 Login Screen               | Registration Screen       | Products Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/login.jpg"/>           |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/registration.jpg"/>              | <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/products.jpg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(5).jpeg"/>           |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(4).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(6).jpeg"/>  |
 
-Basket Screen              | Search Screen             | Splash Screen
+Basket Screen              | Search Screen             | Detail Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/basket.jpg"/>           |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/search.jpg"/>              | <img src="https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/splash.jpg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(8).jpeg"/>           |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(9).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(10).jpeg"/>  |
 
 ## Tech Stack and whys
 
@@ -91,13 +60,4 @@ For more information about used dependencies, see [this](https://github.com/Rava
 
 ![architecture](https://github.com/RavanSA/ShoppingApp/blob/master/preview_screen/mvvm.png)
 
-
-## Download
-
-Get the debug mode apk from [here](https://github.com/RavanSA/ShoppingApp/blob/master/demo/app-debug.apk)
-
-
-## Questions
-
-If you have any questions regarding the codebase, contact via revan.sadiqli99@gmail.com
 
