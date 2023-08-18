@@ -28,7 +28,7 @@ On Boarding Screen 1       | On Boarding Screen 2      | On Boarding Screen 3
 
 Login Screen               | Registration Screen       | Products Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(5).jpeg"/>           |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(4).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(6).jpeg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(5).jpeg"/>           |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(4).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/Screenshot%202023-08-18%20at%2023.29.46.png"/>  |
 
 Basket Screen              | Search Screen             | Detail Screen
 :-------------------------:|:-------------------------:|:-------------------------:
