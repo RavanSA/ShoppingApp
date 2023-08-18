@@ -9,7 +9,6 @@ Android offline first shopping app built with MVVM Architecture using Fake Store
 
 ## Contents
 * [Demonstration](#demonstration)
-  * [Videos](#videos)
   * [Screenshots](#screenshots)
 * [Tech Stack and whys](#tech-stack)
 * [Architecture](#architecture)
@@ -25,15 +24,15 @@ Android offline first shopping app built with MVVM Architecture using Fake Store
 
 On Boarding Screen 1       | On Boarding Screen 2      | On Boarding Screen 3 
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(1).jpeg"/>            |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(2).jpeg"/>  | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(3).jpeg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(1).jpeg"/>            |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(2).jpeg"/>  | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(3).jpeg"/>  |
 
 Login Screen               | Registration Screen       | Products Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(5).jpeg"/>           |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(4).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(6).jpeg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(5).jpeg"/>           |  <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(4).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(6).jpeg"/>  |
 
 Basket Screen              | Search Screen             | Detail Screen
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(8).jpeg"/>           |  <img src="https://github.com/RavanSA/ShoppingApp/blob/master/demo/photo1692390802%20(9).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(10).jpeg"/>  |
+<img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(8).jpeg"/>           |  <img src="https://github.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(9).jpeg"/>              | <img src="https://raw.githubusercontent.com/RavanSA/ShoppingApp/master/demo/photo1692390802%20(10).jpeg"/>  |
 
 ## Tech Stack and whys
 
